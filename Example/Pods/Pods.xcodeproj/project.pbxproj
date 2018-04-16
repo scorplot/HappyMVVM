@@ -35,6 +35,7 @@
 		21B21947E9008BCD6D64FA386C59CA6E /* MJRefreshAutoFooter.h in Headers */ = {isa = PBXBuildFile; fileRef = 23F44BA30E37E7AEAB3002AE5693066F /* MJRefreshAutoFooter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2248239AACD982B3D390D2A408DDED98 /* MJRefreshComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CA36B936CE01D206DAFD3D899DBC8D4 /* MJRefreshComponent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		28BC90FE7E35881D7FDF3FB215026FAA /* TaskRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = 47EDF6F4CB40D82DE387971805B75DA4 /* TaskRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B066C18738A6F1D2B572A7E44442B22 /* UIViewController+HayypUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A95878B2019A9FDB99E309900A19F7 /* UIViewController+HayypUI.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		2E48F085D7E0ED2E84D9CCABE5E24514 /* RealReachability-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DE6FDD8B2A5F7EDE12EB19ADBB92F9D0 /* RealReachability-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB781E3CBF5FC86E474599E6281533E /* ReachState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3EC02F8ACE53E2299C243ECC562CF /* ReachState.m */; };
 		2FD0B2C5DA68994C6DB599BD65C627A6 /* MJRefresh-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 841E7A3DEDCCF1C5B3EC2C519D27089F /* MJRefresh-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -45,19 +46,18 @@
 		3231DFB7AD87F7004E623303B43C1BA4 /* MJRefreshBackStateFooter.h in Headers */ = {isa = PBXBuildFile; fileRef = 35BCFA16723FD1BF55EDF9A6F0908283 /* MJRefreshBackStateFooter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33D74D5CF2C29673AAA555F4F33FDEFF /* Pods-HappyUI_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 633E84BEAE821D2F1186DB9A8988C4E5 /* Pods-HappyUI_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3404C251E433BAAF5C93F1D2C43C7874 /* CircleReferenceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8378FFC5ACFAEDBB295872C820C08C /* CircleReferenceCheck.framework */; };
-		377C1A2D0537DF6A70FBD0165E7BF9CB /* HappyContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6E177BA033EEF6B95839087D589000 /* HappyContext.m */; };
 		3C8BF40E9DE6B8E0F28B0998E34D0B97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59DB457C192A51095CFBE0F6D8435424 /* Foundation.framework */; };
 		3CF293D9079FB866432E4E6091991BBD /* JointTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F93D666CBF0F538C17685501424D4 /* JointTaskManager.m */; };
-		3DAAB25271F644650BF64FE370991204 /* UIViewController+HayypUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A95878B2019A9FDB99E309900A19F7 /* UIViewController+HayypUI.m */; };
+		3FBB9C223E57FF8803C5C69B18676936 /* ListVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 3324B5182E6E474B8CF27E1616920AAE /* ListVM.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		4138E01F44EDE2CFB467E5EDE59F603D /* CollectionViewProtocolListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 16012B9B6E37001AAB1CD7ACF73F6CC1 /* CollectionViewProtocolListener.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		426EB33367A1C0D681C97DC2928B316A /* CircleReferenceCheck-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2777503A22752C9E33D5919756E6E3AD /* CircleReferenceCheck-dummy.m */; };
 		43E6B64F1F23B12C97A178CA15DD1841 /* UIView+MJExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DD0BB8FA84A0CD3350556A5FB17CC27 /* UIView+MJExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		45641647D9EB06F19BF2E6ADF7F666A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59DB457C192A51095CFBE0F6D8435424 /* Foundation.framework */; };
 		4980E932AC6337F50A3E2D6793BA6A5E /* TaskEnginer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ECF594F1DBB333E81235C954D57042E /* TaskEnginer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4A7C7C75E7A16EFFED03F4940729B63D /* ReachStateUnReachable.h in Headers */ = {isa = PBXBuildFile; fileRef = E6D19FDC56EF7AE33D589730BC91DCBF /* ReachStateUnReachable.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		4A9965D140587729F171E878CD3F754D /* HappyUI-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 11A6D6C3373099C0C8BC200E973869DE /* HappyUI-dummy.m */; };
 		4D132012DFCBE4880ACD6B9F1A0FA4B1 /* MutableArrayListener.m in Sources */ = {isa = PBXBuildFile; fileRef = C38732FB71486F6D12BFC6DCCD128DEA /* MutableArrayListener.m */; };
 		4E988FD47BB43866649D4A3D76B1F06C /* SaveFileSubTask.h in Headers */ = {isa = PBXBuildFile; fileRef = EF99A4FB64DED4B0FB76CB9471F5B77B /* SaveFileSubTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		509E368887F2209BD9B033423DF51B90 /* ListVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 3324B5182E6E474B8CF27E1616920AAE /* ListVM.m */; };
 		510F5F6D84AA9BD1221093038DC35E79 /* MJRefreshNormalHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4635B0CE8BFE5DDE65584837A117FD /* MJRefreshNormalHeader.m */; };
 		5154C5CD3B423957C8764FDED71080B5 /* CollectionViewArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E7E60DFB53E534C9131F11AF218B1A /* CollectionViewArray.m */; };
 		51A1B91DC3913004BEC5BBD4A690D1BF /* JointSubTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AD9E13ECE4AA6D70528CC2C7DE1C39 /* JointSubTask.m */; };
@@ -66,10 +66,12 @@
 		53689B52E55FD47635AFC2F2785C17EE /* MJRefreshBackGifFooter.h in Headers */ = {isa = PBXBuildFile; fileRef = F8239A4D9648F90447F1340DC33FC63B /* MJRefreshBackGifFooter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		543B6E24D1F3F68FFB9C071653019C80 /* JointTaskItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36592946F9B30CAFFE00BD4F3AE0240C /* JointTaskItem.m */; };
 		5458A828D02E19968AF3245AE8BF82C5 /* MJRefresh-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 460EFC4D5982E08E9F05160DEF873B36 /* MJRefresh-dummy.m */; };
+		55757A05448A0CAAB6173AB3CB91D15C /* ListBaseResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C9B1ECA4AFDED138F0AFB3D95F0CD6 /* ListBaseResponse.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		559E2E25315C2C03107099C4904C86EC /* HappyUI-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 669136436ACD0A2E114CE09156B96C2B /* HappyUI-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58D745A88F5CD6DD1D5CD0D5D28D699B /* LocalConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = E514D5B6709D9E69DF703C5DC9E72E88 /* LocalConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5975A0E74A5864EADA7415E5A11A4790 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59DB457C192A51095CFBE0F6D8435424 /* Foundation.framework */; };
 		5A020DCB808FACE6B07933A4782A14A5 /* PingFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B4814C1B593C405B4B8CB9567AC70DD /* PingFoundation.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		5E5E9FF587E7D6F519D98C907AD0546E /* UINavigationController+HappyUI.m in Sources */ = {isa = PBXBuildFile; fileRef = AF00A823D0E0E727CFFBDB84CBB38568 /* UINavigationController+HappyUI.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		606F05B86771EC3495B3CCA31C6BBDD2 /* CollectionViewProtocolListener.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB79E1F356CFB9C5C63DD9F6F15B90C /* CollectionViewProtocolListener.m */; };
 		6105A6710A5E2E1D4D8026A0BF99239C /* MutableArrayListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 74161CFEACD525888308E654C9870BDF /* MutableArrayListener.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62399D52CA721EB2E16A9937669C07DE /* RealReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F23F41DB439C2157B8D875C8076170 /* RealReachability.m */; };
@@ -78,7 +80,6 @@
 		67BCBB9874332A99870A55DFC1D7040C /* MJRefreshAutoStateFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C38EC09BA3203270A9F19467A6BFD6 /* MJRefreshAutoStateFooter.m */; };
 		6996DB8F9EF44141918CE646E0C502EF /* CircleReferenceCheck-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A0B98A99B504074156116A5CDAD306 /* CircleReferenceCheck-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6A48DDDF08F86BB7E432CFECFD0E3770 /* CCUIModel-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D049B5B390D3910D52B7B766C6622F94 /* CCUIModel-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6A7DEEE63E2CE78077FD00B8B15E6BED /* ListBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F7C4F089485703AFB1ABD2D2F89B06 /* ListBaseModel.m */; };
 		6B59AE2ABA73354ED452104B95C6609E /* CircleReferenceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8378FFC5ACFAEDBB295872C820C08C /* CircleReferenceCheck.framework */; };
 		6C9163F6A7FFFB0F6EF3A8B4C592D7A9 /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 956DC0CA7ACE97F216EF5D425D1461D0 /* MJRefreshAutoFooter.m */; };
 		6E426A33726F3DAAF07ABD2F05DEAE1D /* PingFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD135DA7DEF7079286B2CF9A91270FE /* PingFoundation.m */; };
@@ -102,20 +103,18 @@
 		97500654D9CB661B0F23F7B2AC078B52 /* MJRefreshAutoStateFooter.h in Headers */ = {isa = PBXBuildFile; fileRef = D8F43BA462BF1FE6E209CC5FEDF4B7F7 /* MJRefreshAutoStateFooter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9755DA143F3DEB4CF56021F4A5556CDA /* CircleReferenceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8378FFC5ACFAEDBB295872C820C08C /* CircleReferenceCheck.framework */; };
 		98EE8383CC00402DD52FD224C40D2830 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5093A09DE5114EA112B6E82182A7F85C /* UIView+MJExtension.m */; };
-		99C40F5BBC38729462A3D27103A99ED7 /* UINavigationController+HappyUI.m in Sources */ = {isa = PBXBuildFile; fileRef = AF00A823D0E0E727CFFBDB84CBB38568 /* UINavigationController+HappyUI.m */; };
 		9C2EE5F1D9CCA4186A62257572C95F66 /* ReachStateUnloaded.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E737BC1414C8E89D394B7463CF10BFC /* ReachStateUnloaded.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		9E4B90006F9A6573C6D85F005A2DC8E0 /* MutableArrayListener-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 297AC21EE0AE017D93EFE99145B7D4B3 /* MutableArrayListener-dummy.m */; };
 		A10D6AB4595EC8E4F41A5D2D45647181 /* FSMEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E665FA9D63FA322651A213AA5CC31994 /* FSMEngine.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		A3C3DB3EF1B19DBBD0A937A326BA0DB6 /* NSMutableArray+Listener.h in Headers */ = {isa = PBXBuildFile; fileRef = E99C45720D0C20BC84C7C56994B5CF6D /* NSMutableArray+Listener.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A65E2F2ACE1F1470FA8CB2E931EFCC85 /* TableViewArray.h in Headers */ = {isa = PBXBuildFile; fileRef = F5113CFF03988D4BFFA5C5A20989E626 /* TableViewArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A8F2F0A988D0B500B496B3AB4BB96A1F /* ListBaseResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C9B1ECA4AFDED138F0AFB3D95F0CD6 /* ListBaseResponse.m */; };
 		A9C1D202D3BACBD617764E621B956C25 /* CCUIModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6421D8B0F6AAC49576F788B806A3041D /* CCUIModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABFE383BF362BE7EE86900CDCA0241F0 /* TaskEnginer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31B23DAFC640F32A9FF1DADB2F5FB5E5 /* TaskEnginer.framework */; };
 		ACE75D2C40D895D411DF7F9945B2EFFF /* MJRefreshGifHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F0C759C9684B6564B19B63E932A2D73 /* MJRefreshGifHeader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AF45A0ABDE6FE2AFD0C9DD8634D1BB8F /* TableViewArray.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC5BE563328AE969F47A44859FE7C20 /* TableViewArray.framework */; };
-		B06C5B1DE2A3FE17B767F938A8E84A7C /* HappyAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C4E03607A9870E81EFFA127ED8B726 /* HappyAccount.m */; };
 		B1276CA5CBEB8F89C6243D483ED28BAD /* CollectionViewArray-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 886A3753D910A85C87E2A6AB4FEB6009 /* CollectionViewArray-dummy.m */; };
 		B188E06EAB6448CD2C7C0B7DCA40EC72 /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5DA85438B491F5E91ECE8AD4B54787 /* MJRefreshFooter.m */; };
+		B3CA2C1A1D825FEDAC598B668C6842F1 /* UIView+HappyUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E275ECBE965EE71D1A6F753932D7B3 /* UIView+HappyUI.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		B574D974C73B2F87A882D207B4A3323A /* RealReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EA7ACBBD66889D27AD3E7655CB3C529 /* RealReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B5DFBF126E8E98A807BFFCA3EFA28D8E /* MJRefreshFooter.h in Headers */ = {isa = PBXBuildFile; fileRef = AB863BBC857EA1B110C911863577B446 /* MJRefreshFooter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B631024ABFF1D4003CDB9E75B609E4CE /* MJRefreshBackNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E856A598827CCE8E107222D5A483C79 /* MJRefreshBackNormalFooter.m */; };
@@ -125,6 +124,7 @@
 		BA0060D7112568D184C13E36DC842D7D /* ReachStateWIFI.m in Sources */ = {isa = PBXBuildFile; fileRef = 607C25FB0C255E752CE78C153693ACD9 /* ReachStateWIFI.m */; };
 		BBCE1CAB7CBF6FEB1177101A15AB1015 /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DBAE7C425691FA548EF2A245D22DF03 /* MJRefreshComponent.m */; };
 		BCF52DCBA4138D365885504BF5D83880 /* UIScrollView+MJRefresh.h in Headers */ = {isa = PBXBuildFile; fileRef = F978894100220FF15D71498E54EF5ABE /* UIScrollView+MJRefresh.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BF37CE4132F7AB061CC2DBB8C1E6ED1F /* HappyContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6E177BA033EEF6B95839087D589000 /* HappyContext.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		BF921089EA94528E0848D21903D0B60A /* NSMutableArray+Listener.m in Sources */ = {isa = PBXBuildFile; fileRef = D8653D9B97B035C66CBD6132EBBDA2ED /* NSMutableArray+Listener.m */; };
 		C220119693F9899AC1EF1C0B48B56A84 /* JointSubTask.h in Headers */ = {isa = PBXBuildFile; fileRef = F912A104F340E10D65A800317E52A36F /* JointSubTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C62F0DB8CEB1E520B1EF70829476070C /* UIViewController+HayypUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 03772BDF7E71C6EE699C09A6267FE5F7 /* UIViewController+HayypUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -139,8 +139,8 @@
 		D4CC69245394DF0C915CC55AEAE7666C /* MJRefreshStateHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2216761ABAE2479CCDEA3CEAB0C70F /* MJRefreshStateHeader.m */; };
 		D58491A3070FCD0913396DF8E759E84E /* CollectionViewArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 8256A63920BA44570E5D3D118E622DF9 /* CollectionViewArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7263322719094F36289A95B7028D336 /* SaveFileSubTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 6347D578863F2D7B18ED0C3691DCE4A9 /* SaveFileSubTask.m */; };
+		D726F42C65BF6CE933DA65043CAF7660 /* SimpleListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80AAE52042FE27B7F72B64BDA42DFC /* SimpleListModel.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		D7787F133D87AF7D24216BE1FEC80973 /* MJRefresh.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29360CB754532D096AE85AF5BAC3B466 /* MJRefresh.framework */; };
-		D7BA30551DE22EB54AA91195B208B9CE /* SimpleListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80AAE52042FE27B7F72B64BDA42DFC /* SimpleListModel.m */; };
 		D90738E9E1EC5DFA722AB486A543831C /* PingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 028CE1BAA8E391F98903109DE34BCC38 /* PingHelper.m */; };
 		D9A736A6771375071705F75E8AD88019 /* CCUIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 172E0C34EE23D078732BBACF1299F31A /* CCUIModel.m */; };
 		DA098267A6B51BFA06BECC630A5C7DAB /* CircleReferenceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8378FFC5ACFAEDBB295872C820C08C /* CircleReferenceCheck.framework */; };
@@ -152,8 +152,6 @@
 		E12B50D56D694FE507B0C785C385AAF0 /* CircleReferenceCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 839E63A07E4FACAD250BB21C11F37A0A /* CircleReferenceCheck.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E17A5AB2978D4C28B87F0EB1AEC14993 /* ReachStateWIFI.h in Headers */ = {isa = PBXBuildFile; fileRef = DB75C5968C91EC2E3279D83DC97E012F /* ReachStateWIFI.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		E1BAF57322E9C90C24D21F2726119FE3 /* UIView+HappyUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 3036768640E7AEBCD9AD4D11FA02CC65 /* UIView+HappyUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E1D8C6E2BDAAEDC112539E6160EBC585 /* HappyUI-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 11A6D6C3373099C0C8BC200E973869DE /* HappyUI-dummy.m */; };
-		E24FA07621E601575EDC30946F0BD17D /* UIView+HappyUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E275ECBE965EE71D1A6F753932D7B3 /* UIView+HappyUI.m */; };
 		E42670402FE1924F76F265C8DFB6BB36 /* MJRefreshAutoGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4371C9A7624F5653B69E28F19565AA4C /* MJRefreshAutoGifFooter.m */; };
 		E52B3053771EC85E9DE0DD7146BC792A /* ReachStateLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 9430AD184CE345DEBDE04DE19C2FE706 /* ReachStateLoading.m */; };
 		E63FA22B6A304E9C9C561B28FF8F7721 /* RealReachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0422E2B8D4193854EAA759284320F497 /* RealReachability.framework */; };
@@ -165,8 +163,10 @@
 		EFD65FC28C65DB252E2B2072190B4D5A /* MutableArrayListener.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D988ADD51E034A82145DD98DCD9A52D3 /* MutableArrayListener.framework */; };
 		F2D0250BBE010CAB57FACE47C6B22AC5 /* SubTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3D6233D4D849BEA2367DC67A604706 /* SubTask.m */; };
 		F326CF861A8D9E32A05F26206116D221 /* FSMEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D49B898286F57EC0D360FFA00D25D9 /* FSMEngine.m */; };
+		F71168B2DB3A71DD687C5C92F4269F72 /* ListBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F7C4F089485703AFB1ABD2D2F89B06 /* ListBaseModel.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F722C34F7084A9B27D2ADFB0DD1E33B6 /* MJRefresh.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F804F96E2F0D65001FC0BBA05E56BFD /* MJRefresh.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F965E9367DAD2C88B391AFDC5091E802 /* MJRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A91261BC7785942A51FE18FD98914E /* MJRefreshGifHeader.m */; };
+		FB8C74C1A6FB5980E0F9AFDDA52D7A10 /* HappyAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C4E03607A9870E81EFFA127ED8B726 /* HappyAccount.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		FC1CD8841A038D911FFF4EEBAFE99A85 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7165010777E2446A03799670E3469F7D /* MJRefresh.bundle */; };
 		FF6E7D5EAFD67BAAE1D70A41690A472B /* MutableArrayListener-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 52AC24AB8D2E3E3AD728B575B5BB15CF /* MutableArrayListener-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -1395,7 +1395,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C69B39BD07AB91A1D6C6EE98EE1346A6 /* Build configuration list for PBXNativeTarget "HappyUI" */;
 			buildPhases = (
-				4F6B677D20706D609EBF25A7649FD8A2 /* Sources */,
+				0663F4A812FCB114C6224FF9F5698551 /* Sources */,
 				CD3FDDBE9504E5663E956E76F3CCB71A /* Frameworks */,
 				B6C8EE082831BACCC0BC287C4A58350B /* Headers */,
 			);
@@ -1554,6 +1554,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0663F4A812FCB114C6224FF9F5698551 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB8C74C1A6FB5980E0F9AFDDA52D7A10 /* HappyAccount.m in Sources */,
+				BF37CE4132F7AB061CC2DBB8C1E6ED1F /* HappyContext.m in Sources */,
+				4A9965D140587729F171E878CD3F754D /* HappyUI-dummy.m in Sources */,
+				F71168B2DB3A71DD687C5C92F4269F72 /* ListBaseModel.m in Sources */,
+				55757A05448A0CAAB6173AB3CB91D15C /* ListBaseResponse.m in Sources */,
+				3FBB9C223E57FF8803C5C69B18676936 /* ListVM.m in Sources */,
+				D726F42C65BF6CE933DA65043CAF7660 /* SimpleListModel.m in Sources */,
+				5E5E9FF587E7D6F519D98C907AD0546E /* UINavigationController+HappyUI.m in Sources */,
+				B3CA2C1A1D825FEDAC598B668C6842F1 /* UIView+HappyUI.m in Sources */,
+				2B066C18738A6F1D2B572A7E44442B22 /* UIViewController+HayypUI.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06B86F5739D66A6620CB5B30A3DF0611 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1596,23 +1613,6 @@
 			files = (
 				426EB33367A1C0D681C97DC2928B316A /* CircleReferenceCheck-dummy.m in Sources */,
 				E12B50D56D694FE507B0C785C385AAF0 /* CircleReferenceCheck.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4F6B677D20706D609EBF25A7649FD8A2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B06C5B1DE2A3FE17B767F938A8E84A7C /* HappyAccount.m in Sources */,
-				377C1A2D0537DF6A70FBD0165E7BF9CB /* HappyContext.m in Sources */,
-				E1D8C6E2BDAAEDC112539E6160EBC585 /* HappyUI-dummy.m in Sources */,
-				6A7DEEE63E2CE78077FD00B8B15E6BED /* ListBaseModel.m in Sources */,
-				A8F2F0A988D0B500B496B3AB4BB96A1F /* ListBaseResponse.m in Sources */,
-				509E368887F2209BD9B033423DF51B90 /* ListVM.m in Sources */,
-				D7BA30551DE22EB54AA91195B208B9CE /* SimpleListModel.m in Sources */,
-				99C40F5BBC38729462A3D27103A99ED7 /* UINavigationController+HappyUI.m in Sources */,
-				E24FA07621E601575EDC30946F0BD17D /* UIView+HappyUI.m in Sources */,
-				3DAAB25271F644650BF64FE370991204 /* UIViewController+HayypUI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
