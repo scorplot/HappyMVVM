@@ -10,7 +10,8 @@
 
 @implementation UIViewController (HayypUI)
 static void* keyContext;
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
 -(instancetype)initWithContext:(nullable HappyContext*)context {
     self = [super init];
     if (self) {
@@ -18,6 +19,7 @@ static void* keyContext;
     }
     return self;
 }
+#pragma clang diagnostic pop
 
 -(HappyContext*)context {
     UINavigationController* navi = self.navigationController;
