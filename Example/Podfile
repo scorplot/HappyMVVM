@@ -1,0 +1,10 @@
+use_frameworks!
+
+target 'HappyUI_Example' do
+  pod 'HappyUI', :path => '../'
+
+  target 'HappyUI_Tests' do
+    inherit! :search_paths
+
+  end
+end

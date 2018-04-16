@@ -1,0 +1,6 @@
+framework module CollectionViewArray {
+  umbrella header "CollectionViewArray-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module TableViewArray {
+  umbrella header "TableViewArray-umbrella.h"
+
+  export *
+  module * { export * }
+}

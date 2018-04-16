@@ -1,0 +1,74 @@
+//
+//  ListVM.h
+//  HappyUI
+//
+//  Created by Aruisi on 2017/8/1.
+//  Copyright © 2017年 Scorplot. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+@class CollectionViewArray;
+@class TableViewArray;
+@class ListBaseModel;
+
+@interface ListVM : NSObject
+@property (nonatomic) BOOL hideHeadRefresh;
+@property (nonatomic) BOOL hideFooterGetMore;
+
+/**
+ refresh callback
+ */
+@property (nonatomic, copy) void(^startRefresh)(void);
+@property (nonatomic, copy) void(^didRefresh)(void);
+
+/**
+ get more callback
+ */
+@property (nonatomic, copy) void(^startGetMore)(void);
+@property (nonatomic, copy) void(^didGetMore)(void);
+
+/**
+ empty view
+ */
+@property (nonatomic, strong) UIView* _Nullable emptyView;
+
+/**
+ error view
+ */
+@property (nonatomic, strong) UIView* _Nullable errorView;
+
+@property (nonatomic, readonly) ListBaseModel * _Nullable listModel;
+
+@property (nonatomic, readonly)  UICollectionView* _Nullable  listCollectionView;
+@property (nonatomic, readonly)  UITableView* _Nullable  listTableView;
+
+//collectioView
+-(instancetype _Nonnull )initWith:(ListBaseModel*_Nonnull)model collectionView:(UICollectionView*_Nonnull)collectionView;
+
+//tableView
+-(instancetype _Nonnull )initWith:(ListBaseModel *_Nonnull)model tableView:(UITableView *_Nonnull)tableView;
+
+#pragma mark sub class
+/**
+ The sub class need to do as following
+ 1. set collectionView with a layout
+ 2. compute cell size
+ 3. register nib for collectionView, used to create cell
+ 4. implement cellForItem block
+ 5. handel cell click
+ */
+-(void)setUpCollectionView:(CollectionViewArray*_Nonnull)binder collectionView:(UICollectionView*_Nonnull)collectionView;
+
+
+/**
+ The sub class need to do as following
+ 1. compute cell height
+ 2. register nib for tableview, used to create cell
+ 3. implement cellForRow block
+ 4. handel cell click
+ */
+-(void)setUpTableView:(TableViewArray*_Nonnull)binder tableView:(UITableView*_Nonnull)tableView;
+
+
+@end

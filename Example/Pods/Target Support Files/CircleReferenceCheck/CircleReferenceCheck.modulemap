@@ -1,0 +1,6 @@
+framework module CircleReferenceCheck {
+  umbrella header "CircleReferenceCheck-umbrella.h"
+
+  export *
+  module * { export * }
+}

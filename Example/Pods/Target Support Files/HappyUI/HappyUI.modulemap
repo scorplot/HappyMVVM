@@ -1,0 +1,6 @@
+framework module HappyUI {
+  umbrella header "HappyUI-umbrella.h"
+
+  export *
+  module * { export * }
+}

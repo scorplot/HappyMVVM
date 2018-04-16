@@ -1,0 +1,6 @@
+framework module MutableArrayListener {
+  umbrella header "MutableArrayListener-umbrella.h"
+
+  export *
+  module * { export * }
+}
