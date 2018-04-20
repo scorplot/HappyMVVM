@@ -167,7 +167,7 @@ static const NSInteger preloadIndex  = 5;
 
 -(void)updateStatus:(ListModelStatus)status view:(UIView*)contentView {
     switch (status) {
-        case EMEPTY:
+        case LIST_EMEPTY:
             // empty data
             [_errorView removeFromSuperview];
             if (self.emptyView) {
@@ -177,7 +177,7 @@ static const NSInteger preloadIndex  = 5;
                 [contentView addSubview:self.emptyView];
             }
             break;
-        case ERROR:
+        case LIST_ERROR:
             // error
             [_emptyView removeFromSuperview];
             if (self.errorView) {

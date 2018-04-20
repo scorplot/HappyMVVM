@@ -103,7 +103,7 @@
 
 -(void)updateStatus:(BaseModelStatus)status view:(UIView*)contentView {
     switch (status) {
-        case ERROR:
+        case MODEL_ERROR:
             // error
             if (self.errorView) {
                 CGRect rc = contentView.bounds;

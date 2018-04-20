@@ -42,7 +42,7 @@
                 case RealStatusViaWiFi:
                 case RealStatusViaWWAN:
                 {
-                    if (ws.status == ERROR) [ws refresh];
+                    if (ws.status == MODEL_ERROR) [ws refresh];
                     break;
                 }
                 default:
@@ -80,12 +80,12 @@
                     
                     [SELF parseResult:task.result error:(NSError*)error callback:^(id model, NSError* error) {
                         
-                        BaseModelStatus status = UNDEFINE;
+                        BaseModelStatus status = MODEL_UNDEFINE;
                         if (error) {
-                            status = ERROR;
+                            status = MODEL_ERROR;
                             SELF.error = error;
                         } else {
-                            status = NORMAL;
+                            status = MODEL_NORMAL;
                             SELF.error = nil;
                         }
                         
@@ -113,7 +113,7 @@
 }
 
 -(void)saveToCache {
-    if (_status != UNDEFINE) {
+    if (_status != MODEL_UNDEFINE) {
         TaskRoute* task = [self saveCacheTask:[self.model copy]];
         _saveCacheTask = task;
         task.autoRetain = YES;
@@ -138,9 +138,9 @@
                         int status = SELF.status;
                         
                         if (error) {
-                            status = ERROR;
+                            status = MODEL_ERROR;
                         } else {
-                            status = NORMAL;
+                            status = MODEL_NORMAL;
                         }
                         
                         if (status != SELF.status) {

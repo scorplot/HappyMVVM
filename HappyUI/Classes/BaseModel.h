@@ -7,9 +7,9 @@
 
 #import <Foundation/Foundation.h>
 typedef NS_ENUM(NSUInteger, BaseModelStatus) {
-    UNDEFINE,
-    ERROR,
-    NORMAL,
+    MODEL_UNDEFINE,
+    MODEL_ERROR,
+    MODEL_NORMAL,
 };
 
 @class TaskRoute;

@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSUInteger, ListModelStatus) {
-    UNDEFINE,
-    EMEPTY,
-    ERROR,
-    NORMAL,
+    LIST_UNDEFINE,
+    LIST_EMEPTY,
+    LIST_ERROR,
+    LIST_NORMAL,
 };
 
 @class TaskRoute;

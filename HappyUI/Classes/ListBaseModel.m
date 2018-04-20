@@ -50,7 +50,7 @@
                 case RealStatusViaWiFi:
                 case RealStatusViaWWAN:
                 {
-                    if (ws.status == ERROR) [ws refresh];
+                    if (ws.status == LIST_ERROR) [ws refresh];
                     break;
                 }
                 default:
@@ -95,17 +95,17 @@
                     
                     [SELF parseResult:task.result error:(NSError*)error callback:^(NSArray *items, NSError *error, NSObject* lastToken, id extra) {
                         
-                        ListModelStatus status = UNDEFINE;
+                        ListModelStatus status = LIST_UNDEFINE;
                         if (items.count > 0) {
-                            status = NORMAL;
+                            status = LIST_NORMAL;
                             SELF.error = nil;
                         } else if (finished) {
                             if (error) {
                                 SELF.error = error;
-                                status = ERROR;
+                                status = LIST_ERROR;
                             } else {
                                 SELF.error = nil;
-                                status = EMEPTY;
+                                status = LIST_EMEPTY;
                             }
                         }
                         
@@ -149,7 +149,7 @@
 }
 
 -(void)saveToCache {
-    if (_status != UNDEFINE) {
+    if (_status != LIST_UNDEFINE) {
         TaskRoute* task = [self saveCacheTask:[self.array copy]];
         _saveCacheTask = task;
         task.autoRetain = YES;
@@ -173,7 +173,7 @@
                     [SELF parseResult:task.result error:nil callback:^(NSArray *items, NSError *error, id lastToken, id extra) {
                         if (items) {
                             int status = SELF.status;
-                            if (status == UNDEFINE || status == ERROR) {
+                            if (status == LIST_UNDEFINE || status == LIST_ERROR) {
                                 SELF->_lastToken = lastToken;
                                 SELF.hasMore = lastToken != nil;
                                 
@@ -182,9 +182,9 @@
                             }
                             
                             if (SELF.array.count > 0) {
-                                status = NORMAL;
+                                status = LIST_NORMAL;
                             } else {
-                                status = EMEPTY;
+                                status = LIST_EMEPTY;
                             }
                             
                             if (status != SELF.status) {
@@ -256,7 +256,7 @@
         [_array removeObjectAtIndex:index];
         self.count--;
         if (_array.count == 0) {
-            self.status = EMEPTY;
+            self.status = LIST_EMEPTY;
         }
     }
 }
@@ -264,7 +264,7 @@
 -(void)addItem:(id)item index:(int)index {
     if (index >= 0 && index <= _array.count && item) {
         if (_array.count == 0) {
-            self.status = NORMAL;
+            self.status = LIST_NORMAL;
             [_array addObject:item];
         }else {
             [_array insertObject:item atIndex:index];
