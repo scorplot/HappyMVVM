@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HappyUI'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = 'A short description of HappyUI.'
 
 # This description is used to generate tags and improve search results.
@@ -42,6 +42,6 @@ TODO: Add long description of the pod here.
   s.dependency 'CollectionViewArray'
   s.dependency 'TaskEnginer'
   s.dependency 'CCUIModel'
-  s.dependency 'MJRefresh'
+  #s.dependency 'MJRefresh'
   s.dependency 'RealReachability'
 end
