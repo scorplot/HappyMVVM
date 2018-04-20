@@ -127,7 +127,7 @@
     }
 }
 
--(instancetype)initWithSubTasks:(NSArray<SubTask*>*)subTasks context:(id<NSObject>)context{
+-(instancetype)initWithSubTasks:(NSArray<SubTask*>*)subTasks context:(id)context{
     self = [super init];
     if (self) {
         _context = context;
@@ -141,7 +141,7 @@
     return self;
 }
 
--(instancetype)initWithSingleTask:(SubTask*)subTask context:(id<NSObject>)context {
+-(instancetype)initWithSingleTask:(SubTask*)subTask context:(id)context {
     return [self initWithSubTasks:@[subTask] context:context];
 }
 
@@ -488,8 +488,19 @@
         if (item.finished)
             return @[];
         return _subTasks;
+    } else {
+        if (_subTaskDoing.count) {
+            return nil;
+        } else {
+            for (SubTask* item in _subTasks) {
+                if (item.canceled) return @[];
+                if (item.error) return @[];
+                if (item.executing) return nil;
+                if (!item.finished) return @[item];
+            }
+        }
+        return @[];
     }
-    return nil;
 }
 
 // When a subTask finished, this method will be called, sub class should gether information from subtask

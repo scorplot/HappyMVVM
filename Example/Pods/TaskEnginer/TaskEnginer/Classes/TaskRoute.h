@@ -12,14 +12,14 @@
 @class SubTask;
 @interface TaskRoute : NSObject
 @property (nonatomic, strong) id result; // executed result
-@property (nonatomic, strong, readonly) id<NSObject> context; // context
+@property (nonatomic, strong, readonly) id context; // context
 
 @property (nonatomic, readonly) NSTimeInterval beginTime;
 @property (nonatomic, readonly) NSTimeInterval endTime;
 
--(instancetype)initWithSubTasks:(NSArray<SubTask*>*)subTasks context:(id<NSObject>)context;
+-(instancetype)initWithSubTasks:(NSArray<SubTask*>*)subTasks context:(id)context;
 
--(instancetype)initWithSingleTask:(SubTask*)subTask context:(id<NSObject>)context;
+-(instancetype)initWithSingleTask:(SubTask*)subTask context:(id)context;
 
 @property (nonatomic, readonly) NSArray<SubTask*>* subTasks; // all sub tasks
 

@@ -29,7 +29,7 @@
     __weak TaskRoute* _loadCacheTask;
 }
 
--(instancetype)initWithContext:(id<NSObject>)context {
+-(instancetype)initWithContext:(id)context {
     self = [super init];
     if (self) {
         _context = context;

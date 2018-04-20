@@ -10,11 +10,14 @@
 #endif
 #endif
 
+#import "BaseModel.h"
+#import "BaseVM.h"
 #import "HappyAccount.h"
 #import "HappyContext.h"
 #import "ListBaseModel.h"
 #import "ListBaseResponse.h"
 #import "ListVM.h"
+#import "SimpleBaseModel.h"
 #import "SimpleListModel.h"
 #import "UINavigationController+HappyUI.h"
 #import "UIView+HappyUI.h"

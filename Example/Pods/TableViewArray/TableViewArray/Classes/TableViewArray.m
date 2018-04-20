@@ -10,11 +10,9 @@
 #import "TableViewProtocolListener.h"
 #import <objc/runtime.h>
 #import <UIKit/UIKit.h>
-
 @implementation TableViewArray
 -(instancetype)init{
     if (self = [super init]) {
-        self.tableViewStyle = UITableViewStylePlain;
     }
     return self;
 }

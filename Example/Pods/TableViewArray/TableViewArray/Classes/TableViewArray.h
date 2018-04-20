@@ -9,67 +9,75 @@
 #import <Foundation/Foundation.h>
 @class TableViewArray;
 
-void TableViewConnectArray(UITableView * _Nonnull tableview ,NSArray<NSObject*>* _Nonnull dataSource,TableViewArray * _Nonnull listener);
+#pragma mark  - the picker of array
+typedef NSArray* (^subArray)(NSArray* all, NSInteger index);
+
+void TableViewConnectArray(UITableView * _Nonnull tableview ,NSArray<NSObject*>* _Nullable dataSource,TableViewArray * _Nonnull listener);
 
 #pragma mark  - dataSource
-typedef UITableViewCell* _Nullable (^cellforRowBlock)(UITableView* _Nullable tableView, NSIndexPath * _Nullable indexPath,id _Nullable object);
-typedef NSArray <NSString*>*_Nullable(^sectionIndexTitlesBlock)(UITableView * _Nullable tableView );
-typedef NSInteger(^sectionForSectionIndexTitleBlock)(UITableView * _Nullable tableView,NSString * _Nullable title,NSInteger index);
-typedef NSString* _Nullable (^titleForHeaderBlock)(UITableView * _Nullable tableView,NSInteger section);
-typedef NSString* _Nullable (^titleForFooterBlock)(UITableView * _Nullable tableView,NSInteger section);
+typedef NSInteger (^numberOfSectionsBlock)(UITableView *tableView);
+typedef NSInteger (^numberOfRowsInSectionBlock)(UITableView *tableView, NSInteger section);
+typedef id (^getItemBlock)(NSInteger section, NSInteger row);
+typedef id (^getSectionBlock)(NSInteger section);
+
+typedef UITableViewCell* _Nullable (^cellforRowBlock)(UITableView* _Nullable tableView, NSIndexPath * _Nullable indexPath, id _Nullable object);
+typedef NSArray <NSString*>*_Nullable(^sectionIndexTitlesBlock)(UITableView * _Nullable tableView);
+typedef NSInteger(^sectionForSectionIndexTitleBlock)(UITableView * _Nullable tableView,NSString * _Nullable title,NSInteger index, id _Nullable object);
+typedef NSString* _Nullable (^titleForHeaderBlock)(UITableView * _Nullable tableView,NSInteger section, id _Nullable object);
+typedef NSString* _Nullable (^titleForFooterBlock)(UITableView * _Nullable tableView,NSInteger section, id _Nullable object);
 #pragma mark - Inserting or Deleting table rows
-typedef void(^commitEditingStyleBlock)(UITableView * _Nullable tableView,UITableViewCellEditingStyle  editingStyle, NSIndexPath *_Nullable indexPath);
-typedef BOOL(^canEditRowBlock)(UITableView* _Nullable tableView,NSIndexPath *_Nullable indexPath);
+typedef void(^commitEditingStyleBlock)(UITableView * _Nullable tableView, UITableViewCellEditingStyle  editingStyle, NSIndexPath *_Nullable indexPath, id _Nullable object);
+typedef BOOL(^canEditRowBlock)(UITableView* _Nullable tableView, NSIndexPath *_Nullable indexPath, id _Nullable object);
 #pragma mark  - Recording Table Rows
-typedef BOOL(^canMoveRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath);
+typedef BOOL(^canMoveRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath, id _Nullable object);
 typedef void(^moveRowAtIndexPathBlock)(UITableView * _Nullable tableView, NSIndexPath * _Nullable sourceIndexPath, NSIndexPath *_Nullable destinationIndexPath);
 
 
 #pragma ark  - Delegate
 #pragma mark - select protocal
-typedef NSIndexPath*_Nullable(^willSelectRowBlock)(UITableView * _Nullable tableView, NSIndexPath * _Nullable indexPath,id _Nullable object);
-typedef void(^didSelectRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath,id _Nullable object);
-typedef NSIndexPath* _Nullable(^willDeselectRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath,id _Nullable object);
-typedef void(^didDeselectRowBlock)(UITableView * _Nullable tableView, NSIndexPath * _Nullable indexPath,id _Nullable object);
+typedef NSIndexPath*_Nullable(^willSelectRowBlock)(UITableView * _Nullable tableView, NSIndexPath * _Nullable indexPath, id _Nullable object);
+typedef void(^didSelectRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath, id _Nullable object);
+typedef NSIndexPath* _Nullable(^willDeselectRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath, id _Nullable object);
+typedef void(^didDeselectRowBlock)(UITableView * _Nullable tableView, NSIndexPath * _Nullable indexPath, id _Nullable object);
 
 #pragma mark - Configuring Rows for the Table View
 
-typedef CGFloat(^heightForRowBlock)(UITableView * _Nullable tableView,NSIndexPath  * _Nullable indexPath);
-typedef CGFloat(^estimatedHeightForRowBlock)(UITableView * _Nullable tableView,NSIndexPath  * _Nullable indexPath);
-typedef NSInteger(^indentationLevelForRowBlock)(UITableView * _Nullable tableView,NSIndexPath *_Nullable indexPath);
-typedef void(^willDisplayCellForRowBlock)(UITableView* _Nullable tableView,UITableViewCell * _Nullable cell,NSIndexPath * _Nullable indexPath,id _Nullable object);
+typedef CGFloat(^heightForRowBlock)(UITableView * _Nullable tableView,NSIndexPath  * _Nullable indexPath, id _Nullable object);
+typedef CGFloat(^estimatedHeightForRowBlock)(UITableView * _Nullable tableView,NSIndexPath  * _Nullable indexPath, id _Nullable object);
+typedef NSInteger(^indentationLevelForRowBlock)(UITableView * _Nullable tableView,NSIndexPath *_Nullable indexPath, id _Nullable object);
+typedef void(^willDisplayCellForRowBlock)(UITableView* _Nullable tableView,UITableViewCell * _Nullable cell,NSIndexPath * _Nullable indexPath, id _Nullable object);
 
 
 #pragma mark - Managing Accessory Views
 
-typedef NSArray<UITableViewRowAction*>*_Nullable(^editActionsForRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath);
-typedef void(^accessoryButtonTappedForRowBlock)(UITableView * _Nullable tableview ,NSIndexPath * _Nullable indexPath);
+typedef NSArray<UITableViewRowAction*>*_Nullable(^editActionsForRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath, id _Nullable object);
+typedef void(^accessoryButtonTappedForRowBlock)(UITableView * _Nullable tableview ,NSIndexPath * _Nullable indexPath, id _Nullable object);
 
 #pragma mark - Modifying the Header and Footer of Sections
 
-typedef UIView* _Nullable (^viewForHeaderBlock)(UITableView * _Nullable tableView,NSInteger section);
-typedef UIView* _Nullable (^viewForFooterBlock)(UITableView * _Nullable tableView,NSInteger section);
+typedef UIView* _Nullable (^viewForHeaderBlock)(UITableView * _Nullable tableView, NSInteger section, id _Nullable object);
+typedef UIView* _Nullable (^viewForFooterBlock)(UITableView * _Nullable tableView, NSInteger section, id _Nullable object);
 
-typedef CGFloat(^heightForHeaderBlock)(UITableView * _Nullable tableView,NSInteger section);
-typedef CGFloat(^heightForFooterBlock)(UITableView * _Nullable tableView,NSInteger section);
+typedef CGFloat(^heightForHeaderBlock)(UITableView * _Nullable tableView, NSInteger section, id _Nullable object);
+typedef CGFloat(^heightForFooterBlock)(UITableView * _Nullable tableView, NSInteger section, id _Nullable object);
 
-typedef CGFloat(^estimatedHeightForHeaderBlock)(UITableView * _Nullable tableView,NSInteger section);
-typedef CGFloat(^estimatedHeightForFooterBlock)(UITableView * _Nullable tableView,NSInteger section);
+typedef CGFloat(^estimatedHeightForHeaderBlock)(UITableView * _Nullable tableView, NSInteger section, id _Nullable object);
+typedef CGFloat(^estimatedHeightForFooterBlock)(UITableView * _Nullable tableView, NSInteger section, id _Nullable object);
 
-typedef void(^willDisplayHeaderBlock)(UITableView * _Nullable tableView, UIView * _Nullable view ,NSInteger section);
-typedef void(^willDisplayFooterBlock)(UITableView * _Nullable tableView, UIView * _Nullable view ,NSInteger section);
+typedef void(^willDisplayHeaderBlock)(UITableView * _Nullable tableView, UIView * _Nullable view ,NSInteger section, id _Nullable object);
+typedef void(^willDisplayFooterBlock)(UITableView * _Nullable tableView, UIView * _Nullable view ,NSInteger section, id _Nullable object);
 
 
 
 #pragma mark - Editing Table Rows
 
-typedef void(^willBeginEditingRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath);
-typedef void(^didEndEditingRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath);
+typedef void(^willBeginEditingRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath, id _Nullable object);
+typedef void(^didEndEditingRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath, id _Nullable object);
 
-typedef UITableViewCellEditingStyle(^editingStyleForRowBlock)(UITableView * _Nullable tableView ,NSIndexPath * _Nullable indexPath);
-typedef NSString*_Nullable(^titleForDeleteConfirmationButtonForRowBlock)(UITableView* _Nullable tableView, NSIndexPath * _Nullable indexPath);
+typedef UITableViewCellEditingStyle(^editingStyleForRowBlock)(UITableView * _Nullable tableView ,NSIndexPath * _Nullable indexPath, id _Nullable object);
+typedef NSString*_Nullable(^titleForDeleteConfirmationButtonForRowBlock)(UITableView* _Nullable tableView, NSIndexPath * _Nullable indexPath, id _Nullable object);
 
-typedef BOOL(^shouldIndentWhileEditingRowBlock)(UITableView* _Nullable tableView ,NSIndexPath * _Nullable indexPath);
+typedef BOOL(^shouldIndentWhileEditingRowBlock)(UITableView* _Nullable tableView ,NSIndexPath * _Nullable indexPath, id _Nullable object);
 
 #pragma mark - Reordering Table Rows
 
@@ -77,24 +85,24 @@ typedef NSIndexPath* _Nullable (^targetIndexPathForMoveFromRowAtIndexPathBlock)(
 
 #pragma mark  - Tracking the Removal of Views
 typedef void(^didEndDisplayingCellBlock)(UITableView * _Nullable tableView,UITableViewCell* _Nullable cell ,NSIndexPath * _Nullable indexPath ,id _Nullable object);
-typedef void(^didEndDisplayingHeaderViewBlock)(UITableView * _Nullable tableView ,UIView* _Nullable view ,NSInteger  section);
-typedef void(^didEndDisplayingFooterViewBlock)(UITableView * _Nullable tableView ,UIView* _Nullable view ,NSInteger  section);
+typedef void(^didEndDisplayingHeaderViewBlock)(UITableView * _Nullable tableView ,UIView* _Nullable view ,NSInteger  section, id _Nullable object);
+typedef void(^didEndDisplayingFooterViewBlock)(UITableView * _Nullable tableView ,UIView* _Nullable view ,NSInteger  section, id _Nullable object);
 
 #pragma mark - Copying and Pasting Row content
 
-typedef BOOL(^shouldShowMenuForRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath);
+typedef BOOL(^shouldShowMenuForRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath, id _Nullable object);
 typedef BOOL(^canPerformActionForRowBlock)(UITableView* _Nullable tableView ,SEL _Nullable action, NSIndexPath * _Nullable indexPath, id _Nullable sender);
 typedef void(^performActionForRowBlock)(UITableView * _Nullable tableView,SEL _Nullable action,NSIndexPath * _Nullable indexPath,id _Nullable sender);
 
 #pragma mark - Managing Table View Highlighting
 
-typedef BOOL(^shouldHighlightRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath);
-typedef void(^didHighlightRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath);
-typedef void(^didUnhighlightRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath);
+typedef BOOL(^shouldHighlightRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath, id _Nullable object);
+typedef void(^didHighlightRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath, id _Nullable object);
+typedef void(^didUnhighlightRowBlock)(UITableView * _Nullable tableView,NSIndexPath * _Nullable indexPath, id _Nullable object);
 
 #pragma mark - Managing Table View Focus
 
-typedef BOOL(^canFocusRowBlock)(UITableView* _Nullable tableview,NSIndexPath * _Nullable indexPath);
+typedef BOOL(^canFocusRowBlock)(UITableView* _Nullable tableview,NSIndexPath * _Nullable indexPath, id _Nullable object);
 typedef BOOL(^shouldUpdateFocusBlock)(UITableView* _Nullable tableView, UITableViewFocusUpdateContext * _Nullable context) NS_AVAILABLE_IOS(9_0);
 typedef void(^didUpdateFocusBlock)(UITableView* _Nullable tableView ,UITableViewFocusUpdateContext * _Nullable context,UIFocusAnimationCoordinator* _Nullable coordinator) NS_AVAILABLE_IOS(9_0);
 typedef NSIndexPath*_Nullable(^indexPathForPreferredFocusedViewBlock)(UITableView * _Nullable tableView);
@@ -106,7 +114,15 @@ typedef void(^prefetchRowsBlock)(UITableView* _Nullable tableView,NSArray<NSInde
 typedef void(^cancelPrefetchingForRowsBlock)(UITableView* _Nullable tableView,NSArray<NSIndexPath*>* _Nullable indexPaths);
 
 @interface TableViewArray : NSObject
+@property(nonatomic,copy,nullable) subArray subArray;
+
 #pragma mark  - dataSource
+// conflits with auto lisntener array. If implements these block, the TableView is auto connect with virtul data. can not be listener
+@property(nonatomic,copy,nullable) numberOfSectionsBlock numberOfSections;
+@property(nonatomic,copy,nullable) numberOfRowsInSectionBlock numberOfRowsInSection;
+@property(nonatomic,copy,nullable) getItemBlock getItem;
+@property(nonatomic,copy,nullable) getSectionBlock getSection;
+
 @property(nonatomic,copy,nonnull) cellforRowBlock   cellForRowAtIndexPath;
 @property(nonatomic,copy,nonnull) sectionIndexTitlesBlock  sectionIndexTitlesForTableView;
 @property(nonatomic,copy,nonnull) sectionForSectionIndexTitleBlock  sectionForSectionIndexTitleAtIndex;
@@ -185,10 +201,6 @@ typedef void(^cancelPrefetchingForRowsBlock)(UITableView* _Nullable tableView,NS
 #pragma mark - prefetching 
 @property(nonatomic,copy,nonnull) prefetchRowsBlock  prefetchRowsAtIndexPaths NS_AVAILABLE_IOS(10_0);
 @property(nonatomic,copy,nonnull) cancelPrefetchingForRowsBlock  cancelPrefetchingForRowsAtIndexPaths NS_AVAILABLE_IOS(10_0);
-
-    @property(nonatomic,assign)UITableViewStyle tableViewStyle;
-
-
 
 #pragma mark  - UIScrollViewDelegate
 @property(nonatomic,copy,nonnull) void (^scrollViewDidScroll)(UIScrollView * _Nonnull scrollView);

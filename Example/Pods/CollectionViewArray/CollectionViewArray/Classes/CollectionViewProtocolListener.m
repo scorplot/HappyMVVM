@@ -43,7 +43,21 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
     }
 }
 
-@implementation CollectionViewProtocolListener
+static void* keyArrayIndex;
+static void setArrayIndex(NSArray* arr, NSInteger index) {
+    objc_setAssociatedObject(arr, &keyArrayIndex, @(index), OBJC_ASSOCIATION_RETAIN);
+}
+static NSInteger getArrayIndex(NSArray* arr) {
+    NSNumber* number = objc_getAssociatedObject(arr, &keyArrayIndex);
+    if (number) {
+        return [number integerValue];
+    }
+    return NSNotFound;
+}
+
+@implementation CollectionViewProtocolListener{
+    BOOL _fakeArray;
+}
 +(void)load {
     Method method;
     method = class_getInstanceMethod([UICollectionView class], @selector(setDelegate:));
@@ -251,6 +265,34 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
     
     return [super respondsToSelector:aSelector];
 }
+
+-(id)getObject:(NSIndexPath*)indexPath {
+    id object = nil;
+    if (_fakeArray) {
+        object = _listener.getItem(indexPath.section, indexPath.row);
+    } else {
+        if (self.listener.subArray) {
+            object = self.listener.subArray(_dataSource, indexPath.section)[indexPath.row];
+        } else {
+            object = _dataSource[indexPath.row];
+        }
+    }
+    return object;
+}
+-(id)getSection:(NSUInteger)section {
+    id object = nil;
+    if (_fakeArray) {
+        object = _listener.getSection(section);
+    } else {
+        if (self.listener.subArray) {
+            object = _dataSource[section];
+        } else {
+            object = _dataSource;
+        }
+    }
+    return object;
+}
+
 #pragma mark  - UICollecionViewDataSourcePrefectching
 /* UICollecionView DataSource Prefectching 协议 */
 - (void)collectionView:(UICollectionView *)collectionView prefetchItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths{
@@ -265,34 +307,28 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 /* CollectionView Delegate Flowlayout 协议 */
 /*Getting the Header and Footer Sizes*/
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
-    return _listener.layoutReferenceSizeForFooterInSection(collectionView,collectionViewLayout,section);
+    return _listener.layoutReferenceSizeForFooterInSection(collectionView,collectionViewLayout,section,[self getSection:section]);
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-    return _listener.layoutReferenceSizeForHeaderInSection(collectionView,collectionViewLayout,section);
+    return _listener.layoutReferenceSizeForHeaderInSection(collectionView,collectionViewLayout,section,[self getSection:section]);
 }
 
 /*Getting the Section Spacing*/
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return _listener.minimumInteritemSpacingForSectionAtIndex(collectionView,collectionViewLayout,section);
+    return _listener.minimumInteritemSpacingForSectionAtIndex(collectionView,collectionViewLayout,section,[self getSection:section]);
 }
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    return _listener.minimumLineSpacingForSectionAtIndex(collectionView,collectionViewLayout,section);
+    return _listener.minimumLineSpacingForSectionAtIndex(collectionView,collectionViewLayout,section,[self getSection:section]);
 }
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return _listener.layoutInsetForSectionAtIndex(collectionView,collectionViewLayout,section);;
+    return _listener.layoutInsetForSectionAtIndex(collectionView,collectionViewLayout,section,[self getSection:section]);;
 }
 /*Getting the Size of Items*/
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    id object = nil;
-    if(_listener.collectionViewStyle == UICollectionViewStylePlain){
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    return _listener.sizeForItemAtIndexPath(collectionView,collectionViewLayout,indexPath,object);
+    return _listener.sizeForItemAtIndexPath(collectionView,collectionViewLayout,indexPath,[self getObject:indexPath]);
 }
 
 
@@ -309,21 +345,21 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
     return _listener.indexPathForPreferredFocusedViewInCollectionView(collectionView);
 }
 -(BOOL)collectionView:(UICollectionView *)collectionView canFocusItemAtIndexPath:(NSIndexPath *)indexPath{
-    return _listener.canFocusItemAtIndexPath(collectionView,indexPath);
+    return _listener.canFocusItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 
 
 /*Managing Actions for Cells*/
 -(void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender{
-    _listener.performActionForItemAtIndexPath(collectionView,action,indexPath,sender);
+    _listener.performActionForItemAtIndexPath(collectionView,action,indexPath,sender,[self getObject:indexPath]);
 }
 
 -(BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender{
-    return _listener.canPerformActionForItemAtIndexPath(collectionView,action,indexPath,sender);
+    return _listener.canPerformActionForItemAtIndexPath(collectionView,action,indexPath,sender,[self getObject:indexPath]);
 }
 
 -(BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return _listener.shouldShowMenuForItemAtIndexPath(collectionView,indexPath);
+    return _listener.shouldShowMenuForItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 
 /*Handling Layout Changes*/
@@ -340,86 +376,47 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 
 /*Tracking the Addition and Removal of Views*/
 -(void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath{
-    _listener.didEndDisplayingSupplementaryViewForElementKindAtIndexPath(collectionView,view,elementKind,indexPath);
+    _listener.didEndDisplayingSupplementaryViewForElementKindAtIndexPath(collectionView,view,elementKind,indexPath,[self getObject:indexPath]);
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
-    id object = nil;
-    if (_listener.collectionViewStyle == UICollectionViewStylePlain){
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-        
-    }
-    
-    _listener.didEndDisplayingCellForItemAtIndexPath(collectionView,cell,indexPath,object);
+    _listener.didEndDisplayingCellForItemAtIndexPath(collectionView,cell,indexPath,[self getObject:indexPath]);
 }
 -(void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath{
-    _listener.wilDisplaySupplementaryViewForElementKindAtIndexPath(collectionView,view,elementKind,indexPath);
+    _listener.wilDisplaySupplementaryViewForElementKindAtIndexPath(collectionView,view,elementKind,indexPath,[self getObject:indexPath]);
 }
 
 -(void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
-    id object = nil;
-    if (_listener.collectionViewStyle == UICollectionViewStylePlain){
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-        
-    }
-    _listener.willDisplayCellForItemAtIndexPath(collectionView,cell,indexPath,object);
+    _listener.willDisplayCellForItemAtIndexPath(collectionView,cell,indexPath,[self getObject:indexPath]);
 }
 
 /*Managing Cell Highlighting */
 -(void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath{
-    _listener.didUnhighlightItemAtIndexPath(collectionView,indexPath);
+    _listener.didUnhighlightItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath{
-    _listener.didHighlightItemAtIndexPath(collectionView,indexPath);
+    _listener.didHighlightItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 
 -(BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath{
-    return _listener.shouldHighlightItemAtIndexPath(collectionView,indexPath);
+    return _listener.shouldHighlightItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 
 /* Managing the Selected Cells */
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
-    id object = nil;
-    if (_listener.collectionViewStyle == UICollectionViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    _listener.didDeselectItemAtIndexPath(collectionView,indexPath,object);
+    _listener.didDeselectItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 -(BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
-    id object = nil;
-    if (_listener.collectionViewStyle == UICollectionViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    return _listener.shouldDeselectItemAtIndexPath(collectionView,indexPath,object);
+    return _listener.shouldDeselectItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    id object = nil;
-    if (_listener.collectionViewStyle == UICollectionViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    _listener.didSelectItemAtIndexPath(collectionView,indexPath,object);
+    _listener.didSelectItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 
 -(BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    id object = nil;
-    if (_listener.collectionViewStyle == UICollectionViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    return _listener.shouldSelectItemAtIndexPath(collectionView,indexPath,object);
+    return _listener.shouldSelectItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 
 /* CollectionView DataSource 协议 */
@@ -440,20 +437,21 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 }
 
 -(BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath{
-    return _listener.canMoveItemAtIndexPath(collectionView,indexPath);
+    return _listener.canMoveItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 
 
 /* Getting views for Items */
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-    return _listener.viewForSupplementaryElementOfKindatIndexPath(collectionView,kind,indexPath);
+    return _listener.viewForSupplementaryElementOfKindatIndexPath(collectionView,kind,indexPath,[self getObject:indexPath]);
 }
 
 
 #pragma mark - set Property methods
 -(void)setListener:(CollectionViewArray *)binder{
     _listener = binder;
-    
+    _fakeArray = _listener.numberOfGroups != nil;
+
     /* Getting Views for Items */
     NSAssert(!checkCircleReference(binder.cellForItemAtIndexPath, binder), @"raise a block circle reference");
     NSAssert(!checkCircleReference(binder.viewForSupplementaryElementOfKindatIndexPath, binder), @"raise a block circle reference");
@@ -525,68 +523,45 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
     
 }
 -(void)setDataSource:(NSArray *)dataSource{
-    if (_dataSource != dataSource) {
-        if ([_dataSource isKindOfClass:[NSMutableArray class]]) {
-            [self removeDatasourceObserver];
+    if (!_fakeArray) {
+        if (_dataSource!=dataSource) {
+            [self removeObserver];
         }
-    }
-    _dataSource  = dataSource;
-    // 监视数组变化
-    if ([self.dataSource isKindOfClass:[NSMutableArray class]]) {
-        [self addObserverForDataSource:(NSMutableArray*)self.dataSource];
-        if (_listener.collectionViewStyle ==UICollectionViewStyleGrouped) {
-            for (NSMutableArray * arry in self.dataSource) {
-                if ([arry isKindOfClass:[NSMutableArray class]]) {
-                    [self addObserverForDataSource:arry];
-                }
-            }
-        }
-    }
-}
--(void)removeDatasourceObserver{
-    for (MutableArrayListener * observer in self.observerArray) {
-        [ (NSMutableArray*)self.dataSource removeListener:observer];
-        for (NSMutableArray * subarray in self.dataSource) {
-            if ([subarray isKindOfClass:[NSMutableArray class]]) {
-                [subarray removeListener:observer];
-            }
-        }
-    }
-    [self.observerArray removeAllObjects];
-}
-
--(void)addObserverForDataSource:(NSMutableArray *)array{
-    // 监视数组变化 一组数组与二维数组的变化
-    MutableArrayListener * listener = [[MutableArrayListener alloc]init];
-    
-    typeof(self) __weak weakself = self;
-    BOOL isGrouped = _listener.collectionViewStyle == UICollectionViewStyleGrouped;
-    listener.didChanged = ^(NSMutableArray *array) {
-        //数组改变
-        if (array == weakself.dataSource) {
-            [weakself.collectionView reloadData];
-            [weakself removeDatasourceObserver];
-            [weakself addObserverForDataSource:(NSMutableArray*)weakself.dataSource];
-            for (NSMutableArray * subarray in weakself.dataSource) {
-                if ([subarray isKindOfClass:[NSMutableArray class]]) {
-                    [weakself addObserverForDataSource:subarray];
-                }
-            }
-        }else{
-            NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
-            [weakself.collectionView reloadSections:[NSIndexSet indexSetWithIndex:section]];
-        }
-    };
-    
-    listener.didAddObjects = ^(NSMutableArray *array, NSArray *objects, NSIndexSet *indexes) {
-        //        数组加了多个元素
-        if (array == weakself.dataSource) {
-            if (isGrouped) {
-                [weakself.collectionView insertSections:indexes];
-                for (NSMutableArray * subArray in objects) {
+        _dataSource = dataSource;
+        
+        if ([dataSource isKindOfClass:[NSMutableArray class]]) {
+            [self addObserverForDataSource:(NSMutableArray*)self.dataSource];
+            if (_listener.subArray) {
+                for (NSInteger i = 0; i < self.dataSource.count; i++) {
+                    NSArray* subArray = _listener.subArray(_dataSource, i);
                     if ([subArray isKindOfClass:[NSMutableArray class]]) {
-                        [weakself addObserverForDataSource:subArray];
+                        [self addObserverForDataSource:(NSMutableArray*)subArray];
+                        setArrayIndex(subArray, i);
                     }
+                }
+            }
+        }
+    }
+}
+-(void)addObserverForDataSource:(NSMutableArray *)array{
+    BOOL isGroup = _listener.subArray != nil;
+    typeof(self)__weak weakself = self;
+    typeof(_listener.subArray)__weak weakSubArray = _listener.subArray;
+    
+    MutableArrayListener *observer = [[MutableArrayListener alloc]init];
+    observer.didAddObjects = ^(NSMutableArray *array, NSArray *objects, NSIndexSet *indexes) {
+        if (array == weakself.dataSource) {
+            if (isGroup) {
+                [weakself.collectionView insertSections:indexes];
+                typeof(_listener.subArray) strongSubArray = weakSubArray;
+                if (strongSubArray) {
+                    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+                        NSArray* subArray = strongSubArray(array, idx);
+                        if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                            [weakself addObserverForDataSource:(NSMutableArray*)subArray];
+                            setArrayIndex(subArray, idx);
+                        }
+                    }];
                 }
             }else{
                 NSMutableArray * indexPaths = [NSMutableArray array];
@@ -600,7 +575,7 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
                 }
             }
         }else{
-            NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
+            NSInteger section = getArrayIndex(array);
             NSMutableArray * indexPaths = [NSMutableArray array];
             [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                 [indexPaths addObject:[NSIndexPath indexPathForItem:idx inSection:section]];
@@ -612,12 +587,17 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
             }
         }
     };
-    
-    listener.didDeleteObjects = ^(NSMutableArray *array, NSArray *objects, NSIndexSet *indexes) {
+    observer.didDeleteObjects = ^(NSMutableArray *array, NSArray *objects, NSIndexSet *indexes) {
         //        数组删除了多个元素
         if (array == weakself.dataSource) {
-            if (isGrouped) {
+            if (isGroup) {
                 [weakself.collectionView deleteSections:indexes];
+                for (NSInteger i = 0; i < array.count; i++) {
+                    NSArray* subArray = weakSubArray(array, i);
+                    if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                        setArrayIndex(subArray, i);
+                    }
+                }
             }else{
                 NSMutableArray * indexPaths = [NSMutableArray array];
                 [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
@@ -626,7 +606,7 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
                 [weakself.collectionView deleteItemsAtIndexPaths:indexPaths];
             }
         }else{
-            NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
+            NSInteger section = getArrayIndex(array);
             NSMutableArray * indexPaths = [NSMutableArray array];
             [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                 [indexPaths addObject:[NSIndexPath indexPathForItem:idx inSection:section]];
@@ -634,26 +614,18 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
             [weakself.collectionView deleteItemsAtIndexPaths:indexPaths];
         }
     };
-    listener.didReplaceObject = ^(NSMutableArray *array, id anObject, id withObject, NSUInteger index) {
-        //        数组中一个元素替换了
-        if (array == weakself.dataSource) {
-            if (isGrouped) {
-                [weakself.collectionView reloadSections:[NSIndexSet indexSetWithIndex:index]];
-                if ([withObject isKindOfClass:[NSMutableArray class]]) {
-                    [weakself addObserverForDataSource:withObject];
-                }
-            }else{
-                [weakself.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-            }
-        }else{
-            NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
-            [weakself.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:section]]];
-        }
-    };
-    listener.didExchangeIndex = ^(NSMutableArray *array, NSUInteger index1, NSUInteger index2) {
+    observer.didExchangeIndex = ^(NSMutableArray *array, NSUInteger index1, NSUInteger index2) {
         //        数组中元素交换了位置
         if (array == weakself.dataSource) {
-            if (isGrouped) {
+            if (isGroup) {
+                NSArray* subArray = weakSubArray(array, index1);
+                if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                    setArrayIndex(subArray, index1);
+                }
+                subArray = weakSubArray(array, index2);
+                if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                    setArrayIndex(subArray, index2);
+                }
                 [weakself.collectionView performBatchUpdates:^{
                     [weakself.collectionView moveSection:index1 toSection:index2];
                     [weakself.collectionView moveSection:index2 toSection:index1];
@@ -667,7 +639,6 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
                 } completion:^(BOOL finished) {
                     
                 }];
-                
             }
         }else{
             NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
@@ -679,39 +650,94 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
             }];
         }
     };
-    [array addListener:listener];
-    [self.observerArray addObject:listener];
+    observer.didReplaceObject = ^(NSMutableArray *array, id anObject, id withObject, NSUInteger index) {
+        //        数组中一个元素替换了
+        if (array == weakself.dataSource) {
+            if (isGroup) {
+                [weakself.collectionView reloadSections:[NSIndexSet indexSetWithIndex:index]];
+                typeof(_listener.subArray) strongSubArray = weakSubArray;
+                if (strongSubArray) {
+                    NSArray* subArray = strongSubArray(array, index);
+                    if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                        [weakself addObserverForDataSource:(NSMutableArray*)subArray];
+                        setArrayIndex(subArray, index);
+                    }
+                }
+            }else{
+                [weakself.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
+            }
+        }else{
+            NSInteger section = getArrayIndex(array);
+            [weakself.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:section]]];
+        }
+    };
+    observer.didChanged = ^(NSMutableArray *array) {
+        if (array == weakself.dataSource) {
+            [weakself.collectionView reloadData];
+            [weakself removeObserver];
+            [weakself addObserverForDataSource:(NSMutableArray*)weakself.dataSource];
+            typeof(_listener.subArray) strongSubArray = weakSubArray;
+            if (strongSubArray) {
+                for (NSInteger i = 0; i < weakself.dataSource.count; i++) {
+                    NSArray* subArray = strongSubArray(weakself.dataSource, i);
+                    if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                        [weakself addObserverForDataSource:(NSMutableArray*)subArray];
+                        setArrayIndex(subArray, i);
+                    }
+                }
+            }
+        }else{
+            NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
+            [weakself.collectionView reloadSections:[NSIndexSet indexSetWithIndex:section]];
+        }
+    };
+    [array addListener:observer];
+    [self.observerArray addObject:observer];
 }
-
+-(void)removeObserver{
+    for (MutableArrayListener * obs in self.observerArray) {
+        [(NSMutableArray*)self.dataSource removeListener:obs];
+        if (_listener.subArray) {
+            for (NSInteger i = 0; i < _dataSource.count; i++) {
+                NSArray* subArray = _listener.subArray(_dataSource, i);
+                if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                    for (MutableArrayListener * obs in self.observerArray) {
+                        [(NSMutableArray*)subArray removeListener:obs];
+                    }
+                }
+            }
+        }
+    }
+    [self.observerArray removeAllObjects];
+}
 
 
 #pragma mark  - CollectionView DataSource  require
 /* CollectionView DataSource 协议 */
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    if (_listener.collectionViewStyle == UICollectionViewStylePlain) {
-        return _dataSource.count;
-    }else{
-        return [_dataSource[section] count];
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    if (_fakeArray) {
+        return _listener.numberOfGroups(collectionView);
+    } else {
+        if (_listener.subArray) {
+            return _dataSource.count;
+        } else {
+            return 1;
+        }
     }
 }
-
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    if (_listener.collectionViewStyle == UICollectionViewStylePlain) {
-        return 1;
-    }else{
-        return _dataSource.count;
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    if (_fakeArray) {
+        return _listener.numberOfRowsInGroup(collectionView, section);
+    } else {
+        if (self.listener.subArray) {
+            return self.listener.subArray(_dataSource, section).count;
+        } else {
+            return _dataSource.count ;
+        }
     }
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSAssert(self.listener.cellForItemAtIndexPath, @"cellForItemAtIndexPath block must not be nil");
-    id object = nil;
-    if (_listener.collectionViewStyle == UICollectionViewStylePlain){
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-        
-    }
-    return self.listener.cellForItemAtIndexPath(collectionView,indexPath,object);
+    return self.listener.cellForItemAtIndexPath(collectionView,indexPath,[self getObject:indexPath]);
 }
 
 #pragma mark - UIScrollView Delegate

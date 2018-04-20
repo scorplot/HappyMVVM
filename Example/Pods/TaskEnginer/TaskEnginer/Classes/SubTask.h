@@ -9,9 +9,10 @@
 
 @class TaskRoute;
 @interface SubTask : NSObject
-@property (nonatomic, strong, readonly) id<NSObject> context; // context
+@property (nonatomic, strong, readonly) id context; // context
 @property (nonatomic, weak, readonly) TaskRoute* task;
 @property (nonatomic, strong) id result; // result
+@property (nonatomic, strong, readonly) NSError* error; // error
 
 @property (nonatomic, readonly) NSTimeInterval beginTime; // beginTime
 @property (nonatomic, readonly) NSTimeInterval endTime; // endTime

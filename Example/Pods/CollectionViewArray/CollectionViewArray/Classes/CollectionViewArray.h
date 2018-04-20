@@ -10,20 +10,23 @@
 
 @class CollectionViewArray;
 
-typedef NS_ENUM(NSInteger, UICollectionViewStyle) {
-    UICollectionViewStylePlain,          // regular collection view
-    UICollectionViewStyleGrouped         // preferences style collection view
-};
+#pragma mark  - the picker of array
+typedef NSArray* (^subArray)(NSArray* all, NSInteger index);
 
-void CollectionViewConnectArray(UICollectionView * _Nonnull collectionView ,NSArray<NSObject*>* _Nonnull dataSource,CollectionViewArray * _Nonnull listener);
+void CollectionViewConnectArray(UICollectionView * _Nonnull collectionView ,NSArray<NSObject*>* _Nullable dataSource,CollectionViewArray * _Nonnull listener);
 
 #pragma mark  - CollectionView DataSource
+typedef NSInteger (^numberOfGroupsBlock)(UICollectionView *collectionView);
+typedef NSInteger (^numberOfRowsInGroupBlock)(UICollectionView *collectionView, NSInteger section);
+typedef id (^getItemBlock)(NSInteger section, NSInteger row);
+typedef id (^getSectionBlock)(NSInteger section);
+
 typedef __kindof UICollectionViewCell * _Nonnull (^cellForItemBlock)(UICollectionView* _Nonnull collectionView,NSIndexPath * _Nonnull indexPath,id _Nullable object);
 
-typedef UICollectionReusableView*_Nonnull(^viewForSupplementaryElementOfKindBlock)(UICollectionView * _Nonnull collectionView,NSString * _Nonnull kind ,NSIndexPath * _Nonnull indexPath);
+typedef UICollectionReusableView*_Nonnull(^viewForSupplementaryElementOfKindBlock)(UICollectionView * _Nonnull collectionView,NSString * _Nonnull kind ,NSIndexPath * _Nonnull indexPath,id _Nullable object);
 
 /* Reordering Items */
-typedef BOOL(^canMoveItemBlock)(UICollectionView* _Nonnull collectionView,NSIndexPath* _Nonnull indexPath);
+typedef BOOL(^canMoveItemBlock)(UICollectionView* _Nonnull collectionView,NSIndexPath* _Nonnull indexPath,id _Nullable object);
 typedef void(^moveItemAtIndexPathBlock)(UICollectionView* _Nonnull collectionView,NSIndexPath* _Nonnull sourceIndexPath,NSIndexPath* _Nonnull destinationIndexPath);
 
 /* Instance Methods */
@@ -39,15 +42,15 @@ typedef BOOL(^shouldDeselectItemBlock)(UICollectionView* _Nonnull collectionView
 typedef void(^didDeselectItemBlock)(UICollectionView * _Nonnull collectionView,NSIndexPath * _Nonnull indexPath,id _Nullable object);
 
 /*Mananing cell Highting */
-typedef BOOL(^shouldHiglightItemBlock)(UICollectionView * _Nonnull collectionView,NSIndexPath * _Nonnull indexPath);
-typedef void(^didHighlightItemBlock)(UICollectionView * _Nonnull collectionView ,NSIndexPath * _Nonnull indexPath);
-typedef void(^didUnhighlightItemBlock)(UICollectionView *_Nonnull collectionView,NSIndexPath *_Nonnull indexPath);
+typedef BOOL(^shouldHiglightItemBlock)(UICollectionView * _Nonnull collectionView,NSIndexPath * _Nonnull indexPath,id _Nullable object);
+typedef void(^didHighlightItemBlock)(UICollectionView * _Nonnull collectionView ,NSIndexPath * _Nonnull indexPath,id _Nullable object);
+typedef void(^didUnhighlightItemBlock)(UICollectionView *_Nonnull collectionView,NSIndexPath *_Nonnull indexPath,id _Nullable object);
 
 /*Tracking the addition adn removal of views*/
 typedef void(^willDisplayCellForItemBlock)(UICollectionView* _Nonnull collectionView,UICollectionViewCell* _Nonnull cell ,NSIndexPath * _Nonnull indexPath,id _Nullable object);
-typedef void(^wilDisplaySupplementaryViewForElementKindBlock)(UICollectionView* _Nonnull collectionView,UICollectionReusableView*_Nonnull view,NSString* _Nonnull elementKind,NSIndexPath* _Nonnull indexPath);
+typedef void(^wilDisplaySupplementaryViewForElementKindBlock)(UICollectionView* _Nonnull collectionView,UICollectionReusableView*_Nonnull view,NSString* _Nonnull elementKind,NSIndexPath* _Nonnull indexPath,id _Nullable object);
 typedef void(^didEndDisplayingCellForItemBlock)(UICollectionView * _Nonnull collectionView,UICollectionViewCell* _Nonnull cell,NSIndexPath * _Nonnull indexPath,id _Nullable object);
-typedef void(^didEndDisplayingSupplementaryViewForElementKindBlock)(UICollectionView * _Nonnull collectionView,UICollectionReusableView*_Nonnull view,NSString* _Nonnull elementKind,NSIndexPath *_Nonnull indexPath);
+typedef void(^didEndDisplayingSupplementaryViewForElementKindBlock)(UICollectionView * _Nonnull collectionView,UICollectionReusableView*_Nonnull view,NSString* _Nonnull elementKind,NSIndexPath *_Nonnull indexPath,id _Nullable object);
 
 /*Handing layout Changes*/
 typedef UICollectionViewTransitionLayout*_Nonnull(^transitionLayoutForOldLayoutBlock)(UICollectionView * _Nonnull collectionView,UICollectionViewLayout* _Nonnull fromLayout,UICollectionViewLayout * _Nonnull toLayout);
@@ -55,12 +58,12 @@ typedef CGPoint(^targetContentOffsetForProposedContentOffsetBlock)(UICollectionV
 typedef NSIndexPath*_Nonnull(^targetIndexPathForMoveFromItemAtIndexPathBlock)(UICollectionView * _Nonnull collectionView,NSIndexPath *_Nonnull originalIndexPath,NSIndexPath*_Nonnull proposedIndexPath);
 
 /*manaing actions of Cells*/
-typedef BOOL(^shouldShowMenuForItemBlock)(UICollectionView *_Nonnull collectionView,NSIndexPath *_Nonnull indexPath);
-typedef BOOL(^canPerformActionForItemBlock)(UICollectionView * _Nonnull collectionView,SEL _Nonnull action,NSIndexPath*_Nonnull indexPath,id _Nonnull sender);
-typedef void(^performActionForItemBlock)(UICollectionView * _Nonnull collectionView,SEL _Nonnull action,NSIndexPath*_Nonnull indexPath,id _Nonnull sender);
+typedef BOOL(^shouldShowMenuForItemBlock)(UICollectionView *_Nonnull collectionView,NSIndexPath *_Nonnull indexPath,id _Nullable object);
+typedef BOOL(^canPerformActionForItemBlock)(UICollectionView * _Nonnull collectionView,SEL _Nonnull action,NSIndexPath*_Nonnull indexPath,id _Nonnull sender,id _Nullable object);
+typedef void(^performActionForItemBlock)(UICollectionView * _Nonnull collectionView,SEL _Nonnull action,NSIndexPath*_Nonnull indexPath,id _Nonnull sender,id _Nullable object);
 
 /*Managing focus in a Collection view*/
-typedef BOOL(^canFocusItemBlock)(UICollectionView *_Nonnull collectionView,NSIndexPath *_Nonnull indexPath);
+typedef BOOL(^canFocusItemBlock)(UICollectionView *_Nonnull collectionView,NSIndexPath *_Nonnull indexPath,id _Nullable object);
 typedef NSIndexPath*_Nonnull(^indexPathForPreferredFocusedViewInCollectionView)(UICollectionView *_Nonnull collectionView);
 typedef BOOL(^shouldUpdateFocusInContextBlock)(UICollectionView* _Nonnull collectionView,UICollectionViewFocusUpdateContext *_Nonnull context)NS_AVAILABLE_IOS(9_0);
 typedef void(^didUpdateFocusInContextBlock)(UICollectionView* _Nonnull collectionView,UICollectionViewFocusUpdateContext *_Nonnull context,UIFocusAnimationCoordinator *_Nonnull coordinator)NS_AVAILABLE_IOS(9_0);
@@ -71,13 +74,13 @@ typedef void(^didUpdateFocusInContextBlock)(UICollectionView* _Nonnull collectio
 typedef CGSize(^layoutSizeForItemBlock)(UICollectionView* _Nonnull collectionView,UICollectionViewLayout*_Nonnull collectionViewLayout,NSIndexPath*_Nonnull indexPath,id _Nullable object);
 
 /* Getting the Section Spacing */
-typedef UIEdgeInsets(^layoutInsetForSectionBlock)(UICollectionView*_Nonnull collectionView,UICollectionViewLayout* _Nonnull collectionViewLayout,NSInteger section);
-typedef CGFloat(^layoutminimumLineSpacingForSectionBlock)(UICollectionView*_Nonnull collectionView,UICollectionViewLayout* _Nonnull collectionViewLayout,NSInteger section);
-typedef CGFloat(^layoutminimumInteritemSpacingForSectionBlock)(UICollectionView*_Nonnull collectionView,UICollectionViewLayout* _Nonnull collectionViewLayout,NSInteger section);
+typedef UIEdgeInsets(^layoutInsetForSectionBlock)(UICollectionView*_Nonnull collectionView,UICollectionViewLayout* _Nonnull collectionViewLayout,NSInteger section,id _Nullable object);
+typedef CGFloat(^layoutminimumLineSpacingForSectionBlock)(UICollectionView*_Nonnull collectionView,UICollectionViewLayout* _Nonnull collectionViewLayout,NSInteger section,id _Nullable object);
+typedef CGFloat(^layoutminimumInteritemSpacingForSectionBlock)(UICollectionView*_Nonnull collectionView,UICollectionViewLayout* _Nonnull collectionViewLayout,NSInteger section,id _Nullable object);
 
 /*Getting the Header and Footer Sizes*/
-typedef CGSize(^layoutReferenceSizeForHeaderBlock)(UICollectionView*_Nonnull collectionView,UICollectionViewLayout* _Nonnull collectionViewLayout,NSInteger section);
-typedef CGSize(^layoutReferenceSizeForFooterBlock)(UICollectionView*_Nonnull collectionView,UICollectionViewLayout* _Nonnull collectionViewLayout,NSInteger section);
+typedef CGSize(^layoutReferenceSizeForHeaderBlock)(UICollectionView*_Nonnull collectionView,UICollectionViewLayout* _Nonnull collectionViewLayout,NSInteger section,id _Nullable object);
+typedef CGSize(^layoutReferenceSizeForFooterBlock)(UICollectionView*_Nonnull collectionView,UICollectionViewLayout* _Nonnull collectionViewLayout,NSInteger section,id _Nullable object);
 
 
 #pragma mark  - UICollecionViewDataSourcePrefectching
@@ -87,10 +90,16 @@ typedef void(^prefetchItemsBlock)(UICollectionView* _Nonnull collectionView,NSAr
 typedef void(^cancelPrefetchingForItemsBlock)(UICollectionView* _Nonnull collectionView,NSArray<NSIndexPath*>* _Nonnull indexPaths);
 
 @interface CollectionViewArray : NSObject
+@property(nonatomic,copy,nullable) subArray subArray;
 
-@property(nonatomic,assign) UICollectionViewStyle collectionViewStyle;
 
 #pragma mark  - CollectionView DataSource
+// conflits with auto lisntener array. If implements these block, the TableView is auto connect with virtul data. can not be listener
+@property(nonatomic,copy,nullable) numberOfGroupsBlock numberOfGroups;
+@property(nonatomic,copy,nullable) numberOfRowsInGroupBlock numberOfRowsInGroup;
+@property(nonatomic,copy,nullable) getItemBlock getItem;
+@property(nonatomic,copy,nullable) getSectionBlock getSection;
+
 /* CollectionView DataSource protocal block*/
 /* Getting Views for Items */
 @property(nonatomic,copy,nonnull) cellForItemBlock  cellForItemAtIndexPath;
@@ -174,8 +183,5 @@ typedef void(^cancelPrefetchingForItemsBlock)(UICollectionView* _Nonnull collect
 @property(nonatomic,copy,nonnull) BOOL (^scrollViewShouldScrollToTop)(UIScrollView * scrollView);
 @property(nonatomic,copy,nonnull) BOOL (^scrollViewDidScrollToTop)(UIScrollView * ScrollView);
 @property(nonatomic,copy,nonnull) BOOL (^scrollViewDidChangeAdjustedContentInset)(UIScrollView* scrollView)API_AVAILABLE(ios(11.0), tvos(11.0));
-
-
-
 
 @end

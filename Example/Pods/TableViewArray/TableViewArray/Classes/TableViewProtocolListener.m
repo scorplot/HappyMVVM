@@ -44,8 +44,22 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
     }
 }
 
+static void* keyArrayIndex;
+static void setArrayIndex(NSArray* arr, NSInteger index) {
+    objc_setAssociatedObject(arr, &keyArrayIndex, @(index), OBJC_ASSOCIATION_RETAIN);
+}
+static NSInteger getArrayIndex(NSArray* arr) {
+    NSNumber* number = objc_getAssociatedObject(arr, &keyArrayIndex);
+    if (number) {
+        return [number integerValue];
+    }
+    return NSNotFound;
+}
 
-@implementation TableViewProtocolListener
+
+@implementation TableViewProtocolListener {
+    BOOL _fakeArray;
+}
 +(void)load {
     Method method;
     method = class_getInstanceMethod([UITableView class], @selector(setDelegate:));
@@ -218,127 +232,123 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
     return [super respondsToSelector:aSelector];
 }
 
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+-(id)getObject:(NSIndexPath*)indexPath {
     id object = nil;
-    if (_listener.tableViewStyle == UITableViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
+    if (_fakeArray) {
+        object = _listener.getItem(indexPath.section, indexPath.row);
+    } else {
+        if (self.listener.subArray) {
+            object = self.listener.subArray(_dataSource, indexPath.section)[indexPath.row];
+        } else {
+            object = _dataSource[indexPath.row];
+        }
     }
-    return self.listener.willSelectRowAtIndexPath(tableView, indexPath,object);
+    return object;
+}
+-(id)getSection:(NSUInteger)section {
+    id object = nil;
+    if (_fakeArray) {
+        object = _listener.getSection(section);
+    } else {
+        if (self.listener.subArray) {
+            object = _dataSource[section];
+        } else {
+            object = _dataSource;
+        }
+    }
+    return object;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    return self.listener.willSelectRowAtIndexPath(tableView, indexPath, [self getObject:indexPath]);
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    id object = nil;
-    if (_listener.tableViewStyle == UITableViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    return  self.listener.willDeselectRowAtIndexPath(tableView, indexPath,object);
+    return  self.listener.willDeselectRowAtIndexPath(tableView, indexPath, [self getObject:indexPath]);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    id object = nil;
-    if (_listener.tableViewStyle == UITableViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    self.listener.didSelectRowAtIndexPath(tableView, indexPath,object);
+    self.listener.didSelectRowAtIndexPath(tableView, indexPath, [self getObject:indexPath]);
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    id object = nil;
-    if (_listener.tableViewStyle == UITableViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    self.listener.didDeselectRowAtIndexPath(tableView, indexPath,object);
+    self.listener.didDeselectRowAtIndexPath(tableView, indexPath, [self getObject:indexPath]);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.heightForRowAtIndexPath(tableView,indexPath);
+    return self.listener.heightForRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.estimatedHeightForRowAtIndexPath(tableView,indexPath);
+    return self.listener.estimatedHeightForRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.indentationLevelForRowAtIndexPath(tableView,indexPath);
+    return self.listener.indentationLevelForRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    id object = nil;
-    if (_listener.tableViewStyle == UITableViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    self.listener.willDisplayCellforRowAtIndexPath(tableView, cell, indexPath,object);
+    self.listener.willDisplayCellforRowAtIndexPath(tableView, cell, indexPath,[self getObject:indexPath]);
 }
 
 - (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.editActionsForRowAtIndexPath(tableView,indexPath);
+    return self.listener.editActionsForRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    self.listener.accessoryButtonTappedForRowWithIndexPath(tableView, indexPath);
+    self.listener.accessoryButtonTappedForRowWithIndexPath(tableView, indexPath,[self getObject:indexPath]);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return  self.listener.viewForHeaderInSection(tableView,section);
+    return  self.listener.viewForHeaderInSection(tableView,section,[self getSection:section]);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return self.listener.viewForFooterInSection(tableView,section);
+    return self.listener.viewForFooterInSection(tableView,section,[self getSection:section]);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return self.listener.heightForHeaderInSection(tableView,section);
+    return self.listener.heightForHeaderInSection(tableView,section,[self getSection:section]);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return self.listener.heightForFooterInSection(tableView,section);
+    return self.listener.heightForFooterInSection(tableView,section,[self getSection:section]);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
-    return self.listener.estimatedHeightForHeaderInSection(tableView,section);
+    return self.listener.estimatedHeightForHeaderInSection(tableView,section,[self getSection:section]);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section {
-    return self.listener.estimatedHeightForFooterInSection(tableView,section);
+    return self.listener.estimatedHeightForFooterInSection(tableView,section,[self getSection:section]);
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    self.listener.willDisplayHeaderViewForSection(tableView, view, section);
+    self.listener.willDisplayHeaderViewForSection(tableView, view, section,[self getSection:section]);
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
-    self.listener.willDisplayFooterViewForSection(tableView, view, section);
+    self.listener.willDisplayFooterViewForSection(tableView, view, section,[self getSection:section]);
 }
 
 - (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.listener.willBeginEditingRowAtIndexPath(tableView,indexPath);
+    self.listener.willBeginEditingRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.listener.didEndEditingRowAtIndexPath(tableView,indexPath);
+    self.listener.didEndEditingRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.editingStyleForRowAtIndexPath(tableView,indexPath);
+    return self.listener.editingStyleForRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.titleForDeleteConfirmationButtonForRowAtIndexPath(tableView,indexPath);
+    return self.listener.titleForDeleteConfirmationButtonForRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.shouldIndentWhileEditingRowAtIndexPath(tableView,indexPath);
+    return self.listener.shouldIndentWhileEditingRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 #pragma mark - Reordering Table Rows
@@ -350,27 +360,21 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 #pragma mark - Tacking the Removal of Views
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    id object = nil;
-    if (_listener.tableViewStyle == UITableViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    self.listener.didEndDisplayingCellForRowAtIndexPath(tableView,cell,indexPath,object);
+    self.listener.didEndDisplayingCellForRowAtIndexPath(tableView,cell,indexPath,[self getObject:indexPath]);
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingHeaderView:(UIView *)view forSection:(NSInteger)section {
-    self.listener.didEndDisplayingHeaderViewForSection(tableView,view,section);
+    self.listener.didEndDisplayingHeaderViewForSection(tableView,view,section,[self getSection:section]);
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingFooterView:(UIView *)view forSection:(NSInteger)section {
-    self.listener.didEndDisplayingFooterViewForSection(tableView, view, section);
+    self.listener.didEndDisplayingFooterViewForSection(tableView, view, section,[self getSection:section]);
 }
 
 #pragma mark - Copying and Pasting Row content
 
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.shouldShowMenuForRowAtIndexPath(tableView,indexPath);
+    return self.listener.shouldShowMenuForRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
@@ -384,21 +388,21 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 #pragma mark - Managing Table View Highlighting
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.shouldHighlightRowAtIndexPath(tableView,indexPath);
+    return self.listener.shouldHighlightRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.listener.didHighlightRowAtIndexPath(tableView, indexPath);
+    self.listener.didHighlightRowAtIndexPath(tableView, indexPath,[self getObject:indexPath]);
 }
 
 - (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.listener.didUnhighlightRowAtIndexPath(tableView,indexPath);
+    self.listener.didUnhighlightRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 #pragma mark  - Managing TableView Focus
 
 - (BOOL)tableView:(UITableView *)tableView canFocusRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.canFocusRowAtIndexPath(tableView,indexPath);
+    return self.listener.canFocusRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldUpdateFocusInContext:(UITableViewFocusUpdateContext *)context  API_AVAILABLE(ios(9.0)){
@@ -420,27 +424,27 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return self.listener.sectionForSectionIndexTitleAtIndex(tableView,title,index);
+    return self.listener.sectionForSectionIndexTitleAtIndex(tableView,title,index,[self getSection:index]);
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return self.listener.titleForHeaderInSection(tableView,section);
+    return self.listener.titleForHeaderInSection(tableView,section,[self getSection:section]);
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    return self.listener.titleForFooterInSection(tableView,section);
+    return self.listener.titleForFooterInSection(tableView,section,[self getSection:section]);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.listener.commitEditingStyleForRowAtIndexPath(tableView, editingStyle, indexPath);
+    self.listener.commitEditingStyleForRowAtIndexPath(tableView, editingStyle, indexPath, [self getObject:indexPath]);
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.canEditRowAtIndexPath(tableView,indexPath);
+    return self.listener.canEditRowAtIndexPath(tableView,indexPath, [self getObject:indexPath]);
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.listener.canMoveRowAtIndexPath(tableView,indexPath);
+    return self.listener.canMoveRowAtIndexPath(tableView,indexPath, [self getObject:indexPath]);
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
@@ -468,20 +472,18 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 #pragma mark  require
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (_listener.tableViewStyle == UITableViewStylePlain) {
-        return _dataSource.count ;
-    }else{
-        return [_dataSource[section] count];
+    if (_fakeArray) {
+        return _listener.numberOfRowsInSection(tableView, section);
+    } else {
+        if (self.listener.subArray) {
+            return self.listener.subArray(_dataSource, section).count;
+        } else {
+            return _dataSource.count ;
+        }
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    id object = nil;
-    if (_listener.tableViewStyle == UITableViewStylePlain) {
-        object = _dataSource[indexPath.row];
-    }else{
-        object = _dataSource[indexPath.section][indexPath.row];
-    }
-    return self.listener.cellForRowAtIndexPath(tableView,indexPath,object);
+    return self.listener.cellForRowAtIndexPath(tableView,indexPath,[self getObject:indexPath]);
 }
 #pragma mark - UIScrollView Delegate
 // any offset changes
@@ -623,10 +625,14 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 
 #pragma mark   optional
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if (_listener.tableViewStyle == UITableViewStylePlain) {
-        return 1;
-    }else{
-        return _dataSource.count;
+    if (_fakeArray) {
+        return _listener.numberOfSections(tableView);
+    } else {
+        if (_listener.subArray) {
+            return _dataSource.count;
+        } else {
+            return 1;
+        }
     }
 }
 
@@ -639,11 +645,17 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 
 -(void)setListener:(TableViewArray *)listener{
     _listener = listener;
-    
     [self checkCircleReference:_listener];
+    _fakeArray = _listener.numberOfSections != nil;
 }
 -(void)checkCircleReference:(TableViewArray*)listener{
+    NSAssert(!checkCircleReference(listener.subArray, listener), @"raise a block circle reference reason: subArray");
+
     /**dataSource*/
+    NSAssert(!checkCircleReference(listener.numberOfSections, listener), @"raise a block circle reference reason: numberOfSections");
+    NSAssert(!checkCircleReference(listener.numberOfRowsInSection, listener), @"raise a block circle reference reason: numberOfRowsInSection");
+    NSAssert(!checkCircleReference(listener.getItem, listener), @"raise a block circle reference reason: getItem");
+    NSAssert(!checkCircleReference(listener.getSection, listener), @"raise a block circle reference reason: getSection");
     NSAssert(!checkCircleReference(listener.cellForRowAtIndexPath, listener), @"raise a block circle reference reason: cellForRowAtIndexPath");
     NSAssert(!checkCircleReference(listener.sectionIndexTitlesForTableView, listener), @"raise a block circle reference reason: sectionIndexTitlesForTableView");
     NSAssert(!checkCircleReference(listener.sectionForSectionIndexTitleAtIndex, listener), @"raise a block circle reference reason: sectionForSectionIndexTitleAtIndex");
@@ -744,35 +756,46 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 }
 
 -(void)setDataSource:(NSArray *)dataSource{
-    
-    if (_dataSource!=dataSource) {
-        [self removeObserver];
-    }
-    _dataSource = dataSource;
-    
-    if ([dataSource isKindOfClass:[NSMutableArray class]]) {
-        [self addObserverForDataSource:(NSMutableArray*)self.dataSource];
-        for (NSMutableArray * subArray in self.dataSource) {
-            if ([subArray isKindOfClass:[NSMutableArray class]]) {
-                [self addObserverForDataSource:subArray];
+    if (!_fakeArray) {
+        if (_dataSource!=dataSource) {
+            [self removeObserver];
+        }
+        _dataSource = dataSource;
+        
+        if ([dataSource isKindOfClass:[NSMutableArray class]]) {
+            [self addObserverForDataSource:(NSMutableArray*)self.dataSource];
+            if (_listener.subArray) {
+                for (NSInteger i = 0; i < self.dataSource.count; i++) {
+                    NSArray* subArray = _listener.subArray(_dataSource, i);
+                    if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                        [self addObserverForDataSource:(NSMutableArray*)subArray];
+                        setArrayIndex(subArray, i);
+                    }
+                }
             }
         }
     }
 }
 
 -(void)addObserverForDataSource:(NSMutableArray * )array{
-    BOOL isGroup = _listener.tableViewStyle == UITableViewStyleGrouped;
+    BOOL isGroup = _listener.subArray != nil;
     typeof(self)__weak weakself = self;
+    typeof(_listener.subArray)__weak weakSubArray = _listener.subArray;
+
     MutableArrayListener *observer = [[MutableArrayListener alloc]init];
     observer.didAddObjects = ^(NSMutableArray *array, NSArray *objects, NSIndexSet *indexes) {
-//        [weakself.tableView beginUpdates];
         if (array==weakself.dataSource) {
             if (isGroup) {
                 [weakself.tableView insertSections:indexes withRowAnimation:UITableViewRowAnimationNone];
-                for (NSMutableArray * subArry in objects) {
-                    if ([subArry isKindOfClass:[NSMutableArray class]]) {
-                        [weakself addObserverForDataSource:subArry];
-                    }
+                typeof(_listener.subArray) strongSubArray = weakSubArray;
+                if (strongSubArray) {
+                    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+                        NSArray* subArray = strongSubArray(array, idx);
+                        if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                            [weakself addObserverForDataSource:(NSMutableArray*)subArray];
+                            setArrayIndex(subArray, idx);
+                        }
+                    }];
                 }
             }else{
                 NSMutableArray * indexPaths = [NSMutableArray array];
@@ -782,21 +805,25 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
                 [weakself.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
             }
         }else{
-            NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
+            NSInteger section = getArrayIndex(array);
             NSMutableArray * indexPaths = [NSMutableArray array];
             [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                 [indexPaths addObject:[NSIndexPath indexPathForRow:idx inSection:section]];
             }];
             [weakself.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-            
         }
-//        [weakself.tableView endUpdates];
     };
     observer.didDeleteObjects = ^(NSMutableArray *array, NSArray *objects, NSIndexSet *indexes) {
 //        [weakself.tableView beginUpdates];
         if (array==weakself.dataSource) {
             if (isGroup) {
                 [weakself.tableView deleteSections:indexes withRowAnimation:UITableViewRowAnimationNone];
+                for (NSInteger i = 0; i < array.count; i++) {
+                    NSArray* subArray = weakSubArray(array, i);
+                    if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                        setArrayIndex(subArray, i);
+                    }
+                }
             }else{
                 NSMutableArray * indexPaths = [NSMutableArray array];
                 [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
@@ -805,7 +832,7 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
                 [weakself.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
             }
         }else{
-            NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
+            NSInteger section = getArrayIndex(array);
             NSMutableArray * indexPaths = [NSMutableArray array];
             [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                 [indexPaths addObject:[NSIndexPath indexPathForRow:idx inSection:section]];
@@ -818,6 +845,14 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 //        [weakself.tableView beginUpdates];
         if (array==weakself.dataSource) {
             if (isGroup) {
+                NSArray* subArray = weakSubArray(array, index1);
+                if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                    setArrayIndex(subArray, index1);
+                }
+                subArray = weakSubArray(array, index2);
+                if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                    setArrayIndex(subArray, index2);
+                }
                 [weakself.tableView moveSection:index1 toSection:index2];
                 [weakself.tableView moveSection:index2 toSection:index1];
             }else{
@@ -825,7 +860,7 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
                 [weakself.tableView moveRowAtIndexPath:[NSIndexPath indexPathForRow:index2 inSection:0] toIndexPath:[NSIndexPath indexPathForRow:index1 inSection:0]];
             }
         }else{
-            NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
+            NSInteger section = getArrayIndex(array);
             [weakself.tableView moveRowAtIndexPath:[NSIndexPath indexPathForRow:index1 inSection:section] toIndexPath:[NSIndexPath indexPathForRow:index2 inSection:section]];
             [weakself.tableView moveRowAtIndexPath:[NSIndexPath indexPathForRow:index2 inSection:section ] toIndexPath:[NSIndexPath indexPathForRow:index1 inSection:section]];
         }
@@ -835,15 +870,19 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
         if (array==weakself.dataSource) {
             if (isGroup) {
                 [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:UITableViewRowAnimationNone];
-                if ([withObject isKindOfClass:[NSMutableArray class]]) {
-                    [weakself addObserverForDataSource:withObject];
+                typeof(_listener.subArray) strongSubArray = weakSubArray;
+                if (strongSubArray) {
+                    NSArray* subArray = strongSubArray(array, index);
+                    if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                        [weakself addObserverForDataSource:(NSMutableArray*)subArray];
+                        setArrayIndex(subArray, index);
+                    }
                 }
-                
             }else{
                 [weakself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
             }
         }else{
-            NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
+            NSInteger section = getArrayIndex(array);
             [weakself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:section]] withRowAnimation:UITableViewRowAnimationNone];
         }
     };
@@ -852,13 +891,18 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
             [weakself.tableView reloadData];
             [weakself removeObserver];
             [weakself addObserverForDataSource:(NSMutableArray *)weakself.dataSource];
-            for (NSMutableArray * subarray in weakself.dataSource) {
-                if ([subarray isKindOfClass:[NSMutableArray class]]) {
-                    [weakself addObserverForDataSource:subarray];
+            typeof(_listener.subArray) strongSubArray = weakSubArray;
+            if (strongSubArray) {
+                for (NSInteger i = 0; i < weakself.dataSource.count; i++) {
+                    NSArray* subArray = strongSubArray(weakself.dataSource, i);
+                    if ([subArray isKindOfClass:[NSMutableArray class]]) {
+                        [weakself addObserverForDataSource:(NSMutableArray*)subArray];
+                        setArrayIndex(subArray, i);
+                    }
                 }
             }
-        }else{
-            NSInteger section = [weakself.dataSource indexOfObjectIdenticalTo:array];
+        } else {
+            NSInteger section = getArrayIndex(array);
             [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationNone];
         }
     };
@@ -869,20 +913,20 @@ static void replace_setDelegate_IMP(id self,SEL _cmd ,id delegate){
 }
 
 -(void)removeObserver{
-    if ([_dataSource isKindOfClass:[NSMutableArray class]]) {
-        for (MutableArrayListener * obs in self.observerArray) {
-            [(NSMutableArray*)self.dataSource removeListener:obs];
-            for (NSMutableArray * subArray  in _dataSource) {
+    for (MutableArrayListener * obs in self.observerArray) {
+        [(NSMutableArray*)self.dataSource removeListener:obs];
+        if (_listener.subArray) {
+            for (NSInteger i = 0; i < _dataSource.count; i++) {
+                NSArray* subArray = _listener.subArray(_dataSource, i);
                 if ([subArray isKindOfClass:[NSMutableArray class]]) {
-                    
                     for (MutableArrayListener * obs in self.observerArray) {
                         [(NSMutableArray*)subArray removeListener:obs];
                     }
                 }
             }
         }
-        [self.observerArray removeAllObjects];
     }
+    [self.observerArray removeAllObjects];
 }
 
 @end

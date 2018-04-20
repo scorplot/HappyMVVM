@@ -10,6 +10,8 @@
 #import "CircleReferenceCheck.h"
 
 @interface SubTask()
+@property (nonatomic, strong) NSError* error; // error
+
 @property (nonatomic, readwrite) NSTimeInterval beginTime;
 @property (nonatomic, readwrite) NSTimeInterval endTime;
 
@@ -41,7 +43,7 @@
     float _weight;
 }
 
--(id<NSObject>)context {
+-(id)context {
     return self.task.context;
 }
 
@@ -123,6 +125,7 @@
         int tickCount = _tickCount;
         self.executing = YES;
         self.finished = NO;
+        self.error = nil;
         self.beginTime = [[NSDate date] timeIntervalSince1970];
         dispatch_async(self.executingQueue, ^{
             @autoreleasepool {
@@ -197,6 +200,7 @@
     if (queue == dispatch_get_main_queue() && [NSThread isMainThread]) {
         if (!finished && tickCount != _tickCount) return;
         if (finished && tickCount + 1 != _tickCount) return;
+        self.error = error;
         void (^didFinished)(SubTask *subTask, NSError *error, BOOL finished) = self.didFinished;
         if (didFinished)
             didFinished(self, error, finished);
@@ -205,6 +209,7 @@
         dispatch_async(queue, ^{
             if (!finished && tickCount != _tickCount) return;
             if (finished && tickCount + 1 != _tickCount) return;
+            self.error = error;
             void (^didFinished)(SubTask *subTask, NSError *error, BOOL finished) = self.didFinished;
             if (didFinished)
                 didFinished(self, error, finished);
