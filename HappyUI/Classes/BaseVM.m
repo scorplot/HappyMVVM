@@ -10,7 +10,7 @@
 #import <CollectionViewArray/CollectionViewArray.h>
 #import <CCUIModel/CCUIModel.h>
 #import <TableViewArray/TableViewArray.h>
-#import <MJRefresh/MJRefresh.h>
+//#import <MJRefresh/MJRefresh.h>
 @interface BaseVM ()
 
 @property (nonatomic, strong) BaseModel * listModel;
@@ -30,25 +30,25 @@
     
     int _ingoreCountRefresh;
 }
--(MJRefreshHeader*)refreshHeader{
-    typeof(self) __weak SELF = self;
-    MJRefreshHeader * header = [MJRefreshHeader headerWithRefreshingBlock:^{
-        [SELF refresh];
-    }];
-    
-    return header;
-}
--(void)setHideHeadRefresh:(BOOL)hideHeadRefresh{
-    _hideHeadRefresh = hideHeadRefresh;
-    if (hideHeadRefresh) {
-        if (self.listTableView) {
-            self.listTableView.mj_header = nil;
-        }
-        if (self.listCollectionView) {
-            self.listCollectionView.mj_header = nil;
-        }
-    }
-}
+//-(MJRefreshHeader*)refreshHeader{
+//    typeof(self) __weak SELF = self;
+//    MJRefreshHeader * header = [MJRefreshHeader headerWithRefreshingBlock:^{
+//        [SELF refresh];
+//    }];
+//
+//    return header;
+//}
+//-(void)setHideHeadRefresh:(BOOL)hideHeadRefresh{
+//    _hideHeadRefresh = hideHeadRefresh;
+//    if (hideHeadRefresh) {
+//        if (self.listTableView) {
+//            self.listTableView.mj_header = nil;
+//        }
+//        if (self.listCollectionView) {
+//            self.listCollectionView.mj_header = nil;
+//        }
+//    }
+//}
 -(instancetype)initWith:(BaseModel *)model collectionView:(UICollectionView *)collectionView{
     if (self =  [super init]) {
         _listModel  = model;
@@ -61,7 +61,7 @@
             CollectionViewConnectArray(_listCollectionView, nil, _collectionViewArray);
         }
         if (!self.hideHeadRefresh) {
-            _listCollectionView.mj_header = [self refreshHeader];
+//            _listCollectionView.mj_header = [self refreshHeader];
         }
         // listener model changed
         [self addObserverForListBaseModelForView:_listCollectionView];
@@ -80,23 +80,23 @@
 -(void)updateRefreshStatus:(BOOL)value view:(UIView*)contentView {
     if (value) {
         // being refresh
-        if ([contentView isKindOfClass:[UICollectionView class]]) {
-            if ([(UICollectionView*)contentView mj_header].state != MJRefreshStateRefreshing)
-                _ingoreCountRefresh++;
-            [[(UICollectionView*)contentView mj_header] beginRefreshing];
-        }else{
-            if ([(UITableView*)contentView mj_header].state != MJRefreshStateRefreshing)
-                _ingoreCountRefresh++;
-            [[(UITableView*)contentView mj_header] beginRefreshing];
-        }
+//        if ([contentView isKindOfClass:[UICollectionView class]]) {
+//            if ([(UICollectionView*)contentView mj_header].state != MJRefreshStateRefreshing)
+//                _ingoreCountRefresh++;
+//            [[(UICollectionView*)contentView mj_header] beginRefreshing];
+//        }else{
+//            if ([(UITableView*)contentView mj_header].state != MJRefreshStateRefreshing)
+//                _ingoreCountRefresh++;
+//            [[(UITableView*)contentView mj_header] beginRefreshing];
+//        }
         if (_startRefresh) _startRefresh();
     } else {
         // refresh end
-        if ([contentView isKindOfClass:[UICollectionView class]]) {
-            [[(UICollectionView*)contentView mj_header] endRefreshing];
-        } else {
-            [[(UITableView*)contentView mj_header] endRefreshing];
-        }
+//        if ([contentView isKindOfClass:[UICollectionView class]]) {
+//            [[(UICollectionView*)contentView mj_header] endRefreshing];
+//        } else {
+//            [[(UITableView*)contentView mj_header] endRefreshing];
+//        }
         if (_didRefresh) _didRefresh();
     }
 }
@@ -167,7 +167,7 @@
             TableViewConnectArray(_listTableView, nil, _tableViewArray);
         }
         if (!self.hideHeadRefresh) {
-            _listTableView.mj_header = [self refreshHeader];
+//            _listTableView.mj_header = [self refreshHeader];
         }
         
         // listener model changed

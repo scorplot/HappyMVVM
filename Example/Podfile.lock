@@ -4,14 +4,12 @@ PODS:
   - CircleReferenceCheck (0.0.1)
   - CollectionViewArray (0.1.1):
     - MutableArrayListener
-  - HappyUI (0.1.0):
+  - HappyUI (0.1.3):
     - CCUIModel
     - CollectionViewArray
-    - MJRefresh
     - RealReachability
     - TableViewArray
     - TaskEnginer
-  - MJRefresh (3.1.15.3)
   - MutableArrayListener (0.1.0):
     - CircleReferenceCheck
   - RealReachability (1.1.9):
@@ -35,8 +33,7 @@ SPEC CHECKSUMS:
   CCUIModel: b5e0e490caef73dd4e423f332b1ca850d6106368
   CircleReferenceCheck: 5ef0dbaff301108a523f845bf81dfa9a12a83024
   CollectionViewArray: 7d27b09462af7d14b1ff897ae137c2caae06a38c
-  HappyUI: bd859a1b37da74e7d68822aa52436536df06b41d
-  MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
+  HappyUI: f2b5435aa133644f9a3744ca91d3cbf654b15f01
   MutableArrayListener: 80566460c0f35ffe89d76a90ebb33adf7f413182
   RealReachability: a8c483900986a0f3305733961effbfbb00637a02
   TableViewArray: 288501b4abc71efabb82ce2f4bb397f1c2fa25a9

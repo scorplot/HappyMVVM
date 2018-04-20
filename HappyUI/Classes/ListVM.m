@@ -11,7 +11,7 @@
 #import <CollectionViewArray/CollectionViewArray.h>
 #import <CCUIModel/CCUIModel.h>
 #import <TableViewArray/TableViewArray.h>
-#import <MJRefresh/MJRefresh.h>
+//#import <MJRefresh/MJRefresh.h>
 static const NSInteger preloadIndex  = 5;
 @interface ListVM ()
 
@@ -35,29 +35,29 @@ static const NSInteger preloadIndex  = 5;
     int _ingoreCountRefresh;
     int _ingoreCountGetMore;
 }
--(MJRefreshHeader*)refreshHeader{
-    typeof(self) __weak SELF = self;
-    MJRefreshHeader * header = [MJRefreshHeader headerWithRefreshingBlock:^{
-        [SELF refresh];
-    }];
-    
-    return header;
-}
--(MJRefreshFooter*)refreshFooter{
-    typeof(self) __weak SELF = self;
-    MJRefreshFooter * footer = [MJRefreshFooter footerWithRefreshingBlock:^{
-        [SELF getMore];
-    }];
-    return footer;
-}
+//-(MJRefreshHeader*)refreshHeader{
+//    typeof(self) __weak SELF = self;
+//    MJRefreshHeader * header = [MJRefreshHeader headerWithRefreshingBlock:^{
+//        [SELF refresh];
+//    }];
+//
+//    return header;
+//}
+//-(MJRefreshFooter*)refreshFooter{
+//    typeof(self) __weak SELF = self;
+//    MJRefreshFooter * footer = [MJRefreshFooter footerWithRefreshingBlock:^{
+//        [SELF getMore];
+//    }];
+//    return footer;
+//}
 -(void)setHideHeadRefresh:(BOOL)hideHeadRefresh{
     _hideHeadRefresh = hideHeadRefresh;
     if (hideHeadRefresh) {
         if (self.listTableView) {
-            self.listTableView.mj_header = nil;
+//            self.listTableView.mj_header = nil;
         }
         if (self.listCollectionView) {
-            self.listCollectionView.mj_header = nil;
+//            self.listCollectionView.mj_header = nil;
         }
     }
 }
@@ -65,10 +65,10 @@ static const NSInteger preloadIndex  = 5;
     _hideFooterGetMore = hideFooterRefresh;
     if (hideFooterRefresh) {
         if (self.listTableView) {
-            self.listTableView.mj_footer = nil;
+//            self.listTableView.mj_footer = nil;
         }
         if (self.listCollectionView) {
-            self.listCollectionView.mj_footer = nil;
+//            self.listCollectionView.mj_footer = nil;
         }
     }
 }
@@ -90,10 +90,10 @@ static const NSInteger preloadIndex  = 5;
             CollectionViewConnectArray(_listCollectionView, _listModel.array, _collectionViewArray);
         }
         if (!self.hideHeadRefresh) {
-            _listCollectionView.mj_header = [self refreshHeader];
+//            _listCollectionView.mj_header = [self refreshHeader];
         }
         if (!self.hideFooterGetMore) {
-            _listCollectionView.mj_footer = [self refreshFooter];
+//            _listCollectionView.mj_footer = [self refreshFooter];
         }
         // listener model changed
         [self addObserverForListBaseModelForView:_listCollectionView];
@@ -113,21 +113,21 @@ static const NSInteger preloadIndex  = 5;
     if (value) {
         // being refresh
         if ([contentView isKindOfClass:[UICollectionView class]]) {
-            if ([(UICollectionView*)contentView mj_header].state != MJRefreshStateRefreshing)
-                _ingoreCountRefresh++;
-            [[(UICollectionView*)contentView mj_header] beginRefreshing];
+//            if ([(UICollectionView*)contentView mj_header].state != MJRefreshStateRefreshing)
+//                _ingoreCountRefresh++;
+//            [[(UICollectionView*)contentView mj_header] beginRefreshing];
         }else{
-            if ([(UITableView*)contentView mj_header].state != MJRefreshStateRefreshing)
-                _ingoreCountRefresh++;
-            [[(UITableView*)contentView mj_header] beginRefreshing];
+//            if ([(UITableView*)contentView mj_header].state != MJRefreshStateRefreshing)
+//                _ingoreCountRefresh++;
+//            [[(UITableView*)contentView mj_header] beginRefreshing];
         }
         if (_startRefresh) _startRefresh();
     } else {
         // refresh end
         if ([contentView isKindOfClass:[UICollectionView class]]) {
-            [[(UICollectionView*)contentView mj_header] endRefreshing];
+//            [[(UICollectionView*)contentView mj_header] endRefreshing];
         } else {
-            [[(UITableView*)contentView mj_header] endRefreshing];
+//            [[(UITableView*)contentView mj_header] endRefreshing];
         }
         if (_didRefresh) _didRefresh();
     }
@@ -145,22 +145,22 @@ static const NSInteger preloadIndex  = 5;
     if (value) {
         // being get more
         if ([contentView isKindOfClass:[UICollectionView class]]) {
-            if ([(UICollectionView*)contentView mj_footer].state != MJRefreshStateRefreshing)
-                _ingoreCountGetMore++;
-            [[(UICollectionView*)contentView mj_footer] beginRefreshing];
+//            if ([(UICollectionView*)contentView mj_footer].state != MJRefreshStateRefreshing)
+//                _ingoreCountGetMore++;
+//            [[(UICollectionView*)contentView mj_footer] beginRefreshing];
         }else{
-            if ([(UITableView*)contentView mj_footer].state != MJRefreshStateRefreshing)
-                _ingoreCountGetMore++;
-            [[(UITableView*)contentView mj_footer] beginRefreshing];
+//            if ([(UITableView*)contentView mj_footer].state != MJRefreshStateRefreshing)
+//                _ingoreCountGetMore++;
+//            [[(UITableView*)contentView mj_footer] beginRefreshing];
         }
         if (_startGetMore) _startGetMore();
     } else {
         // get more end
-        if ([contentView isKindOfClass:[UICollectionView class]]) {
-            [[(UICollectionView*)contentView mj_footer] endRefreshing];
-        } else {
-            [[(UITableView*)contentView mj_footer] endRefreshing];
-        }
+//        if ([contentView isKindOfClass:[UICollectionView class]]) {
+//            [[(UICollectionView*)contentView mj_footer] endRefreshing];
+//        } else {
+//            [[(UITableView*)contentView mj_footer] endRefreshing];
+//        }
         if (_didGetMore) _didGetMore();
     }
 }
@@ -218,19 +218,19 @@ static const NSInteger preloadIndex  = 5;
     [createNotifer(SELF.listModel, @"hasMore") makeRelation:self withBlock:^(id value) {
         if (__contentView) {
             if ([value boolValue]) {
-                if ([__contentView isKindOfClass:[UICollectionView class]]) {
-                    [(UICollectionView*)__contentView mj_footer].hidden = NO ;
-                    
-                }else{
-                    [(UITableView*)__contentView mj_footer].hidden = NO;
-                }
+//                if ([__contentView isKindOfClass:[UICollectionView class]]) {
+//                    [(UICollectionView*)__contentView mj_footer].hidden = NO ;
+//
+//                }else{
+//                    [(UITableView*)__contentView mj_footer].hidden = NO;
+//                }
             }else{
-                if ([__contentView isKindOfClass:[UICollectionView class]]) {
-                    [(UICollectionView*)__contentView mj_footer].hidden = YES ;
-                    
-                }else{
-                    [(UITableView*)__contentView mj_footer].hidden = YES;
-                }
+//                if ([__contentView isKindOfClass:[UICollectionView class]]) {
+//                    [(UICollectionView*)__contentView mj_footer].hidden = YES ;
+//
+//                }else{
+//                    [(UITableView*)__contentView mj_footer].hidden = YES;
+//                }
             }
         }
     }];
@@ -291,10 +291,10 @@ static const NSInteger preloadIndex  = 5;
             TableViewConnectArray(_listTableView, _listModel.array, _tableViewArray);
         }
         if (!self.hideHeadRefresh) {
-            _listTableView.mj_header = [self refreshHeader];
+//            _listTableView.mj_header = [self refreshHeader];
         }
         if (!self.hideFooterGetMore) {
-            _listTableView.mj_footer = [self refreshFooter];
+//            _listTableView.mj_footer = [self refreshFooter];
         }
         
         // listener model changed
