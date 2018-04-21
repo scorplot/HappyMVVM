@@ -5,9 +5,9 @@
 //  Created by Aruisi on 4/20/18.
 //
 
-#import "BaseModel.h"
+#import "HappyModel.h"
 
-@interface SimpleBaseModel : BaseModel
+@interface SimpleHappyModel : HappyModel
 #pragma mark sub class need override
 -(NSString*)cacheFilePath;
 -(id(^)(id))serialize;

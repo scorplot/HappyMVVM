@@ -8,9 +8,9 @@
 #import <Foundation/Foundation.h>
 @class CollectionViewArray;
 @class TableViewArray;
-@class BaseModel;
+@class HappyModel;
 
-@interface BaseVM : NSObject
+@interface HappyVM : NSObject
 @property (nonatomic) BOOL hideHeadRefresh;
 
 /**
@@ -24,16 +24,16 @@
  */
 @property (nonatomic, strong) UIView* _Nullable errorView;
 
-@property (nonatomic, readonly) BaseModel * _Nullable listModel;
+@property (nonatomic, readonly) HappyModel * _Nullable listModel;
 
 @property (nonatomic, readonly)  UICollectionView* _Nullable  listCollectionView;
 @property (nonatomic, readonly)  UITableView* _Nullable  listTableView;
 
 //collectioView
--(instancetype _Nonnull )initWith:(BaseModel*_Nonnull)model collectionView:(UICollectionView*_Nonnull)collectionView;
+-(instancetype _Nonnull )initWith:(HappyModel*_Nonnull)model collectionView:(UICollectionView*_Nonnull)collectionView;
 
 //tableView
--(instancetype _Nonnull )initWith:(BaseModel *_Nonnull)model tableView:(UITableView *_Nonnull)tableView;
+-(instancetype _Nonnull )initWith:(HappyModel *_Nonnull)model tableView:(UITableView *_Nonnull)tableView;
 
 #pragma mark sub class
 /**

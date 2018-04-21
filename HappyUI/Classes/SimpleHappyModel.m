@@ -5,12 +5,12 @@
 //  Created by Aruisi on 4/20/18.
 //
 
-#import "SimpleBaseModel.h"
+#import "SimpleHappyModel.h"
 #import "LoadFileSubTask.h"
 #import "SaveFileSubTask.h"
 #import "TaskRoute.h"
 
-@implementation SimpleBaseModel
+@implementation SimpleHappyModel
 -(TaskRoute*)saveCacheTask:(id)value {
     NSString* cacheFile = [self cacheFilePath];
     if (cacheFile) {

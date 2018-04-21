@@ -5,18 +5,18 @@
 //  Created by Aruisi on 4/20/18.
 //
 
-#import "BaseModel.h"
+#import "HappyModel.h"
 #import <TaskEnginer/TaskRoute.h>
 #import <RealReachability/RealReachability.h>
 
-@interface BaseModel()
+@interface HappyModel()
 @property (nonatomic, readwrite) id model;
 @property (nonatomic, readwrite) BaseModelStatus status;
 @property (nonatomic, readwrite) NSError *error;
 @property (nonatomic, readwrite, getter=isRefreshing) BOOL refreshing;
 @end
 
-@implementation BaseModel {
+@implementation HappyModel {
     TaskRoute* _refreshTask;
     __weak TaskRoute* _saveCacheTask;
     __weak TaskRoute* _loadCacheTask;

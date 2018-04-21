@@ -5,19 +5,19 @@
 //  Created by Aruisi on 4/20/18.
 //
 
-#import "BaseVM.h"
-#import "BaseModel.h"
+#import "HappyVM.h"
+#import "HappyModel.h"
 #import <CollectionViewArray/CollectionViewArray.h>
 #import <CCUIModel/CCUIModel.h>
 #import <TableViewArray/TableViewArray.h>
 //#import <MJRefresh/MJRefresh.h>
-@interface BaseVM ()
+@interface HappyVM ()
 
-@property (nonatomic, strong) BaseModel * listModel;
+@property (nonatomic, strong) HappyModel * listModel;
 
 @end
 
-@implementation BaseVM
+@implementation HappyVM
 {
     UICollectionView * _listCollectionView;
     CollectionViewArray * _collectionViewArray;
@@ -49,7 +49,7 @@
 //        }
 //    }
 //}
--(instancetype)initWith:(BaseModel *)model collectionView:(UICollectionView *)collectionView{
+-(instancetype)initWith:(HappyModel *)model collectionView:(UICollectionView *)collectionView{
     if (self =  [super init]) {
         _listModel  = model;
         _listCollectionView = collectionView;
@@ -154,7 +154,7 @@
 
 #pragma mark - tableView
 
--(instancetype)initWith:(BaseModel *)model tableView:(UITableView *)tableView{
+-(instancetype)initWith:(HappyModel *)model tableView:(UITableView *)tableView{
     if (self = [super init]) {
         _listModel  = model;
         _listTableView = tableView;
