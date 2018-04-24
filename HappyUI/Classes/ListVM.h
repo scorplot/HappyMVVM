@@ -8,14 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "HappyBIProtocal.h"
+
 @class CollectionViewArray;
 @class TableViewArray;
 @class ListBaseModel;
 
 @interface ListVM : NSObject
-@property (nonatomic) BOOL hideHeadRefresh;
-@property (nonatomic) BOOL hideFooterGetMore;
-
 /**
  refresh callback
  */
@@ -37,6 +36,16 @@
  error view
  */
 @property (nonatomic, strong) UIView* _Nullable errorView;
+
+/**
+ loading from empty
+ */
+@property (nonatomic, strong) UIView* _Nullable loadingView;
+
+
+@property (nonatomic, strong) UIView<ScrollRefreshHeaderProtocal>* _Nullable refreshHeaderView;
+@property (nonatomic, strong) UIView<ScrollGetMoreFooterProtocal>* _Nullable getMoreFooterView;
+
 
 @property (nonatomic, readonly) ListBaseModel * _Nullable listModel;
 

@@ -114,7 +114,7 @@
 
 -(void)saveToCache {
     if (_status != MODEL_UNDEFINE) {
-        TaskRoute* task = [self saveCacheTask:[self.model copy]];
+        TaskRoute* task = [self saveCacheTask:self.model];
         _saveCacheTask = task;
         task.autoRetain = YES;
         if (_saveCacheTask) {

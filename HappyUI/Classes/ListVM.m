@@ -11,7 +11,9 @@
 #import <CollectionViewArray/CollectionViewArray.h>
 #import <CCUIModel/CCUIModel.h>
 #import <TableViewArray/TableViewArray.h>
-//#import <MJRefresh/MJRefresh.h>
+#import "SimpleRefreshingView.h"
+#import "SimpleGetMoreView.h"
+
 static const NSInteger preloadIndex  = 5;
 @interface ListVM ()
 
@@ -31,46 +33,53 @@ static const NSInteger preloadIndex  = 5;
     UIView* _emptyView;
     BOOL _firstError;
     UIView* _errorView;
+    BOOL _firstLoading;
+    UIView* _loadingView;
     
-    int _ingoreCountRefresh;
-    int _ingoreCountGetMore;
+    BOOL _firstRefresh;
+    UIView<ScrollRefreshHeaderProtocal>* _refreshHeaderView;
+
+    BOOL _firstGetMore;
+    UIView<ScrollGetMoreFooterProtocal>* _getMoreFooterView;
 }
-//-(MJRefreshHeader*)refreshHeader{
-//    typeof(self) __weak SELF = self;
-//    MJRefreshHeader * header = [MJRefreshHeader headerWithRefreshingBlock:^{
-//        [SELF refresh];
-//    }];
-//
-//    return header;
-//}
-//-(MJRefreshFooter*)refreshFooter{
-//    typeof(self) __weak SELF = self;
-//    MJRefreshFooter * footer = [MJRefreshFooter footerWithRefreshingBlock:^{
-//        [SELF getMore];
-//    }];
-//    return footer;
-//}
--(void)setHideHeadRefresh:(BOOL)hideHeadRefresh{
-    _hideHeadRefresh = hideHeadRefresh;
-    if (hideHeadRefresh) {
-        if (self.listTableView) {
-//            self.listTableView.mj_header = nil;
-        }
-        if (self.listCollectionView) {
-//            self.listCollectionView.mj_header = nil;
+
+-(void)setRefreshHeaderView:(UIView<ScrollRefreshHeaderProtocal> *)refreshHeaderView {
+    _firstRefresh = YES;
+    if (_refreshHeaderView != refreshHeaderView) {
+        [_refreshHeaderView removeFromSuperview];
+        _refreshHeaderView = refreshHeaderView;
+        if (_refreshHeaderView) {
+            [_listTableView addSubview:_refreshHeaderView];
+            [_listCollectionView addSubview:_refreshHeaderView];
         }
     }
 }
--(void)setHideFooterGetMore:(BOOL)hideFooterRefresh{
-    _hideFooterGetMore = hideFooterRefresh;
-    if (hideFooterRefresh) {
-        if (self.listTableView) {
-//            self.listTableView.mj_footer = nil;
-        }
-        if (self.listCollectionView) {
-//            self.listCollectionView.mj_footer = nil;
+-(UIView<ScrollRefreshHeaderProtocal>*)refreshHeaderView {
+    if (_firstRefresh == NO) {
+        _firstRefresh = YES;
+        
+        _refreshHeaderView = [[SimpleRefreshingView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    }
+    return _refreshHeaderView;
+}
+-(void)setGetMoreFooterView:(UIView<ScrollGetMoreFooterProtocal> *)getMoreFooterView {
+    _firstGetMore = YES;
+    if (_getMoreFooterView != getMoreFooterView) {
+        [_getMoreFooterView removeFromSuperview];
+        _getMoreFooterView = getMoreFooterView;
+        if (_getMoreFooterView) {
+            [_listTableView addSubview:_getMoreFooterView];
+            [_listCollectionView addSubview:_getMoreFooterView];
         }
     }
+}
+-(UIView<ScrollGetMoreFooterProtocal>*)getMoreFooterView {
+    if (_firstGetMore == NO) {
+        _firstGetMore = YES;
+        
+        _getMoreFooterView = [[SimpleGetMoreView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    }
+    return _getMoreFooterView;
 }
 -(instancetype)initWith:(ListBaseModel *)model collectionView:(UICollectionView *)collectionView{
     if (self =  [super init]) {
@@ -89,11 +98,20 @@ static const NSInteger preloadIndex  = 5;
         if (collectionView && model.array) {
             CollectionViewConnectArray(_listCollectionView, _listModel.array, _collectionViewArray);
         }
-        if (!self.hideHeadRefresh) {
-//            _listCollectionView.mj_header = [self refreshHeader];
+        __weak typeof(self) ws = self;
+        if (self.refreshHeaderView) {
+            [_listCollectionView addSubview:self.refreshHeaderView];
+            self.refreshHeaderView.shouldTrigger = ^BOOL{
+                [ws.listModel refresh];
+                return ws.listModel.isRefreshing;
+            };
         }
-        if (!self.hideFooterGetMore) {
-//            _listCollectionView.mj_footer = [self refreshFooter];
+        if (self.getMoreFooterView) {
+            [_listCollectionView addSubview:self.getMoreFooterView];
+            self.getMoreFooterView.shouldTrigger = ^BOOL{
+                [ws.listModel getMore];
+                return ws.listModel.isGettingMore;
+            };
         }
         // listener model changed
         [self addObserverForListBaseModelForView:_listCollectionView];
@@ -101,100 +119,62 @@ static const NSInteger preloadIndex  = 5;
     return self;
 }
 
--(void)refresh{
-    if (_ingoreCountRefresh > 0) {
-        _ingoreCountRefresh--;
-        return;
-    }
-    
-    [_listModel refresh];
-}
 -(void)updateRefreshStatus:(BOOL)value view:(UIView*)contentView {
+    _refreshHeaderView.refreshing = _listModel.isRefreshing;
     if (value) {
-        // being refresh
-        if ([contentView isKindOfClass:[UICollectionView class]]) {
-//            if ([(UICollectionView*)contentView mj_header].state != MJRefreshStateRefreshing)
-//                _ingoreCountRefresh++;
-//            [[(UICollectionView*)contentView mj_header] beginRefreshing];
-        }else{
-//            if ([(UITableView*)contentView mj_header].state != MJRefreshStateRefreshing)
-//                _ingoreCountRefresh++;
-//            [[(UITableView*)contentView mj_header] beginRefreshing];
-        }
         if (_startRefresh) _startRefresh();
     } else {
-        // refresh end
-        if ([contentView isKindOfClass:[UICollectionView class]]) {
-//            [[(UICollectionView*)contentView mj_header] endRefreshing];
-        } else {
-//            [[(UITableView*)contentView mj_header] endRefreshing];
-        }
         if (_didRefresh) _didRefresh();
     }
 }
 
--(void)getMore {
-    if (_ingoreCountGetMore > 0) {
-        _ingoreCountGetMore--;
-        return;
-    }
-    
-    [_listModel getMore];
-}
 -(void)updateGetMoreStatus:(BOOL)value view:(UIView*)contentView {
+    _getMoreFooterView.gettingMore = _listModel.isGettingMore;
     if (value) {
-        // being get more
-        if ([contentView isKindOfClass:[UICollectionView class]]) {
-//            if ([(UICollectionView*)contentView mj_footer].state != MJRefreshStateRefreshing)
-//                _ingoreCountGetMore++;
-//            [[(UICollectionView*)contentView mj_footer] beginRefreshing];
-        }else{
-//            if ([(UITableView*)contentView mj_footer].state != MJRefreshStateRefreshing)
-//                _ingoreCountGetMore++;
-//            [[(UITableView*)contentView mj_footer] beginRefreshing];
-        }
         if (_startGetMore) _startGetMore();
     } else {
-        // get more end
-//        if ([contentView isKindOfClass:[UICollectionView class]]) {
-//            [[(UICollectionView*)contentView mj_footer] endRefreshing];
-//        } else {
-//            [[(UITableView*)contentView mj_footer] endRefreshing];
-//        }
         if (_didGetMore) _didGetMore();
     }
 }
 
 -(void)updateStatus:(ListModelStatus)status view:(UIView*)contentView {
-    switch (status) {
-        case LIST_EMEPTY:
-            // empty data
-            [_errorView removeFromSuperview];
-            if (self.emptyView) {
-                CGRect rc = contentView.bounds;
-                rc.origin = CGPointZero;
-                _emptyView.frame = rc;
-                [contentView addSubview:self.emptyView];
-            }
-            break;
-        case LIST_ERROR:
-            // error
+    if (status == LIST_NORMAL) {
+        [_emptyView removeFromSuperview];
+        [_errorView removeFromSuperview];
+        [_loadingView removeFromSuperview];
+    } else {
+        if (_listModel.isRefreshing) {
             [_emptyView removeFromSuperview];
-            if (self.errorView) {
+            [_errorView removeFromSuperview];
+            if (self.loadingView) {
                 CGRect rc = contentView.bounds;
                 rc.origin = CGPointZero;
-                _errorView.frame = rc;
-                if (self.listModel.array.count==0) {
-                    [contentView addSubview:self.errorView];
-                }
-                
+                _loadingView.frame = rc;
+                [contentView addSubview:_loadingView];
             }
-            break;
-        default:
-            // normal
-            [self.emptyView removeFromSuperview];
-            [self.errorView removeFromSuperview];
-            break;
+        } else {
+            if (status == LIST_EMEPTY) {
+                // empty data
+                [_errorView removeFromSuperview];
+                if (self.emptyView) {
+                    CGRect rc = contentView.bounds;
+                    rc.origin = CGPointZero;
+                    _emptyView.frame = rc;
+                    [contentView addSubview:_emptyView];
+                }
+            } else if (status == LIST_ERROR) {
+                // error
+                [_emptyView removeFromSuperview];
+                if (self.errorView) {
+                    CGRect rc = contentView.bounds;
+                    rc.origin = CGPointZero;
+                    _errorView.frame = rc;
+                    if (self.listModel.array.count==0) {
+                        [contentView addSubview:_errorView];
+                    }
+                }
+            }
+        }
     }
 }
 -(void)addObserverForListBaseModelForView:(UIView *)contentView {
@@ -202,12 +182,16 @@ static const NSInteger preloadIndex  = 5;
     __weak UIView* __contentView = contentView;
     
     [createNotifer(SELF.listModel, @"status") makeRelation:self withBlock:^(id value) {
-        if (__contentView)
+        if (__contentView) {
+            [SELF updateRefreshStatus:SELF.listModel.isRefreshing view:__contentView];
             [SELF updateStatus:[value intValue] view:__contentView];
+        }
     }];
     [createNotifer(SELF.listModel, @"refreshing") makeRelation:self withBlock:^(id value) {
-        if (__contentView)
+        if (__contentView) {
             [SELF updateRefreshStatus:[value boolValue] view:__contentView];
+            [SELF updateStatus:SELF.listModel.status view:__contentView];
+        }
     }];
     
     [createNotifer(SELF.listModel, @"gettingMore") makeRelation:self withBlock:^(id value) {
@@ -217,20 +201,11 @@ static const NSInteger preloadIndex  = 5;
     
     [createNotifer(SELF.listModel, @"hasMore") makeRelation:self withBlock:^(id value) {
         if (__contentView) {
+            UIView* footer = SELF.getMoreFooterView;
             if ([value boolValue]) {
-//                if ([__contentView isKindOfClass:[UICollectionView class]]) {
-//                    [(UICollectionView*)__contentView mj_footer].hidden = NO ;
-//
-//                }else{
-//                    [(UITableView*)__contentView mj_footer].hidden = NO;
-//                }
-            }else{
-//                if ([__contentView isKindOfClass:[UICollectionView class]]) {
-//                    [(UICollectionView*)__contentView mj_footer].hidden = YES ;
-//
-//                }else{
-//                    [(UITableView*)__contentView mj_footer].hidden = YES;
-//                }
+                [(UIScrollView*)__contentView addSubview:footer];
+            } else {
+                [footer removeFromSuperview];
             }
         }
     }];
@@ -239,7 +214,13 @@ static const NSInteger preloadIndex  = 5;
 #pragma mark - lazy load
 -(void)setEmptyView:(UIView *)emptyView {
     _firstEmpty = YES;
-    _emptyView = emptyView;
+    if (_emptyView != emptyView) {
+        [_emptyView removeFromSuperview];
+        _emptyView = emptyView;
+        if (_emptyView) {
+            [self updateStatus:_listModel.status view:_listTableView?_listTableView:_listCollectionView];
+        }
+    }
 }
 -(UIView * _Nullable)emptyView{
     if (_firstEmpty == NO) {
@@ -255,7 +236,13 @@ static const NSInteger preloadIndex  = 5;
 
 -(void)setErrorView:(UIView *)errorView {
     _firstError = YES;
-    _errorView = errorView;
+    if (_errorView != errorView) {
+        [_errorView removeFromSuperview];
+        _errorView = errorView;
+        if (_errorView) {
+            [self updateStatus:_listModel.status view:_listTableView?_listTableView:_listCollectionView];
+        }
+    }
 }
 -(UIView * _Nullable)errorView{
     if (_firstError == NO) {
@@ -270,6 +257,32 @@ static const NSInteger preloadIndex  = 5;
     return _errorView;
 }
 
+-(void)setLoadingView:(UIView *)loadingView {
+    _firstLoading = YES;
+    if (_loadingView != loadingView) {
+        [_loadingView removeFromSuperview];
+        _loadingView = loadingView;
+        if (_loadingView) {
+            [self updateRefreshStatus:_listModel.isRefreshing view:_listTableView?_listTableView:_listCollectionView];
+        }
+    }
+}
+-(UIView* _Nullable)loadingView {
+    if (_firstLoading == NO) {
+        _firstLoading = YES;
+        
+        UIActivityIndicatorView* indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        indicator.tintColor = [UIColor blackColor];
+        indicator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+        [indicator startAnimating];
+        
+        _loadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+        [_loadingView addSubview:indicator];
+        indicator.center = CGPointMake(50, 50);
+        _loadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    }
+    return _loadingView;
+}
 #pragma mark - tableView
 
 -(instancetype)initWith:(ListBaseModel *)model tableView:(UITableView *)tableView{
@@ -290,11 +303,20 @@ static const NSInteger preloadIndex  = 5;
         if (tableView && model.array) {
             TableViewConnectArray(_listTableView, _listModel.array, _tableViewArray);
         }
-        if (!self.hideHeadRefresh) {
-//            _listTableView.mj_header = [self refreshHeader];
+        __weak typeof(self) ws = self;
+        if (self.refreshHeaderView) {
+            [_listTableView addSubview:self.refreshHeaderView];
+            self.refreshHeaderView.shouldTrigger = ^BOOL{
+                [ws.listModel refresh];
+                return ws.listModel.isRefreshing;
+            };
         }
-        if (!self.hideFooterGetMore) {
-//            _listTableView.mj_footer = [self refreshFooter];
+        if (self.getMoreFooterView) {
+            [_listTableView addSubview:self.getMoreFooterView];
+            self.getMoreFooterView.shouldTrigger = ^BOOL{
+                [ws.listModel getMore];
+                return ws.listModel.isGettingMore;
+            };
         }
         
         // listener model changed

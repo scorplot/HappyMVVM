@@ -10,127 +10,130 @@
 #import <CollectionViewArray/CollectionViewArray.h>
 #import <CCUIModel/CCUIModel.h>
 #import <TableViewArray/TableViewArray.h>
-//#import <MJRefresh/MJRefresh.h>
+#import "SimpleRefreshingView.h"
 @interface HappyVM ()
 
-@property (nonatomic, strong) HappyModel * listModel;
+@property (nonatomic, strong) HappyModel * model;
 
 @end
 
 @implementation HappyVM
 {
-    UICollectionView * _listCollectionView;
+    UICollectionView * _collectionView;
     CollectionViewArray * _collectionViewArray;
     
-    UITableView * _listTableView;
+    UITableView * _tableView;
     TableViewArray * _tableViewArray;
     
     BOOL _firstError;
     UIView* _errorView;
+    BOOL _firstLoading;
+    UIView* _loadingView;
     
-    int _ingoreCountRefresh;
+    BOOL _firstRefresh;
+    UIView<ScrollRefreshHeaderProtocal>* _refreshHeaderView;
 }
-//-(MJRefreshHeader*)refreshHeader{
-//    typeof(self) __weak SELF = self;
-//    MJRefreshHeader * header = [MJRefreshHeader headerWithRefreshingBlock:^{
-//        [SELF refresh];
-//    }];
-//
-//    return header;
-//}
-//-(void)setHideHeadRefresh:(BOOL)hideHeadRefresh{
-//    _hideHeadRefresh = hideHeadRefresh;
-//    if (hideHeadRefresh) {
-//        if (self.listTableView) {
-//            self.listTableView.mj_header = nil;
-//        }
-//        if (self.listCollectionView) {
-//            self.listCollectionView.mj_header = nil;
-//        }
-//    }
-//}
+
+-(void)setRefreshHeaderView:(UIView<ScrollRefreshHeaderProtocal> *)refreshHeaderView {
+    _firstRefresh = YES;
+    _firstRefresh = YES;
+    if (_refreshHeaderView != refreshHeaderView) {
+        [_refreshHeaderView removeFromSuperview];
+        _refreshHeaderView = refreshHeaderView;
+        if (_refreshHeaderView) {
+            [_tableView addSubview:_refreshHeaderView];
+            [_collectionView addSubview:_refreshHeaderView];
+        }
+    }
+}
+-(UIView<ScrollRefreshHeaderProtocal>*)refreshHeaderView {
+    if (_firstRefresh == NO) {
+        _firstRefresh = YES;
+        
+        _refreshHeaderView = [[SimpleRefreshingView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    }
+    return _refreshHeaderView;
+}
+
 -(instancetype)initWith:(HappyModel *)model collectionView:(UICollectionView *)collectionView{
     if (self =  [super init]) {
-        _listModel  = model;
-        _listCollectionView = collectionView;
+        _model  = model;
+        _collectionView = collectionView;
         _collectionViewArray = [[CollectionViewArray alloc] init];
         
-        [self setUpCollectionView:_collectionViewArray collectionView:_listCollectionView];
+        [self setUpCollectionView:_collectionViewArray collectionView:_collectionView];
         
         if (collectionView) {
-            CollectionViewConnectArray(_listCollectionView, nil, _collectionViewArray);
+            CollectionViewConnectArray(_collectionView, nil, _collectionViewArray);
         }
-        if (!self.hideHeadRefresh) {
-//            _listCollectionView.mj_header = [self refreshHeader];
+        __weak typeof(self) ws = self;
+        if (self.refreshHeaderView) {
+            [_collectionView addSubview:self.refreshHeaderView];
+            self.refreshHeaderView.shouldTrigger = ^BOOL{
+                [ws.model refresh];
+                return ws.model.isRefreshing;
+            };
         }
         // listener model changed
-        [self addObserverForListBaseModelForView:_listCollectionView];
+        [self addObserverForListBaseModelForView:_collectionView];
     }
     return self;
 }
 
--(void)refresh{
-    if (_ingoreCountRefresh > 0) {
-        _ingoreCountRefresh--;
-        return;
-    }
-    
-    [_listModel refresh];
-}
 -(void)updateRefreshStatus:(BOOL)value view:(UIView*)contentView {
+    _refreshHeaderView.refreshing = _model.isRefreshing;
     if (value) {
-        // being refresh
-//        if ([contentView isKindOfClass:[UICollectionView class]]) {
-//            if ([(UICollectionView*)contentView mj_header].state != MJRefreshStateRefreshing)
-//                _ingoreCountRefresh++;
-//            [[(UICollectionView*)contentView mj_header] beginRefreshing];
-//        }else{
-//            if ([(UITableView*)contentView mj_header].state != MJRefreshStateRefreshing)
-//                _ingoreCountRefresh++;
-//            [[(UITableView*)contentView mj_header] beginRefreshing];
-//        }
         if (_startRefresh) _startRefresh();
     } else {
-        // refresh end
-//        if ([contentView isKindOfClass:[UICollectionView class]]) {
-//            [[(UICollectionView*)contentView mj_header] endRefreshing];
-//        } else {
-//            [[(UITableView*)contentView mj_header] endRefreshing];
-//        }
         if (_didRefresh) _didRefresh();
     }
 }
 
 -(void)updateStatus:(BaseModelStatus)status view:(UIView*)contentView {
-    switch (status) {
-        case MODEL_ERROR:
-            // error
-            if (self.errorView) {
+    if (status == MODEL_NORMAL) {
+        [self.loadingView removeFromSuperview];
+    } else {
+        if (_model.isRefreshing) {
+            [self.errorView removeFromSuperview];
+            if (self.loadingView) {
                 CGRect rc = contentView.bounds;
                 rc.origin = CGPointZero;
-                _errorView.frame = rc;
-                if (self.listModel.model == nil) {
-                    [contentView addSubview:self.errorView];
-                }
+                _loadingView.frame = rc;
+                [contentView addSubview:_loadingView];
             }
-            break;
-        default:
-            // normal
-            [self.errorView removeFromSuperview];
-            break;
+        } else {
+            if (status == MODEL_ERROR) {
+                // error
+                if (self.errorView) {
+                    CGRect rc = contentView.bounds;
+                    rc.origin = CGPointZero;
+                    _errorView.frame = rc;
+                    if (self.model.model == nil) {
+                        [contentView addSubview:self.errorView];
+                    }
+                }
+            } else {
+                [self.errorView removeFromSuperview];
+            }
+            [self.loadingView removeFromSuperview];
+        }
     }
 }
 -(void)addObserverForListBaseModelForView:(UIView *)contentView {
     typeof(self) __weak SELF = self;
     __weak UIView* __contentView = contentView;
     
-    [createNotifer(SELF.listModel, @"status") makeRelation:self withBlock:^(id value) {
-        if (__contentView)
+    [createNotifer(SELF.model, @"status") makeRelation:self withBlock:^(id value) {
+        if (__contentView) {
+            [SELF updateRefreshStatus:SELF.model.isRefreshing view:__contentView];
             [SELF updateStatus:[value intValue] view:__contentView];
+        }
     }];
-    [createNotifer(SELF.listModel, @"refreshing") makeRelation:self withBlock:^(id value) {
-        if (__contentView)
+    [createNotifer(SELF.model, @"refreshing") makeRelation:self withBlock:^(id value) {
+        if (__contentView) {
             [SELF updateRefreshStatus:[value boolValue] view:__contentView];
+            [SELF updateStatus:SELF.model.status view:__contentView];
+        }
     }];
 }
 
@@ -152,26 +155,50 @@
     return _errorView;
 }
 
+-(void)setLoadingView:(UIView *)loadingView {
+    _firstLoading = YES;
+    _loadingView = loadingView;
+}
+-(UIView* _Nullable)loadingView {
+    if (_firstLoading == NO) {
+        _firstLoading = YES;
+        
+        UIActivityIndicatorView* indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        indicator.tintColor = [UIColor blackColor];
+        indicator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+        [indicator startAnimating];
+        
+        _loadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+        [_loadingView addSubview:indicator];
+        indicator.center = CGPointMake(50, 50);
+        _loadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    }
+    return _loadingView;
+}
 #pragma mark - tableView
-
 -(instancetype)initWith:(HappyModel *)model tableView:(UITableView *)tableView{
     if (self = [super init]) {
-        _listModel  = model;
-        _listTableView = tableView;
+        _model  = model;
+        _tableView = tableView;
         _tableViewArray = [[TableViewArray alloc] init];
-        _listTableView.tableFooterView = [[UIView alloc] init];
+        _tableView.tableFooterView = [[UIView alloc] init];
         
-        [self setUpTableView:_tableViewArray tableView:_listTableView];
+        [self setUpTableView:_tableViewArray tableView:_tableView];
         
         if (tableView) {
-            TableViewConnectArray(_listTableView, nil, _tableViewArray);
+            TableViewConnectArray(_tableView, nil, _tableViewArray);
         }
-        if (!self.hideHeadRefresh) {
-//            _listTableView.mj_header = [self refreshHeader];
+        __weak typeof(self) ws = self;
+        if (self.refreshHeaderView) {
+            [_tableView addSubview:self.refreshHeaderView];
+            self.refreshHeaderView.shouldTrigger = ^BOOL{
+                [ws.model refresh];
+                return ws.model.isRefreshing;
+            };
         }
         
         // listener model changed
-        [self addObserverForListBaseModelForView:_listTableView];
+        [self addObserverForListBaseModelForView:_tableView];
     }
     return self;
 }

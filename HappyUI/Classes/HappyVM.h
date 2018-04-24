@@ -6,12 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HappyBIProtocal.h"
+
 @class CollectionViewArray;
 @class TableViewArray;
 @class HappyModel;
 
 @interface HappyVM : NSObject
-@property (nonatomic) BOOL hideHeadRefresh;
 
 /**
  refresh callback
@@ -24,10 +25,17 @@
  */
 @property (nonatomic, strong) UIView* _Nullable errorView;
 
-@property (nonatomic, readonly) HappyModel * _Nullable listModel;
+/**
+ loading from empty
+ */
+@property (nonatomic, strong) UIView* _Nullable loadingView;
 
-@property (nonatomic, readonly)  UICollectionView* _Nullable  listCollectionView;
-@property (nonatomic, readonly)  UITableView* _Nullable  listTableView;
+@property (nonatomic, strong) UIView<ScrollRefreshHeaderProtocal>* _Nullable refreshHeaderView;
+
+@property (nonatomic, readonly) HappyModel * _Nullable model;
+
+@property (nonatomic, readonly)  UICollectionView* _Nullable  collectionView;
+@property (nonatomic, readonly)  UITableView* _Nullable  tableView;
 
 //collectioView
 -(instancetype _Nonnull )initWith:(HappyModel*_Nonnull)model collectionView:(UICollectionView*_Nonnull)collectionView;

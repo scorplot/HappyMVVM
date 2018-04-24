@@ -4,7 +4,7 @@ PODS:
   - CircleReferenceCheck (0.0.1)
   - CollectionViewArray (0.1.1):
     - MutableArrayListener
-  - HappyUI (0.1.3):
+  - HappyUI (0.1.5):
     - CCUIModel
     - CollectionViewArray
     - RealReachability
@@ -33,7 +33,7 @@ SPEC CHECKSUMS:
   CCUIModel: b5e0e490caef73dd4e423f332b1ca850d6106368
   CircleReferenceCheck: 5ef0dbaff301108a523f845bf81dfa9a12a83024
   CollectionViewArray: 7d27b09462af7d14b1ff897ae137c2caae06a38c
-  HappyUI: f2b5435aa133644f9a3744ca91d3cbf654b15f01
+  HappyUI: bba10d2182b9141691d1a39ca2648fbfedfc1481
   MutableArrayListener: 80566460c0f35ffe89d76a90ebb33adf7f413182
   RealReachability: a8c483900986a0f3305733961effbfbb00637a02
   TableViewArray: 288501b4abc71efabb82ce2f4bb397f1c2fa25a9
