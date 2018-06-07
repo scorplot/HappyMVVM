@@ -19,7 +19,7 @@
 		154249797DBFA678BB77A3E688D9A666 /* CircleReferenceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B69179136DB5FF9E5BC3616AE85F64E /* CircleReferenceCheck.framework */; };
 		16703406F8E0ACCF6F60F9C0B201D8E2 /* TableViewArray.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06308E73281F9EBE473595097E8482EA /* TableViewArray.framework */; };
 		1784A70D68937B6CA46BF8375C7EBD4C /* PingHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0E09A9FB12859CB2BFF95C5271C44582 /* PingHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1CE6FEDF4404C41DD16D6C86C7922526 /* HappyModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EF87C8B4D09C7A41EFFEC2F7BF594919 /* HappyModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1CE6FEDF4404C41DD16D6C86C7922526 /* HappyBI.h in Headers */ = {isa = PBXBuildFile; fileRef = EF87C8B4D09C7A41EFFEC2F7BF594919 /* HappyBI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E6695E1D39752873EEC33C305B505B5 /* ReachStateUnloaded.h in Headers */ = {isa = PBXBuildFile; fileRef = 466F211CD110CA0CA2056B69EF100F0B /* ReachStateUnloaded.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		1EC104E49E2CA6B954048C4E3C83E20F /* CircleReferenceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B69179136DB5FF9E5BC3616AE85F64E /* CircleReferenceCheck.framework */; };
 		1EC566609DF7A6436544E8D09AAAF894 /* UIView+HappyUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E64959BDC19A960A45EFFFD1300105E /* UIView+HappyUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -37,7 +37,7 @@
 		42674F2FBA10ED78C759088D2E8C0FDB /* FSMStateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6B7AD6BE019A8488DA54DADBECFB95 /* FSMStateUtil.m */; };
 		426EB33367A1C0D681C97DC2928B316A /* CircleReferenceCheck-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D08E9962E300742F9318026B4D6F28D /* CircleReferenceCheck-dummy.m */; };
 		45641647D9EB06F19BF2E6ADF7F666A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230E9F1FC435F6F05CB6558985A7DDF0 /* Foundation.framework */; };
-		49B288E08C978A7ADDC144A85E944682 /* ListBaseModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C33516C1144F4DE3A30284717589D3C /* ListBaseModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		49B288E08C978A7ADDC144A85E944682 /* HappyListBI.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C33516C1144F4DE3A30284717589D3C /* HappyListBI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4A86B26941361302D88CC27CBEDFE2C5 /* SimpleRefreshingView.h in Headers */ = {isa = PBXBuildFile; fileRef = F8657E7266726B4A488AAA2885520635 /* SimpleRefreshingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4A9B8B1D36F860F3DBD219C5B813ADE0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230E9F1FC435F6F05CB6558985A7DDF0 /* Foundation.framework */; };
 		4CDEEBA54BF379767C1C9BADD46B8C54 /* FSMStateUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CCA78A877A5506567A159B258003C403 /* FSMStateUtil.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -54,12 +54,12 @@
 		5C2062BD55D6B88A4F81CC68E44E6537 /* HappyContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B9AEB5D607D81FA2C92F741154D23FD /* HappyContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D69486B5076D888E9E1CA29E22DE08E /* HappyUI-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C1598565687753D354EB49D5BB5F141 /* HappyUI-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DE45440E9006709F5E0FD096A0FD97B /* TaskEnginer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B76FF580174DBB616E4AE121E2D61A87 /* TaskEnginer-dummy.m */; };
-		5E3EDA0F109070740A3AF92B5A35B7ED /* HappyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F62BA6FB3BF81BBA44EF0E1A032CD4BB /* HappyModel.m */; };
+		5E3EDA0F109070740A3AF92B5A35B7ED /* HappyBI.m in Sources */ = {isa = PBXBuildFile; fileRef = F62BA6FB3BF81BBA44EF0E1A032CD4BB /* HappyBI.m */; };
 		606F05B86771EC3495B3CCA31C6BBDD2 /* CollectionViewProtocolListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 09877B4726B542E636E3D973E3BE2CD6 /* CollectionViewProtocolListener.m */; };
-		60F75878B642ADCA8881FC9B1006B4EF /* SimpleListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E492AF6BAC8E81CC6468FCD9793C8C1C /* SimpleListModel.m */; };
+		60F75878B642ADCA8881FC9B1006B4EF /* SimpleListBI.m in Sources */ = {isa = PBXBuildFile; fileRef = E492AF6BAC8E81CC6468FCD9793C8C1C /* SimpleListBI.m */; };
 		6105A6710A5E2E1D4D8026A0BF99239C /* MutableArrayListener.h in Headers */ = {isa = PBXBuildFile; fileRef = FCAB01C121CEED442A6EA4A4519C565A /* MutableArrayListener.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63D4F1C400494426A71B3C2522905578 /* MutableArrayListener.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319D85F2F4E10FB0E14590649AE2AF31 /* MutableArrayListener.framework */; };
-		648D175EA5751EBE0B7AD933F42DBC3A /* SimpleListModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BB063363DF26EC91FED875F0BC39BCF /* SimpleListModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		648D175EA5751EBE0B7AD933F42DBC3A /* SimpleListBI.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BB063363DF26EC91FED875F0BC39BCF /* SimpleListBI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		659AE4EC85B5F75DC6BD370EED4334C9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230E9F1FC435F6F05CB6558985A7DDF0 /* Foundation.framework */; };
 		66C2A079BD233583B75B1EF4ADC852C5 /* ReachStateWWAN.h in Headers */ = {isa = PBXBuildFile; fileRef = 353C4F2C4D1AA46168241C77563D2542 /* ReachStateWWAN.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		6996DB8F9EF44141918CE646E0C502EF /* CircleReferenceCheck-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E3518E44F3733DB5628105DA76F2ED07 /* CircleReferenceCheck-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -82,14 +82,14 @@
 		962F07675532B151A5C408219AC537D2 /* TableViewArray-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FF24CBDB8F33D2270B16F974F1070DCD /* TableViewArray-dummy.m */; };
 		9755DA143F3DEB4CF56021F4A5556CDA /* CircleReferenceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B69179136DB5FF9E5BC3616AE85F64E /* CircleReferenceCheck.framework */; };
 		9E4B90006F9A6573C6D85F005A2DC8E0 /* MutableArrayListener-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF9CD14E7994A6A9614C3A92687C281 /* MutableArrayListener-dummy.m */; };
-		A03609302FB2D3DFDDBB9E4EFCC2F467 /* SimpleHappyModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 8031EF1F0D1088187E4C39EEF4AA77BA /* SimpleHappyModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A03609302FB2D3DFDDBB9E4EFCC2F467 /* SimpleHappyBI.h in Headers */ = {isa = PBXBuildFile; fileRef = 8031EF1F0D1088187E4C39EEF4AA77BA /* SimpleHappyBI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A1C265E75D44298D19081DD8544B7FEC /* ReachStateWIFI.h in Headers */ = {isa = PBXBuildFile; fileRef = 1879509BFC5A59AD4DDD113B139E063C /* ReachStateWIFI.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		A3C3DB3EF1B19DBBD0A937A326BA0DB6 /* NSMutableArray+Listener.h in Headers */ = {isa = PBXBuildFile; fileRef = FDCDDE244372E12D9CAB6724EB23CA07 /* NSMutableArray+Listener.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A680982A7022456D0A8C08A942FD3090 /* ListVM.h in Headers */ = {isa = PBXBuildFile; fileRef = 507963B92288CDDE899F4A548CA71A5E /* ListVM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A7D00D51D9CF1447AB903B83BF671D78 /* RealReachability-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E7D246D1C174085FF0D11BEA9DB949 /* RealReachability-dummy.m */; };
 		A9C1D202D3BACBD617764E621B956C25 /* CCUIModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E4699710C53B110814E04A382CF5040 /* CCUIModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA837C35ACF50908DE847CE385ED23E7 /* JointTaskManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F3D1F2D564CE62FB732997850EADBC41 /* JointTaskManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AB55F841FF114470C43E9DE5717307C5 /* SimpleHappyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B7259644EE63D66C29265DDAD12046 /* SimpleHappyModel.m */; };
+		AB55F841FF114470C43E9DE5717307C5 /* SimpleHappyBI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B7259644EE63D66C29265DDAD12046 /* SimpleHappyBI.m */; };
 		B1276CA5CBEB8F89C6243D483ED28BAD /* CollectionViewArray-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 430939934C97A3247058F0CB6D6735CC /* CollectionViewArray-dummy.m */; };
 		B18DEF923BCFE600B1F5FF30B660A4DD /* TaskRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 19AF7B61FC16218FA915AA43E7D433D8 /* TaskRoute.m */; };
 		B3F07E0682BFEC3B8A45E8535596DFF0 /* ReachStateWIFI.m in Sources */ = {isa = PBXBuildFile; fileRef = 00EE00222F08CCE4EFC22302D10A8CD9 /* ReachStateWIFI.m */; };
@@ -109,7 +109,7 @@
 		CB505FB42098F1AD54109602E978D65B /* SubTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 996B89F88BCAE24AD13C33439516F67C /* SubTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE77C6576875EA064895BA27FBBCF69D /* SaveFileSubTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 71743278062E88FE8377A0C38522533C /* SaveFileSubTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEBF10DA98DDA7AB6F95E9F7097FB3D7 /* PingFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBC31A9B7FF4483608A7F0F0BF32211 /* PingFoundation.m */; };
-		D08C86DB9369BFC15A81C44ABDF4EC02 /* ListBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4BBA815EC486EB58B3562990DA6F84 /* ListBaseModel.m */; };
+		D08C86DB9369BFC15A81C44ABDF4EC02 /* HappyListBI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4BBA815EC486EB58B3562990DA6F84 /* HappyListBI.m */; };
 		D56772CA1855C28FED9E9DA2C49229A2 /* ReachState.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F64E1E80315400E5FAD4B5CAC490AFD /* ReachState.m */; };
 		D58491A3070FCD0913396DF8E759E84E /* CollectionViewArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 8877D186BC177553F6ACE80C5AF0197E /* CollectionViewArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D6BD01879090D13B6E3407A5DA6E2F2C /* PingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1449949AEFEDF7A15C75402405F0FC54 /* PingHelper.m */; };
@@ -303,11 +303,11 @@
 		046EC557C4BE6BE5EE936746B4189AD9 /* MutableArrayListener.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MutableArrayListener.m; path = MutableArrayListener/Classes/MutableArrayListener.m; sourceTree = "<group>"; };
 		0570B08A78DDA29CDAC5FF7A1B2E9AA0 /* Pods-HappyUI_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HappyUI_Example-frameworks.sh"; sourceTree = "<group>"; };
 		06308E73281F9EBE473595097E8482EA /* TableViewArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableViewArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		083350D9EECA3AE97B42BDBD395EAF61 /* CCUIModel.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CCUIModel.modulemap; sourceTree = "<group>"; };
+		083350D9EECA3AE97B42BDBD395EAF61 /* CCUIModel.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = CCUIModel.modulemap; sourceTree = "<group>"; };
 		09877B4726B542E636E3D973E3BE2CD6 /* CollectionViewProtocolListener.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CollectionViewProtocolListener.m; path = CollectionViewArray/Classes/CollectionViewProtocolListener.m; sourceTree = "<group>"; };
 		0C1598565687753D354EB49D5BB5F141 /* HappyUI-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HappyUI-umbrella.h"; sourceTree = "<group>"; };
 		0D5E629F77B50F3F600FD5A790C8DBD6 /* Pods-HappyUI_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HappyUI_Tests-umbrella.h"; sourceTree = "<group>"; };
-		0D77EF659BBEF2EDCC71E7788663A7B8 /* CollectionViewArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CollectionViewArray.framework; path = CollectionViewArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D77EF659BBEF2EDCC71E7788663A7B8 /* CollectionViewArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CollectionViewArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E09A9FB12859CB2BFF95C5271C44582 /* PingHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PingHelper.h; path = RealReachability/Ping/PingHelper.h; sourceTree = "<group>"; };
 		0F64E1E80315400E5FAD4B5CAC490AFD /* ReachState.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReachState.m; path = RealReachability/FSM/ReachState.m; sourceTree = "<group>"; };
 		1416229013A79040FE1D5C2D6413DBDD /* ReachStateUnloaded.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReachStateUnloaded.m; path = RealReachability/FSM/ReachStateUnloaded.m; sourceTree = "<group>"; };
@@ -316,15 +316,15 @@
 		16A1B5F99C0753F08DFAEFF379A05A89 /* TableViewArray.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TableViewArray.m; path = TableViewArray/Classes/TableViewArray.m; sourceTree = "<group>"; };
 		1769DF88521BE3B037EA47253A82B7C0 /* SimpleRefreshingView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleRefreshingView.m; path = HappyUI/Classes/SimpleRefreshingView.m; sourceTree = "<group>"; };
 		1879509BFC5A59AD4DDD113B139E063C /* ReachStateWIFI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReachStateWIFI.h; path = RealReachability/FSM/ReachStateWIFI.h; sourceTree = "<group>"; };
-		18BC316F08DD852341DE078D6C6809E5 /* CircleReferenceCheck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CircleReferenceCheck.framework; path = CircleReferenceCheck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18BC316F08DD852341DE078D6C6809E5 /* CircleReferenceCheck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CircleReferenceCheck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		192173693E9FC8432939F0B8BC36FCE3 /* FSMEngine.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FSMEngine.m; path = RealReachability/FSM/FSMEngine.m; sourceTree = "<group>"; };
 		19AF7B61FC16218FA915AA43E7D433D8 /* TaskRoute.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TaskRoute.m; path = TaskEnginer/Classes/TaskRoute.m; sourceTree = "<group>"; };
 		1A5707AA6541897650FC2F1EA29885DC /* ReachStateUnReachable.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReachStateUnReachable.m; path = RealReachability/FSM/ReachStateUnReachable.m; sourceTree = "<group>"; };
-		1E4BBA815EC486EB58B3562990DA6F84 /* ListBaseModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ListBaseModel.m; path = HappyUI/Classes/ListBaseModel.m; sourceTree = "<group>"; };
+		1E4BBA815EC486EB58B3562990DA6F84 /* HappyListBI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyListBI.m; path = HappyUI/Classes/HappyListBI.m; sourceTree = "<group>"; };
 		1F4123CD40FC74F2B4A187C1914A1305 /* UINavigationController+HappyUI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+HappyUI.m"; path = "HappyUI/Classes/UINavigationController+HappyUI.m"; sourceTree = "<group>"; };
 		21BB1D1198A5FD58B828023F3BE6C9DF /* HappyAccount.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyAccount.h; path = HappyUI/Classes/HappyAccount.h; sourceTree = "<group>"; };
 		230E9F1FC435F6F05CB6558985A7DDF0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		24884753384BEEE6B0F10D0E71DBBA42 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		24884753384BEEE6B0F10D0E71DBBA42 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		24C662277BD8644A600D0647E185A91C /* CircleReferenceCheck.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CircleReferenceCheck.xcconfig; sourceTree = "<group>"; };
 		28DF91AC1A62EE6D3C213B43998EB731 /* TaskRoute.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TaskRoute.h; path = TaskEnginer/Classes/TaskRoute.h; sourceTree = "<group>"; };
 		294A4FCB4276F0E41E194DACB9A3FBFC /* JointTaskItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JointTaskItem.h; path = TaskEnginer/Classes/JointTaskItem.h; sourceTree = "<group>"; };
@@ -334,17 +334,17 @@
 		2D2D54C234FC1FA1EBFA31E6E6256B30 /* TaskEnginer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TaskEnginer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DBB29E45F10D11573451C77A5C5EED7 /* RealReachability.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RealReachability.m; path = RealReachability/RealReachability.m; sourceTree = "<group>"; };
 		30909EE9A8B3DDB010976789DA1B3C1E /* SubTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SubTask.m; path = TaskEnginer/Classes/SubTask.m; sourceTree = "<group>"; };
-		30BD5CB71A6DEC943BEDFB38230D6BDA /* MutableArrayListener.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MutableArrayListener.framework; path = MutableArrayListener.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		30BD5CB71A6DEC943BEDFB38230D6BDA /* MutableArrayListener.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MutableArrayListener.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		30E7D246D1C174085FF0D11BEA9DB949 /* RealReachability-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RealReachability-dummy.m"; sourceTree = "<group>"; };
-		30FF1A247F9B15557C4C7DF9B0602CB5 /* Pods_HappyUI_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HappyUI_Example.framework; path = "Pods-HappyUI_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30FF1A247F9B15557C4C7DF9B0602CB5 /* Pods_HappyUI_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HappyUI_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		319D85F2F4E10FB0E14590649AE2AF31 /* MutableArrayListener.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MutableArrayListener.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32572A800CE8D7D48E7276FB4BDD00EA /* NSMutableArrayListenerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NSMutableArrayListenerDelegate.h; path = MutableArrayListener/Classes/NSMutableArrayListenerDelegate.h; sourceTree = "<group>"; };
 		331BF152943E82E5914B9822F338E41B /* Pods-HappyUI_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HappyUI_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		33C55F7EDD473C77996AA1DF1CDAD0A6 /* Pods-HappyUI_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HappyUI_Example.modulemap"; sourceTree = "<group>"; };
+		33C55F7EDD473C77996AA1DF1CDAD0A6 /* Pods-HappyUI_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-HappyUI_Example.modulemap"; sourceTree = "<group>"; };
 		353C4F2C4D1AA46168241C77563D2542 /* ReachStateWWAN.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReachStateWWAN.h; path = RealReachability/FSM/ReachStateWWAN.h; sourceTree = "<group>"; };
 		38B4CCF87D72FED05080C7C96D03DE74 /* ListBaseResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ListBaseResponse.m; path = HappyUI/Classes/ListBaseResponse.m; sourceTree = "<group>"; };
-		3BB063363DF26EC91FED875F0BC39BCF /* SimpleListModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SimpleListModel.h; path = HappyUI/Classes/SimpleListModel.h; sourceTree = "<group>"; };
-		3C33516C1144F4DE3A30284717589D3C /* ListBaseModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ListBaseModel.h; path = HappyUI/Classes/ListBaseModel.h; sourceTree = "<group>"; };
+		3BB063363DF26EC91FED875F0BC39BCF /* SimpleListBI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SimpleListBI.h; path = HappyUI/Classes/SimpleListBI.h; sourceTree = "<group>"; };
+		3C33516C1144F4DE3A30284717589D3C /* HappyListBI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyListBI.h; path = HappyUI/Classes/HappyListBI.h; sourceTree = "<group>"; };
 		3CFF0A6DEE08AEED7CE1C01669D968CD /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D08E9962E300742F9318026B4D6F28D /* CircleReferenceCheck-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CircleReferenceCheck-dummy.m"; sourceTree = "<group>"; };
 		3D89D0C31964DFF52C1A39AD6E499E1B /* Pods-HappyUI_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HappyUI_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -354,7 +354,7 @@
 		447244943D46803F50008E4416E9A581 /* SaveFileSubTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SaveFileSubTask.m; path = TaskEnginer/Classes/SaveFileSubTask.m; sourceTree = "<group>"; };
 		466F211CD110CA0CA2056B69EF100F0B /* ReachStateUnloaded.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReachStateUnloaded.h; path = RealReachability/FSM/ReachStateUnloaded.h; sourceTree = "<group>"; };
 		46E61A178259BD64758447837424800A /* HappyUI-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HappyUI-prefix.pch"; sourceTree = "<group>"; };
-		497CC9D7CA40DED8477D6D32F1F95330 /* Pods-HappyUI_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HappyUI_Tests.modulemap"; sourceTree = "<group>"; };
+		497CC9D7CA40DED8477D6D32F1F95330 /* Pods-HappyUI_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-HappyUI_Tests.modulemap"; sourceTree = "<group>"; };
 		4A0C4C2BCE1996A255FF1E656C839F2B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D725FFADD8807229EDFBD8A39574EE5 /* RealReachability-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RealReachability-prefix.pch"; sourceTree = "<group>"; };
 		4DBC31A9B7FF4483608A7F0F0BF32211 /* PingFoundation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PingFoundation.m; path = RealReachability/Ping/PingFoundation.m; sourceTree = "<group>"; };
@@ -364,13 +364,13 @@
 		524168CEFE273C19CE4C639E8315C6F3 /* Pods-HappyUI_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HappyUI_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5A220A405A555050AE9C560D6DA9E0CE /* CollectionViewArray.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CollectionViewArray.m; path = CollectionViewArray/Classes/CollectionViewArray.m; sourceTree = "<group>"; };
 		5EE369754459D9FD5013AE62A74C4105 /* JointTaskManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JointTaskManager.m; path = TaskEnginer/Classes/JointTaskManager.m; sourceTree = "<group>"; };
-		60C05B636CEE6A74861C3C863E141707 /* HappyUI.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = HappyUI.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		60C05B636CEE6A74861C3C863E141707 /* HappyUI.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = HappyUI.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6267385E2DCE2B4F4E94D174EEF0272A /* CCUIModel-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CCUIModel-dummy.m"; sourceTree = "<group>"; };
 		633E84BEAE821D2F1186DB9A8988C4E5 /* Pods-HappyUI_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HappyUI_Example-umbrella.h"; sourceTree = "<group>"; };
 		66885CD3B3875F35E86EB2A6A924D38C /* Pods-HappyUI_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HappyUI_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		68FF859BBCBA78EA7BA6D0BC0E3F731A /* JointTaskItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JointTaskItem.m; path = TaskEnginer/Classes/JointTaskItem.m; sourceTree = "<group>"; };
 		694D52F9BF221BF106CB5CEBB4F7E957 /* ReachStateLoading.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReachStateLoading.h; path = RealReachability/FSM/ReachStateLoading.h; sourceTree = "<group>"; };
-		6A2811C0B810053EA53DA23D65238F18 /* CollectionViewArray.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CollectionViewArray.modulemap; sourceTree = "<group>"; };
+		6A2811C0B810053EA53DA23D65238F18 /* CollectionViewArray.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = CollectionViewArray.modulemap; sourceTree = "<group>"; };
 		6A2F0CF98D45B17DF061532AD8923F72 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B456ABBD462AD111DA6DAAF38C22E9D /* LocalConnection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LocalConnection.m; path = RealReachability/Connection/LocalConnection.m; sourceTree = "<group>"; };
 		6B9AEB5D607D81FA2C92F741154D23FD /* HappyContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyContext.h; path = HappyUI/Classes/HappyContext.h; sourceTree = "<group>"; };
@@ -381,13 +381,13 @@
 		750131884B64C0AB2DE4632A5EC9E229 /* TableViewArray-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TableViewArray-prefix.pch"; sourceTree = "<group>"; };
 		7647D7E4598022709EEB5C3F96011364 /* Pods-HappyUI_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HappyUI_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		78D2FE3B5A83DB598DA5BFE2A0B54CAD /* CCUIModel-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CCUIModel-prefix.pch"; sourceTree = "<group>"; };
-		7902537BD2750884DA7FDBB51F046969 /* RealReachability.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = RealReachability.modulemap; sourceTree = "<group>"; };
+		7902537BD2750884DA7FDBB51F046969 /* RealReachability.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = RealReachability.modulemap; sourceTree = "<group>"; };
 		7AC81BCC462B76A2CEDFD273FA06B63E /* TaskEnginer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TaskEnginer-prefix.pch"; sourceTree = "<group>"; };
 		7B2CF34C387E1645E47769BC2F5DC9C6 /* Pods-HappyUI_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HappyUI_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		8031EF1F0D1088187E4C39EEF4AA77BA /* SimpleHappyModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SimpleHappyModel.h; path = HappyUI/Classes/SimpleHappyModel.h; sourceTree = "<group>"; };
+		8031EF1F0D1088187E4C39EEF4AA77BA /* SimpleHappyBI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SimpleHappyBI.h; path = HappyUI/Classes/SimpleHappyBI.h; sourceTree = "<group>"; };
 		8131AEE78518BEDE8F288D992FB0F71B /* ReachState.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReachState.h; path = RealReachability/FSM/ReachState.h; sourceTree = "<group>"; };
 		841972032166B309352E75812BBE627F /* ListVM.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ListVM.m; path = HappyUI/Classes/ListVM.m; sourceTree = "<group>"; };
-		846B17089DA8DE5EDBD8F2CAF2F1C6B4 /* CircleReferenceCheck.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CircleReferenceCheck.modulemap; sourceTree = "<group>"; };
+		846B17089DA8DE5EDBD8F2CAF2F1C6B4 /* CircleReferenceCheck.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = CircleReferenceCheck.modulemap; sourceTree = "<group>"; };
 		868B28B3DE523A7D45C999264C5A7B4A /* ListBaseResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ListBaseResponse.h; path = HappyUI/Classes/ListBaseResponse.h; sourceTree = "<group>"; };
 		86D371F31B2D371840379C444B280967 /* TaskEnginer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TaskEnginer.xcconfig; sourceTree = "<group>"; };
 		873A7AA3BAA9CF6AF43454BAB793CCA0 /* MutableArrayListener.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MutableArrayListener.xcconfig; sourceTree = "<group>"; };
@@ -397,9 +397,9 @@
 		8E4699710C53B110814E04A382CF5040 /* CCUIModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CCUIModel.h; path = CCUIModel/Classes/CCUIModel.h; sourceTree = "<group>"; };
 		8E64959BDC19A960A45EFFFD1300105E /* UIView+HappyUI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+HappyUI.h"; path = "HappyUI/Classes/UIView+HappyUI.h"; sourceTree = "<group>"; };
 		8E9AFDBB9B48380BF6AA226BC6BDA27C /* CCUIModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CCUIModel.m; path = CCUIModel/Classes/CCUIModel.m; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		96294F458331F0782B418C98BCB1AEE7 /* Pods-HappyUI_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HappyUI_Tests-dummy.m"; sourceTree = "<group>"; };
-		96776A6D84071A0EA97AFB9A4E60DBAE /* TableViewArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TableViewArray.framework; path = TableViewArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		96776A6D84071A0EA97AFB9A4E60DBAE /* TableViewArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableViewArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97BAAF3B101FBA1D3A258F610B9BEA05 /* Pods-HappyUI_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HappyUI_Example.release.xcconfig"; sourceTree = "<group>"; };
 		98342F49E7E2C0A19D03F83F6C85686A /* MutableArrayListener-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MutableArrayListener-umbrella.h"; sourceTree = "<group>"; };
 		996AF5E6404800B6AF365A8F42B8E1A7 /* TableViewProtocolListener.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TableViewProtocolListener.h; path = TableViewArray/Classes/TableViewProtocolListener.h; sourceTree = "<group>"; };
@@ -422,47 +422,47 @@
 		B97817BDD515751AE8FB091FE43E20B3 /* HappyAccount.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyAccount.m; path = HappyUI/Classes/HappyAccount.m; sourceTree = "<group>"; };
 		BEA6A7EE34AAF0FA2EE9972C10C1BBD2 /* HappyVM.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyVM.h; path = HappyUI/Classes/HappyVM.h; sourceTree = "<group>"; };
 		BEF7E568E0302045932A3E65BACB0681 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C0E96829C2E9CA97718ED4B0E3AE4E56 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		C0E96829C2E9CA97718ED4B0E3AE4E56 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C316D9501B75F3DC37416AB5652C7E5C /* SimpleGetMoreView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleGetMoreView.m; path = HappyUI/Classes/SimpleGetMoreView.m; sourceTree = "<group>"; };
 		C52C2F5768ADA7F3CCF79BBA70BDE9B2 /* LocalConnection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LocalConnection.h; path = RealReachability/Connection/LocalConnection.h; sourceTree = "<group>"; };
 		C6CA721D8F0FB80169403AE15B259AC4 /* RealReachability.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RealReachability.h; path = RealReachability/RealReachability.h; sourceTree = "<group>"; };
 		CA541F9F55487458A22CF64819D7C39C /* HappyVM.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyVM.m; path = HappyUI/Classes/HappyVM.m; sourceTree = "<group>"; };
 		CAEA5D5C09A6A4E148A6E0D8447D6428 /* Pods-HappyUI_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HappyUI_Tests-resources.sh"; sourceTree = "<group>"; };
-		CB1BA102DEF34D900DC3C0AF9EACB3BE /* RealReachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = RealReachability.framework; path = RealReachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB1BA102DEF34D900DC3C0AF9EACB3BE /* RealReachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealReachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBB2959BF06AE698664CD0A13BA608F8 /* CircleReferenceCheck-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CircleReferenceCheck-prefix.pch"; sourceTree = "<group>"; };
-		CC12366E13649D87E692E9A1B916CFFD /* TaskEnginer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TaskEnginer.framework; path = TaskEnginer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC12366E13649D87E692E9A1B916CFFD /* TaskEnginer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TaskEnginer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCA78A877A5506567A159B258003C403 /* FSMStateUtil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FSMStateUtil.h; path = RealReachability/FSM/FSMStateUtil.h; sourceTree = "<group>"; };
-		CD12DD52F8E6FBFB5A8D41A6D973A5B8 /* HappyUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HappyUI.framework; path = HappyUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD12DD52F8E6FBFB5A8D41A6D973A5B8 /* HappyUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HappyUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6B7AD6BE019A8488DA54DADBECFB95 /* FSMStateUtil.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FSMStateUtil.m; path = RealReachability/FSM/FSMStateUtil.m; sourceTree = "<group>"; };
 		CE43955EE5CA65C0114F73B2E2D768B1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D3B7259644EE63D66C29265DDAD12046 /* SimpleHappyModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleHappyModel.m; path = HappyUI/Classes/SimpleHappyModel.m; sourceTree = "<group>"; };
-		D72E8347B53E9CF871DE485DA92111E5 /* TaskEnginer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = TaskEnginer.modulemap; sourceTree = "<group>"; };
+		D3B7259644EE63D66C29265DDAD12046 /* SimpleHappyBI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleHappyBI.m; path = HappyUI/Classes/SimpleHappyBI.m; sourceTree = "<group>"; };
+		D72E8347B53E9CF871DE485DA92111E5 /* TaskEnginer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = TaskEnginer.modulemap; sourceTree = "<group>"; };
 		D9928C61D00DA90FCECA7E1F31F387A4 /* HappyContext.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyContext.m; path = HappyUI/Classes/HappyContext.m; sourceTree = "<group>"; };
 		D995518274A8B4716168F72FE6CDB1A3 /* TaskEnginer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TaskEnginer-umbrella.h"; sourceTree = "<group>"; };
 		DA1F8A2F99B3584713398DFD5EDD5CB4 /* UIViewController+HayypUI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIViewController+HayypUI.h"; path = "HappyUI/Classes/UIViewController+HayypUI.h"; sourceTree = "<group>"; };
 		DEF0E573FB5C4FEEDD635DCC2C4BB79C /* Pods-HappyUI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HappyUI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E04994D90A6F634BEE0B544FF28FCFDC /* Pods-HappyUI_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HappyUI_Example-resources.sh"; sourceTree = "<group>"; };
-		E209C5D46537AE8388029B3B8A927A84 /* TableViewArray.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = TableViewArray.modulemap; sourceTree = "<group>"; };
+		E209C5D46537AE8388029B3B8A927A84 /* TableViewArray.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = TableViewArray.modulemap; sourceTree = "<group>"; };
 		E2358F3DA4C0EBDF9A6214B427955CAA /* RealReachability.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RealReachability.xcconfig; sourceTree = "<group>"; };
 		E3518E44F3733DB5628105DA76F2ED07 /* CircleReferenceCheck-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CircleReferenceCheck-umbrella.h"; sourceTree = "<group>"; };
-		E492AF6BAC8E81CC6468FCD9793C8C1C /* SimpleListModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleListModel.m; path = HappyUI/Classes/SimpleListModel.m; sourceTree = "<group>"; };
+		E492AF6BAC8E81CC6468FCD9793C8C1C /* SimpleListBI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleListBI.m; path = HappyUI/Classes/SimpleListBI.m; sourceTree = "<group>"; };
 		E5C6B42318D0E5CC4A4CD722E1022F01 /* LoadFileSubTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LoadFileSubTask.m; path = TaskEnginer/Classes/LoadFileSubTask.m; sourceTree = "<group>"; };
-		E6D305E4BF937AA5471E6320D77A6A02 /* HappyUI.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = HappyUI.modulemap; sourceTree = "<group>"; };
+		E6D305E4BF937AA5471E6320D77A6A02 /* HappyUI.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = HappyUI.modulemap; sourceTree = "<group>"; };
 		E9635496E3B07B2BEF72A3A45C7B8542 /* RealReachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealReachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA4C4490CC1CF0C67BDB9E667519A492 /* FSMDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FSMDefines.h; path = RealReachability/FSM/FSMDefines.h; sourceTree = "<group>"; };
 		EAB0AAEA441904C23E9C17F72289DE46 /* Pods-HappyUI_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HappyUI_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		EAEB4067054DF659B7B1495D9F2E3868 /* CircleReferenceCheck.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CircleReferenceCheck.m; path = CircleReferenceCheck/Classes/CircleReferenceCheck.m; sourceTree = "<group>"; };
-		EF87C8B4D09C7A41EFFEC2F7BF594919 /* HappyModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyModel.h; path = HappyUI/Classes/HappyModel.h; sourceTree = "<group>"; };
+		EF87C8B4D09C7A41EFFEC2F7BF594919 /* HappyBI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyBI.h; path = HappyUI/Classes/HappyBI.h; sourceTree = "<group>"; };
 		F0BE152D4AD13CE6EA68403BB1FFABA1 /* FSMEngine.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FSMEngine.h; path = RealReachability/FSM/FSMEngine.h; sourceTree = "<group>"; };
-		F186FEA1B292CE0ECFBBBA0F762C96ED /* Pods_HappyUI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HappyUI_Tests.framework; path = "Pods-HappyUI_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F186FEA1B292CE0ECFBBBA0F762C96ED /* Pods_HappyUI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HappyUI_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3A8F66B23B3C0CF881AF76DBE648712 /* HappyUI.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HappyUI.xcconfig; sourceTree = "<group>"; };
 		F3D1F2D564CE62FB732997850EADBC41 /* JointTaskManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JointTaskManager.h; path = TaskEnginer/Classes/JointTaskManager.h; sourceTree = "<group>"; };
-		F62BA6FB3BF81BBA44EF0E1A032CD4BB /* HappyModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyModel.m; path = HappyUI/Classes/HappyModel.m; sourceTree = "<group>"; };
-		F67D26B9A9E214C395A07C7E9220F60B /* CCUIModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CCUIModel.framework; path = CCUIModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F62BA6FB3BF81BBA44EF0E1A032CD4BB /* HappyBI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyBI.m; path = HappyUI/Classes/HappyBI.m; sourceTree = "<group>"; };
+		F67D26B9A9E214C395A07C7E9220F60B /* CCUIModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CCUIModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F813B519984F06AA60D956EEB56CAC8F /* JointSubTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JointSubTask.h; path = TaskEnginer/Classes/JointSubTask.h; sourceTree = "<group>"; };
 		F8657E7266726B4A488AAA2885520635 /* SimpleRefreshingView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SimpleRefreshingView.h; path = HappyUI/Classes/SimpleRefreshingView.h; sourceTree = "<group>"; };
 		F9CA3A6DA4985820CAE0077908521B21 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FBCF56A5F2F10A33BBC006293EFA3CE1 /* MutableArrayListener.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = MutableArrayListener.modulemap; sourceTree = "<group>"; };
+		FBCF56A5F2F10A33BBC006293EFA3CE1 /* MutableArrayListener.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = MutableArrayListener.modulemap; sourceTree = "<group>"; };
 		FCAB01C121CEED442A6EA4A4519C565A /* MutableArrayListener.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MutableArrayListener.h; path = MutableArrayListener/Classes/MutableArrayListener.h; sourceTree = "<group>"; };
 		FD2007E0066F85125F000D06FB16AFF3 /* RealReachability-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RealReachability-umbrella.h"; sourceTree = "<group>"; };
 		FD73F76A0C943E842DA8987F8A6F65C4 /* SimpleGetMoreView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SimpleGetMoreView.h; path = HappyUI/Classes/SimpleGetMoreView.h; sourceTree = "<group>"; };
@@ -622,7 +622,6 @@
 				043A9F5B76E82B598CD703F941860F95 /* TableViewProtocolListener.m */,
 				B122D4491C93070C601582832BFC6487 /* Support Files */,
 			);
-			name = TableViewArray;
 			path = TableViewArray;
 			sourceTree = "<group>";
 		};
@@ -652,7 +651,6 @@
 				31F4156EEEEA9CD92E929B8DA7C9AD80 /* Ping */,
 				1CC110A3CB9A7286DE7426D0A6F93C9C /* Support Files */,
 			);
-			name = RealReachability;
 			path = RealReachability;
 			sourceTree = "<group>";
 		};
@@ -694,7 +692,6 @@
 				EAEB4067054DF659B7B1495D9F2E3868 /* CircleReferenceCheck.m */,
 				0A1C4A66ECCF0B41B8BAE76736122E69 /* Support Files */,
 			);
-			name = CircleReferenceCheck;
 			path = CircleReferenceCheck;
 			sourceTree = "<group>";
 		};
@@ -720,22 +717,22 @@
 				8D88559EC85CA0A21AFA49BA41C752A1 /* HappyBIProtocal.h */,
 				6B9AEB5D607D81FA2C92F741154D23FD /* HappyContext.h */,
 				D9928C61D00DA90FCECA7E1F31F387A4 /* HappyContext.m */,
-				EF87C8B4D09C7A41EFFEC2F7BF594919 /* HappyModel.h */,
-				F62BA6FB3BF81BBA44EF0E1A032CD4BB /* HappyModel.m */,
+				EF87C8B4D09C7A41EFFEC2F7BF594919 /* HappyBI.h */,
+				F62BA6FB3BF81BBA44EF0E1A032CD4BB /* HappyBI.m */,
 				BEA6A7EE34AAF0FA2EE9972C10C1BBD2 /* HappyVM.h */,
 				CA541F9F55487458A22CF64819D7C39C /* HappyVM.m */,
-				3C33516C1144F4DE3A30284717589D3C /* ListBaseModel.h */,
-				1E4BBA815EC486EB58B3562990DA6F84 /* ListBaseModel.m */,
+				3C33516C1144F4DE3A30284717589D3C /* HappyListBI.h */,
+				1E4BBA815EC486EB58B3562990DA6F84 /* HappyListBI.m */,
 				868B28B3DE523A7D45C999264C5A7B4A /* ListBaseResponse.h */,
 				38B4CCF87D72FED05080C7C96D03DE74 /* ListBaseResponse.m */,
 				507963B92288CDDE899F4A548CA71A5E /* ListVM.h */,
 				841972032166B309352E75812BBE627F /* ListVM.m */,
 				FD73F76A0C943E842DA8987F8A6F65C4 /* SimpleGetMoreView.h */,
 				C316D9501B75F3DC37416AB5652C7E5C /* SimpleGetMoreView.m */,
-				8031EF1F0D1088187E4C39EEF4AA77BA /* SimpleHappyModel.h */,
-				D3B7259644EE63D66C29265DDAD12046 /* SimpleHappyModel.m */,
-				3BB063363DF26EC91FED875F0BC39BCF /* SimpleListModel.h */,
-				E492AF6BAC8E81CC6468FCD9793C8C1C /* SimpleListModel.m */,
+				8031EF1F0D1088187E4C39EEF4AA77BA /* SimpleHappyBI.h */,
+				D3B7259644EE63D66C29265DDAD12046 /* SimpleHappyBI.m */,
+				3BB063363DF26EC91FED875F0BC39BCF /* SimpleListBI.h */,
+				E492AF6BAC8E81CC6468FCD9793C8C1C /* SimpleListBI.m */,
 				F8657E7266726B4A488AAA2885520635 /* SimpleRefreshingView.h */,
 				1769DF88521BE3B037EA47253A82B7C0 /* SimpleRefreshingView.m */,
 				B1DD2CC0A86F577C6E019A81DD191139 /* UINavigationController+HappyUI.h */,
@@ -790,7 +787,6 @@
 				19AF7B61FC16218FA915AA43E7D433D8 /* TaskRoute.m */,
 				70C707747AFA682F2DA9AB6B206165A4 /* Support Files */,
 			);
-			name = TaskEnginer;
 			path = TaskEnginer;
 			sourceTree = "<group>";
 		};
@@ -902,7 +898,6 @@
 				32572A800CE8D7D48E7276FB4BDD00EA /* NSMutableArrayListenerDelegate.h */,
 				D4BEC79EAD037E40BFB973D0D0C06F75 /* Support Files */,
 			);
-			name = MutableArrayListener;
 			path = MutableArrayListener;
 			sourceTree = "<group>";
 		};
@@ -929,7 +924,6 @@
 				09877B4726B542E636E3D973E3BE2CD6 /* CollectionViewProtocolListener.m */,
 				84359F2355CC3658035F760679DFF1EE /* Support Files */,
 			);
-			name = CollectionViewArray;
 			path = CollectionViewArray;
 			sourceTree = "<group>";
 		};
@@ -982,7 +976,6 @@
 				8E9AFDBB9B48380BF6AA226BC6BDA27C /* CCUIModel.m */,
 				105D32471FCB9CA3E834C9A8ECCEFBEC /* Support Files */,
 			);
-			name = CCUIModel;
 			path = CCUIModel;
 			sourceTree = "<group>";
 		};
@@ -1074,15 +1067,15 @@
 				2201471AE540FCBB79E2037C5B5ECF8E /* HappyAccount.h in Headers */,
 				2D804B221709A1465B43FE155973304C /* HappyBIProtocal.h in Headers */,
 				5C2062BD55D6B88A4F81CC68E44E6537 /* HappyContext.h in Headers */,
-				1CE6FEDF4404C41DD16D6C86C7922526 /* HappyModel.h in Headers */,
+				1CE6FEDF4404C41DD16D6C86C7922526 /* HappyBI.h in Headers */,
 				5D69486B5076D888E9E1CA29E22DE08E /* HappyUI-umbrella.h in Headers */,
 				31C2A2EFF32624CD000155F8CDFE9EC3 /* HappyVM.h in Headers */,
-				49B288E08C978A7ADDC144A85E944682 /* ListBaseModel.h in Headers */,
+				49B288E08C978A7ADDC144A85E944682 /* HappyListBI.h in Headers */,
 				6B3929295BDCC64D29F08DAF4E301842 /* ListBaseResponse.h in Headers */,
 				A680982A7022456D0A8C08A942FD3090 /* ListVM.h in Headers */,
 				764ED551B61E4C0452B313099C09DFCF /* SimpleGetMoreView.h in Headers */,
-				A03609302FB2D3DFDDBB9E4EFCC2F467 /* SimpleHappyModel.h in Headers */,
-				648D175EA5751EBE0B7AD933F42DBC3A /* SimpleListModel.h in Headers */,
+				A03609302FB2D3DFDDBB9E4EFCC2F467 /* SimpleHappyBI.h in Headers */,
+				648D175EA5751EBE0B7AD933F42DBC3A /* SimpleListBI.h in Headers */,
 				4A86B26941361302D88CC27CBEDFE2C5 /* SimpleRefreshingView.h in Headers */,
 				290EB58ECD3EC0472EDA91A82DF25600 /* UINavigationController+HappyUI.h in Headers */,
 				1EC566609DF7A6436544E8D09AAAF894 /* UIView+HappyUI.h in Headers */,
@@ -1415,15 +1408,15 @@
 			files = (
 				10558F6101CB72551EED63B2913A591F /* HappyAccount.m in Sources */,
 				E3D3DF433EAD7A751471F557E83A7C6A /* HappyContext.m in Sources */,
-				5E3EDA0F109070740A3AF92B5A35B7ED /* HappyModel.m in Sources */,
+				5E3EDA0F109070740A3AF92B5A35B7ED /* HappyBI.m in Sources */,
 				372166D5A570910BF95B0670565227EC /* HappyUI-dummy.m in Sources */,
 				242F230604933AC40150210C613B2F42 /* HappyVM.m in Sources */,
-				D08C86DB9369BFC15A81C44ABDF4EC02 /* ListBaseModel.m in Sources */,
+				D08C86DB9369BFC15A81C44ABDF4EC02 /* HappyListBI.m in Sources */,
 				883AD086770C811F07BD4A2A0869517D /* ListBaseResponse.m in Sources */,
 				B8CA2C69B84CD733747B4A8059C6B14D /* ListVM.m in Sources */,
 				F4BA89C426A5B52ED165D8C22E076E80 /* SimpleGetMoreView.m in Sources */,
-				AB55F841FF114470C43E9DE5717307C5 /* SimpleHappyModel.m in Sources */,
-				60F75878B642ADCA8881FC9B1006B4EF /* SimpleListModel.m in Sources */,
+				AB55F841FF114470C43E9DE5717307C5 /* SimpleHappyBI.m in Sources */,
+				60F75878B642ADCA8881FC9B1006B4EF /* SimpleListBI.m in Sources */,
 				50672ED5BC42273CAD7E71E25BD6EACC /* SimpleRefreshingView.m in Sources */,
 				ECC43EFE0C10B261DCEDA8520D7C8FE1 /* UINavigationController+HappyUI.m in Sources */,
 				F97E822B88DE39B91CFECA8A32D49C3F /* UIView+HappyUI.m in Sources */,

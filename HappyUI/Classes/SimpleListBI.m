@@ -1,17 +1,17 @@
 //
-//  SimpleListModel.m
+//  SimpleListBI.m
 //  CCUIModel
 //
 //  Created by Aruisi on 4/13/18.
 //
 
-#import "SimpleListModel.h"
+#import "SimpleListBI.h"
 #import "LoadFileSubTask.h"
 #import "SaveFileSubTask.h"
 #import "ListBaseResponse.h"
 #import "TaskRoute.h"
 
-@implementation SimpleListModel
+@implementation SimpleListBI
 -(TaskRoute*)saveCacheTask:(id)value {
     NSString* cacheFile = [self cacheFilePath];
     if (cacheFile) {

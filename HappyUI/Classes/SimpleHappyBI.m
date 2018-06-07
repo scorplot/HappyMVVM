@@ -5,12 +5,12 @@
 //  Created by Aruisi on 4/20/18.
 //
 
-#import "SimpleHappyModel.h"
+#import "SimpleHappyBI.h"
 #import "LoadFileSubTask.h"
 #import "SaveFileSubTask.h"
 #import "TaskRoute.h"
 
-@implementation SimpleHappyModel
+@implementation SimpleHappyBI
 -(TaskRoute*)saveCacheTask:(id)value {
     NSString* cacheFile = [self cacheFilePath];
     if (cacheFile) {
@@ -33,11 +33,13 @@
         id(^deSerialize)(id) = self.deSerialize;
         load.parseData = ^id(NSData* data) {
             id value = nil;
-            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            if (json) {
-                value = deSerialize(json);
+            if (data) {
+                id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                if (json) {
+                    value = deSerialize(json);
+                }
             }
-            return value;
+            return value;                
         };
         return [[TaskRoute alloc] initWithSingleTask:load context:self.context];
     }

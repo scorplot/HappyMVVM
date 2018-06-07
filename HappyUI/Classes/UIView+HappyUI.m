@@ -85,8 +85,8 @@ static HappyContext* __context;
 - (UINavigationController *)navigationController {
     UIResponder *responder = self;
     while ((responder = [responder nextResponder])) {
-        if ([responder isKindOfClass:[UINavigationController class]]) {
-            return (UINavigationController *)responder;
+        if ([responder isKindOfClass:[UIViewController class]]) {
+            return [(UIViewController *)responder navigationController];
         }
     }
     return nil;

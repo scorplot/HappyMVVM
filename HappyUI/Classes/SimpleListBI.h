@@ -1,13 +1,13 @@
 //
-//  SimpleListModel.h
+//  SimpleListBI.h
 //  CCUIModel
 //
 //  Created by Aruisi on 4/13/18.
 //
 
-#import "ListBaseModel.h"
+#import "HappyListBI.h"
 
-@interface SimpleListModel : ListBaseModel
+@interface SimpleListBI : HappyListBI
 
 #pragma mark sub class need override
 -(NSString*)cacheFilePath;

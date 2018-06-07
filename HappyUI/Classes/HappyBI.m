@@ -5,18 +5,18 @@
 //  Created by Aruisi on 4/20/18.
 //
 
-#import "HappyModel.h"
+#import "HappyBI.h"
 #import <TaskEnginer/TaskRoute.h>
 #import <RealReachability/RealReachability.h>
 
-@interface HappyModel()
+@interface HappyBI()
 @property (nonatomic, readwrite) id model;
 @property (nonatomic, readwrite) BaseModelStatus status;
 @property (nonatomic, readwrite) NSError *error;
 @property (nonatomic, readwrite, getter=isRefreshing) BOOL refreshing;
 @end
 
-@implementation HappyModel {
+@implementation HappyBI {
     TaskRoute* _refreshTask;
     __weak TaskRoute* _saveCacheTask;
     __weak TaskRoute* _loadCacheTask;
@@ -109,6 +109,14 @@
             self.refreshing = YES;
             [_refreshTask start];
         }
+    }
+}
+
+-(void)cancelRequest {
+    if (_refreshTask) {
+        [_refreshTask cancel];
+        _refreshTask = nil;
+        self.refreshing = NO;
     }
 }
 

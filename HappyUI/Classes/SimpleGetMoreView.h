@@ -11,5 +11,7 @@
 @interface SimpleGetMoreView : UIView<ScrollGetMoreFooterProtocal>
 @property(nonatomic, copy) BOOL (^shouldTrigger)(void);
 @property(nonatomic, assign) BOOL gettingMore;
+@property(nonatomic, assign) CGFloat offsetTrigger; // the offest which should trigger the refresh operation
+-(void)scrollOffset:(CGFloat)offset; // each scroll called
 
 @end

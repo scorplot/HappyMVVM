@@ -13,7 +13,7 @@ typedef NS_ENUM(NSUInteger, BaseModelStatus) {
 };
 
 @class TaskRoute;
-@interface HappyModel : NSObject
+@interface HappyBI : NSObject
 @property (nonatomic, readonly) id context; // context
 @property (nonatomic, readonly) id model;
 @property (nonatomic, readonly) BaseModelStatus status;
@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, BaseModelStatus) {
 -(instancetype)initWithContext:(id)context;
 
 -(void)refresh;
+-(void)cancelRequest;
 
 -(void)saveToCache;
 

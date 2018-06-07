@@ -6,12 +6,12 @@
 //  Copyright © 2017年 Scorplot. All rights reserved.
 //
 
-#import "ListBaseModel.h"
+#import "HappyListBI.h"
 #import "ListBaseResponse.h"
 #import <TaskEnginer/TaskRoute.h>
 #import <RealReachability/RealReachability.h>
 
-@interface ListBaseModel()
+@interface HappyListBI()
 @property (nonatomic, readwrite) ListModelStatus status;
 @property (nonatomic, readwrite) NSError *error;
 @property (nonatomic, readwrite, getter=isRefreshing) BOOL refreshing;
@@ -21,7 +21,7 @@
 @property (nonatomic, readwrite) id extra;
 @end
 
-@implementation ListBaseModel {
+@implementation HappyListBI {
     NSMutableArray *_array;
     TaskRoute* _refreshTask;
     TaskRoute* _getMoreTask;
@@ -88,11 +88,6 @@
                         SELF->_loadCacheTask = nil;
                     }
                     
-                    if (finished) {
-                        SELF->_refreshTask = nil;
-                        SELF.refreshing = NO;
-                    }
-                    
                     [SELF parseResult:task.result error:(NSError*)error callback:^(NSArray *items, NSError *error, NSObject* lastToken, id extra) {
                         
                         ListModelStatus status = LIST_UNDEFINE;
@@ -109,15 +104,12 @@
                             }
                         }
                         
-                        if (status != SELF.status) {
-                            SELF.status = status;
-                        }
-
                         if (!error) {
                             SELF.extra = extra;
+                            NSMutableArray* cp = [SELF.array mutableCopy];
                             if (_first) {
                                 _first = NO;
-                                [(NSMutableArray*)SELF.array removeAllObjects];
+                                [cp removeAllObjects];
                                 SELF.hasMore = NO;
                             }
                             if (finished) {
@@ -126,10 +118,10 @@
                             }
                             NSMutableArray* temp = [[NSMutableArray alloc] init];
                             for (NSObject* obj in items) {
-                                if ([SELF.array indexOfObjectIdenticalTo:obj] == NSNotFound)
+                                if ([cp indexOfObjectIdenticalTo:obj] == NSNotFound)
                                     [temp addObject:obj];
                             }
-                            [(NSMutableArray*)SELF.array addObjectsFromArray:temp];
+                            [(NSMutableArray*)SELF.array replaceObjectsInRange:NSMakeRange(0, SELF.array.count) withObjectsFromArray:temp];
                             SELF.count = SELF.array.count;
                             // save to cache
                             [SELF saveToCache];
@@ -139,7 +131,16 @@
                             if (SELF.refreshDidSuccess && finished)
                                 SELF.refreshDidSuccess();
                         }
+
+                        if (status != SELF.status) {
+                            SELF.status = status;
+                        }
                     }];
+                    
+                    if (finished) {
+                        SELF->_refreshTask = nil;
+                        SELF.refreshing = NO;
+                    }
                 }
             }];
             self.refreshing = YES;
@@ -251,6 +252,19 @@
     }
 }
 
+-(void)cancelRequest {
+    if (_getMoreTask) {
+        [_getMoreTask cancel];
+        _getMoreTask = nil;
+        self.gettingMore = NO;
+    }
+    if (_refreshTask) {
+        [_refreshTask cancel];
+        _refreshTask = nil;
+        self.refreshing = NO;
+    }
+}
+
 -(void)removeItemAtIndex:(int)index {
     if (index >= 0 && index < _array.count) {
         [_array removeObjectAtIndex:index];
@@ -275,7 +289,7 @@
 
 #pragma mark Sub class need to override
 -(void)parseResult:(ListBaseResponse*)result error:(NSError*)error callback:(void (^)(NSArray* items, NSError* error, id lastToken, id extra))callback {
-    callback(result.list, error, result.list.count?[NSNull null]:nil, result.extra);
+    callback(result.list, error, result.lastToken, result.extra);
 }
 
 -(TaskRoute*)refreshTask {

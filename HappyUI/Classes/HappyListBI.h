@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, ListModelStatus) {
 };
 
 @class TaskRoute;
-@interface ListBaseModel : NSObject
+@interface HappyListBI : NSObject
 @property (nonatomic, readonly) id context; // context
 @property (nonatomic, readonly) NSArray *array;
 @property (nonatomic, readonly, assign) NSInteger count; // how many items in model, it's equlas array.count
@@ -37,6 +37,7 @@ typedef NS_ENUM(NSUInteger, ListModelStatus) {
 
 -(void)refresh;
 -(void)getMore;
+-(void)cancelRequest;
 
 -(void)removeItemAtIndex:(int)index;
 -(void)addItem:(id)item index:(int)index;
