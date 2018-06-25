@@ -81,11 +81,17 @@ static const NSInteger preloadIndex  = 5;
         }
         
         model.refreshDidSuccess = ^{
-            CGPoint offset = ws.listCollectionView.contentOffset;
-            UIEdgeInsets insets = ws.listCollectionView.contentInset;
-            offset.y = -insets.top;
-            offset.x = -insets.left;
-            [ws.listCollectionView setContentOffset:offset animated:YES];
+            ListVM* vm = ws;
+            if (vm) {
+                CGPoint offset = ws.listCollectionView.contentOffset;
+                UIEdgeInsets insets = ws.listCollectionView.contentInset;
+                CGPoint zero = CGPointMake(vm->_insert.left-insets.left, vm->_insert.top-insets.top);
+                if (offset.y > zero.y || offset.x > zero.x) {
+                    offset.y = offset.y > zero.y?zero.y:offset.y;
+                    offset.x = offset.x > zero.x?zero.x:offset.x;
+                    [ws.listCollectionView setContentOffset:offset animated:YES];
+                }
+            }
         };
         
         // listener model changed
@@ -357,10 +363,16 @@ static const NSInteger preloadIndex  = 5;
         }
         
         model.refreshDidSuccess = ^{
-            CGPoint offset = ws.listTableView.contentOffset;
-            UIEdgeInsets insets = ws.listTableView.contentInset;
-            offset.y = -insets.top;
-            [ws.listTableView setContentOffset:offset animated:YES];
+            ListVM* vm = ws;
+            if (vm) {
+                CGPoint offset = ws.listTableView.contentOffset;
+                UIEdgeInsets insets = ws.listTableView.contentInset;
+                CGPoint zero = CGPointMake(offset.x, vm->_insert.top-insets.top);
+                if (offset.y > zero.y) {
+                    offset.y = offset.y>zero.y?zero.y:offset.y;
+                    [ws.listTableView setContentOffset:offset animated:YES];
+                }
+            }
         };
         
         // listener model changed
