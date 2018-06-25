@@ -103,14 +103,6 @@
                 return ws.model.isRefreshing;
             };
         }
-        
-        model.refreshDidSuccess = ^{
-            CGPoint offset = ws.tableView.contentOffset;
-            UIEdgeInsets insets = ws.tableView.contentInset;
-            offset.y = -insets.top;
-            offset.x = -insets.left;
-            [ws.collectionView setContentOffset:offset animated:YES];
-        };
 
         // listener model changed
         [self addObserverForHappyListBIForView:_collectionView];
@@ -281,13 +273,6 @@
                 return ws.model.isRefreshing;
             };
         }
-        
-        model.refreshDidSuccess = ^{
-            CGPoint offset = ws.tableView.contentOffset;
-            UIEdgeInsets insets = ws.tableView.contentInset;
-            offset.y = -insets.top;
-            [ws.tableView setContentOffset:offset animated:YES];
-        };
 
         // listener model changed
         [self addObserverForHappyListBIForView:_tableView];

@@ -79,6 +79,15 @@ static const NSInteger preloadIndex  = 5;
                 return ws.listModel.isGettingMore;
             };
         }
+        
+        model.refreshDidSuccess = ^{
+            CGPoint offset = ws.listCollectionView.contentOffset;
+            UIEdgeInsets insets = ws.listCollectionView.contentInset;
+            offset.y = -insets.top;
+            offset.x = -insets.left;
+            [ws.listCollectionView setContentOffset:offset animated:YES];
+        };
+        
         // listener model changed
         [self addObserverForHappyListBIForView:_listCollectionView];
         
@@ -346,6 +355,13 @@ static const NSInteger preloadIndex  = 5;
                 return ws.listModel.isGettingMore;
             };
         }
+        
+        model.refreshDidSuccess = ^{
+            CGPoint offset = ws.listTableView.contentOffset;
+            UIEdgeInsets insets = ws.listTableView.contentInset;
+            offset.y = -insets.top;
+            [ws.listTableView setContentOffset:offset animated:YES];
+        };
         
         // listener model changed
         [self addObserverForHappyListBIForView:_listTableView];
