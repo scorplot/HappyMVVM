@@ -369,8 +369,6 @@ static void replaced_listener_setter_##var##_IMP(__unsafe_unretained id self, SE
 IMP_LISTENER_SETTER_DEFINE(id, id)
 IMP_LISTENER_SETTER_DEFINE(BOOL, BOOL)
 
-
-
 static void removeRelationWithProp(id object, NSString * prop){
     NSMutableDictionary * listenerDic = objc_getAssociatedObject(object, &__listenerObjKey);
     NSArray * subContent = [listenerDic objectForKey:prop];
@@ -788,8 +786,8 @@ bool initListenerProperty(Class  cls, NSString* p){
                 _nextCls = class_getSuperclass(_cls);
                 _nextMethod = _nextCls?class_getInstanceMethod(_nextCls, NSSelectorFromString(methodName)):nil;
                 _nextOriginal = _nextMethod?method_getImplementation(_nextMethod):nil;
-            //} while (_nextOriginal == original && _cls);
-            } while (_nextOriginal && _cls);
+            //} while (_nextOriginal == original && _cls); // 一般说来子类会调用父类的set方法，所以一直要找到根上。
+            } while (_nextOriginal && _cls); // UIButton 和 UIControl的方法不一样，所以不能劫持父类，需要劫持子类。
         }
 
         

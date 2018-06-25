@@ -1,10 +1,10 @@
 PODS:
-  - CCUIModel (0.0.1):
+  - CCUIModel (0.0.2):
     - CircleReferenceCheck
   - CircleReferenceCheck (0.0.1)
   - CollectionViewArray (0.1.1):
     - MutableArrayListener
-  - HappyUI (0.1.5):
+  - HappyUI (0.1.8):
     - CCUIModel
     - CollectionViewArray
     - RealReachability
@@ -12,12 +12,12 @@ PODS:
     - TaskEnginer
   - MutableArrayListener (0.1.0):
     - CircleReferenceCheck
-  - RealReachability (1.1.9):
-    - RealReachability/Connection (= 1.1.9)
-    - RealReachability/Ping (= 1.1.9)
-  - RealReachability/Connection (1.1.9)
-  - RealReachability/Ping (1.1.9)
-  - TableViewArray (0.1.6):
+  - RealReachability (1.2.2):
+    - RealReachability/Connection (= 1.2.2)
+    - RealReachability/Ping (= 1.2.2)
+  - RealReachability/Connection (1.2.2)
+  - RealReachability/Ping (1.2.2)
+  - TableViewArray (0.1.7):
     - MutableArrayListener
   - TaskEnginer (0.0.5):
     - CircleReferenceCheck
@@ -30,15 +30,15 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  CCUIModel: b5e0e490caef73dd4e423f332b1ca850d6106368
+  CCUIModel: f81a863c45c13d43da803b6eb3a0dcc919abdc13
   CircleReferenceCheck: 5ef0dbaff301108a523f845bf81dfa9a12a83024
   CollectionViewArray: 7d27b09462af7d14b1ff897ae137c2caae06a38c
-  HappyUI: bba10d2182b9141691d1a39ca2648fbfedfc1481
+  HappyUI: b3f3edb0c1e930b5212d71c0ef1b7664ded3b59c
   MutableArrayListener: 80566460c0f35ffe89d76a90ebb33adf7f413182
-  RealReachability: a8c483900986a0f3305733961effbfbb00637a02
-  TableViewArray: 288501b4abc71efabb82ce2f4bb397f1c2fa25a9
+  RealReachability: 7ea2093650004e5e30635edbf9d29ce9b9091001
+  TableViewArray: 602133037689f6d89b426d73e46676ffa407ad8a
   TaskEnginer: cebf4064d6314dfd03bb9f3a4972cf3a661e27dc
 
 PODFILE CHECKSUM: f9fd9a6dda1907012fe99294bff73f565417acca
 
-COCOAPODS: 1.4.0.rc.1
+COCOAPODS: 1.4.0

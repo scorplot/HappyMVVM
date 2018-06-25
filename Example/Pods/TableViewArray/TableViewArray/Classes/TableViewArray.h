@@ -114,6 +114,7 @@ typedef void(^prefetchRowsBlock)(UITableView* _Nullable tableView,NSArray<NSInde
 typedef void(^cancelPrefetchingForRowsBlock)(UITableView* _Nullable tableView,NSArray<NSIndexPath*>* _Nullable indexPaths);
 
 @interface TableViewArray : NSObject
+@property(nonatomic, assign) BOOL disableAnimation;
 @property(nonatomic,copy,nullable) subArray subArray;
 
 #pragma mark  - dataSource

@@ -1,6 +1,6 @@
 {
   "name": "HappyUI",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "summary": "HappyUI is a good library to write ui",
   "description": "HappyUI is a good library to write ui.",
   "homepage": "https://github.com/scorplot/HappyUI",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/scorplot/HappyUI.git",
-    "tag": "0.1.5"
+    "tag": "0.1.8"
   },
   "platforms": {
     "ios": "8.0"

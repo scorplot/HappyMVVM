@@ -786,7 +786,11 @@ static NSInteger getArrayIndex(NSArray* arr) {
     observer.didAddObjects = ^(NSMutableArray *array, NSArray *objects, NSIndexSet *indexes) {
         if (array==weakself.dataSource) {
             if (isGroup) {
-                [weakself.tableView insertSections:indexes withRowAnimation:UITableViewRowAnimationNone];
+                if (weakself.listener.disableAnimation) {
+                    [weakself.tableView reloadData];
+                } else {
+                    [weakself.tableView insertSections:indexes withRowAnimation:UITableViewRowAnimationNone];
+                }
                 typeof(_listener.subArray) strongSubArray = weakSubArray;
                 if (strongSubArray) {
                     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
@@ -802,7 +806,11 @@ static NSInteger getArrayIndex(NSArray* arr) {
                 [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                     [indexPaths addObject:[NSIndexPath indexPathForRow:idx inSection:0]];
                 }];
-                [weakself.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+                if (weakself.listener.disableAnimation) {
+                    [weakself.tableView reloadData];
+                } else {
+                    [weakself.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+                }
             }
         }else{
             NSInteger section = getArrayIndex(array);
@@ -810,14 +818,22 @@ static NSInteger getArrayIndex(NSArray* arr) {
             [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                 [indexPaths addObject:[NSIndexPath indexPathForRow:idx inSection:section]];
             }];
-            [weakself.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+            if (weakself.listener.disableAnimation) {
+                [weakself.tableView reloadData];
+            } else {
+                [weakself.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+            }
         }
     };
     observer.didDeleteObjects = ^(NSMutableArray *array, NSArray *objects, NSIndexSet *indexes) {
 //        [weakself.tableView beginUpdates];
         if (array==weakself.dataSource) {
             if (isGroup) {
-                [weakself.tableView deleteSections:indexes withRowAnimation:UITableViewRowAnimationNone];
+                if (weakself.listener.disableAnimation) {
+                    [weakself.tableView reloadData];
+                } else {
+                    [weakself.tableView deleteSections:indexes withRowAnimation:UITableViewRowAnimationNone];
+                }
                 for (NSInteger i = 0; i < array.count; i++) {
                     NSArray* subArray = weakSubArray(array, i);
                     if ([subArray isKindOfClass:[NSMutableArray class]]) {
@@ -829,7 +845,11 @@ static NSInteger getArrayIndex(NSArray* arr) {
                 [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                     [indexPaths addObject:[NSIndexPath indexPathForRow:idx inSection:0]];
                 }];
-                [weakself.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+                if (weakself.listener.disableAnimation) {
+                    [weakself.tableView reloadData];
+                } else {
+                    [weakself.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+                }
             }
         }else{
             NSInteger section = getArrayIndex(array);
@@ -837,7 +857,11 @@ static NSInteger getArrayIndex(NSArray* arr) {
             [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                 [indexPaths addObject:[NSIndexPath indexPathForRow:idx inSection:section]];
             }];
-            [weakself.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+            if (weakself.listener.disableAnimation) {
+                [weakself.tableView reloadData];
+            } else {
+                [weakself.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+            }
         }
 //        [weakself.tableView endUpdates];
     };
