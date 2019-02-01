@@ -17,7 +17,7 @@
 #import "HappyListBI.h"
 #import "HappyVM.h"
 #import "ListBaseResponse.h"
-#import "ListVM.h"
+#import "HappyListController.h"
 #import "SimpleGetMoreView.h"
 #import "SimpleHappyBI.h"
 #import "SimpleListBI.h"

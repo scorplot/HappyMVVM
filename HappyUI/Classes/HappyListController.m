@@ -1,12 +1,12 @@
 //
-//  ListVM.m
+//  HappyListController.m
 //  HappyUI
 //
 //  Created by Aruisi on 2017/8/1.
 //  Copyright © 2017年 Scorplot. All rights reserved.
 //
 
-#import "ListVM.h"
+#import "HappyListController.h"
 #import "HappyListBI.h"
 #import <CollectionViewArray/CollectionViewArray.h>
 #import <CCUIModel/CCUIModel.h>
@@ -15,13 +15,13 @@
 #import "SimpleGetMoreView.h"
 
 static const NSInteger preloadIndex  = 5;
-@interface ListVM ()
+@interface HappyListController ()
 
 @property (nonatomic, strong) HappyListBI * listModel;
 
 @end
 
-@implementation ListVM
+@implementation HappyListController
 {
     UICollectionView * _listCollectionView;
     CollectionViewArray * _collectionViewArray;
@@ -81,11 +81,11 @@ static const NSInteger preloadIndex  = 5;
         }
         
         model.refreshDidSuccess = ^{
-            ListVM* vm = ws;
-            if (vm) {
+            HappyListController* controller = ws;
+            if (controller) {
                 CGPoint offset = ws.listCollectionView.contentOffset;
                 UIEdgeInsets insets = ws.listCollectionView.contentInset;
-                CGPoint zero = CGPointMake(vm->_insert.left-insets.left, vm->_insert.top-insets.top);
+                CGPoint zero = CGPointMake(controller->_insert.left-insets.left, controller->_insert.top-insets.top);
                 if (offset.y > zero.y || offset.x > zero.x) {
                     offset.y = offset.y > zero.y?zero.y:offset.y;
                     offset.x = offset.x > zero.x?zero.x:offset.x;
@@ -363,11 +363,11 @@ static const NSInteger preloadIndex  = 5;
         }
         
         model.refreshDidSuccess = ^{
-            ListVM* vm = ws;
-            if (vm) {
+            HappyListController* controller = ws;
+            if (controller) {
                 CGPoint offset = ws.listTableView.contentOffset;
                 UIEdgeInsets insets = ws.listTableView.contentInset;
-                CGPoint zero = CGPointMake(offset.x, vm->_insert.top-insets.top);
+                CGPoint zero = CGPointMake(offset.x, controller->_insert.top-insets.top);
                 if (offset.y > zero.y) {
                     offset.y = offset.y>zero.y?zero.y:offset.y;
                     [ws.listTableView setContentOffset:offset animated:YES];

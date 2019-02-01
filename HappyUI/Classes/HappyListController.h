@@ -1,5 +1,5 @@
 //
-//  ListVM.h
+//  HappyListController.h
 //  HappyUI
 //
 //  Created by Aruisi on 2017/8/1.
@@ -14,7 +14,7 @@
 @class TableViewArray;
 @class HappyListBI;
 
-@interface ListVM : NSObject
+@interface HappyListController : NSObject
 /**
  refresh callback
  */
