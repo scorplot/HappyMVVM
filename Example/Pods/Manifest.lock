@@ -4,7 +4,7 @@ PODS:
   - CircleReferenceCheck (0.0.1)
   - CollectionViewArray (0.1.1):
     - MutableArrayListener
-  - HappyUI (0.1.8):
+  - HappyUI (0.2.1):
     - CCUIModel
     - CollectionViewArray
     - RealReachability
@@ -25,15 +25,25 @@ PODS:
 DEPENDENCIES:
   - HappyUI (from `../`)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CCUIModel
+    - CircleReferenceCheck
+    - CollectionViewArray
+    - MutableArrayListener
+    - RealReachability
+    - TableViewArray
+    - TaskEnginer
+
 EXTERNAL SOURCES:
   HappyUI:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   CCUIModel: f81a863c45c13d43da803b6eb3a0dcc919abdc13
   CircleReferenceCheck: 5ef0dbaff301108a523f845bf81dfa9a12a83024
   CollectionViewArray: 7d27b09462af7d14b1ff897ae137c2caae06a38c
-  HappyUI: b3f3edb0c1e930b5212d71c0ef1b7664ded3b59c
+  HappyUI: 947f079e0d86e54ed6d465633de0cb01051ac662
   MutableArrayListener: 80566460c0f35ffe89d76a90ebb33adf7f413182
   RealReachability: 7ea2093650004e5e30635edbf9d29ce9b9091001
   TableViewArray: 602133037689f6d89b426d73e46676ffa407ad8a
@@ -41,4 +51,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f9fd9a6dda1907012fe99294bff73f565417acca
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

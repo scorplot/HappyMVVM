@@ -11,7 +11,7 @@
 
 @interface HappyBI()
 @property (nonatomic, readwrite) id model;
-@property (nonatomic, readwrite) BaseModelStatus status;
+@property (nonatomic, readwrite) HappyViewModelStatus status;
 @property (nonatomic, readwrite) NSError *error;
 @property (nonatomic, readwrite, getter=isRefreshing) BOOL refreshing;
 @end
@@ -42,7 +42,7 @@
                 case RealStatusViaWiFi:
                 case RealStatusViaWWAN:
                 {
-                    if (ws.status == MODEL_ERROR) [ws refresh];
+                    if (ws.status == VIEW_MODEL_ERROR) [ws refresh];
                     break;
                 }
                 default:
@@ -80,12 +80,12 @@
                     
                     [SELF parseResult:task.result error:(NSError*)error callback:^(id model, NSError* error) {
                         
-                        BaseModelStatus status = MODEL_UNDEFINE;
+                        HappyViewModelStatus status = VIEW_MODEL_UNDEFINE;
                         if (error) {
-                            status = MODEL_ERROR;
+                            status = VIEW_MODEL_ERROR;
                             SELF.error = error;
                         } else {
-                            status = MODEL_NORMAL;
+                            status = VIEW_MODEL_NORMAL;
                             SELF.error = nil;
                         }
                         
@@ -121,7 +121,7 @@
 }
 
 -(void)saveToCache {
-    if (_status != MODEL_UNDEFINE) {
+    if (_status != VIEW_MODEL_UNDEFINE) {
         TaskRoute* task = [self saveCacheTask:self.model];
         _saveCacheTask = task;
         task.autoRetain = YES;
@@ -146,9 +146,9 @@
                         int status = SELF.status;
                         
                         if (error) {
-                            status = MODEL_ERROR;
+                            status = VIEW_MODEL_ERROR;
                         } else {
-                            status = MODEL_NORMAL;
+                            status = VIEW_MODEL_NORMAL;
                         }
                         
                         if (status != SELF.status) {

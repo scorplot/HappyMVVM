@@ -30,6 +30,12 @@
  */
 @property (nonatomic, strong) UIView* _Nullable loadingView;
 
+/**
+ empty view
+ */
+@property (nonatomic, strong) UIView* _Nullable emptyView;
+
+
 @property (nonatomic, strong) UIView<ScrollRefreshHeaderProtocal>* _Nullable refreshHeaderView;
 
 @property (nonatomic, readonly) HappyBI * _Nullable model;

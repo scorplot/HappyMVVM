@@ -11,10 +11,14 @@
 #import <TaskEnginer/TaskRoute.h>
 #import <RealReachability/RealReachability.h>
 
-@interface HappyListBI()
-@property (nonatomic, readwrite) ListModelStatus status;
+@interface HappyBI()
+@property (nonatomic, readwrite) id model;
+@property (nonatomic, readwrite) HappyViewModelStatus status;
 @property (nonatomic, readwrite) NSError *error;
 @property (nonatomic, readwrite, getter=isRefreshing) BOOL refreshing;
+@end
+
+@interface HappyListBI()
 @property (nonatomic, readwrite, getter=isGettingMore) BOOL gettingMore;
 @property (nonatomic, readwrite) BOOL hasMore;
 @property (nonatomic, assign, readwrite) NSInteger count;
@@ -28,11 +32,18 @@
     __weak TaskRoute* _saveCacheTask;
     __weak TaskRoute* _loadCacheTask;
 }
+@dynamic context;
+@dynamic model;
+@dynamic status;
+@dynamic error;
+@dynamic refreshing;
+@dynamic refreshDidSuccess;
+@dynamic dataDidChanged;
+@dynamic cacheDidLoaded;
 
 -(instancetype)initWithContext:(id)context {
-    self = [super init];
+    self = [super initWithContext:context];
     if (self) {
-        _context = context;
         _array = [[NSMutableArray alloc] init];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self loadFromCache];
@@ -50,7 +61,7 @@
                 case RealStatusViaWiFi:
                 case RealStatusViaWWAN:
                 {
-                    if (ws.status == LIST_ERROR) [ws refresh];
+                    if (ws.status == VIEW_MODEL_ERROR) [ws refresh];
                     break;
                 }
                 default:
@@ -90,23 +101,23 @@
                     
                     [SELF parseResult:task.result error:(NSError*)error callback:^(NSArray *items, NSError *error, NSObject* lastToken, id extra) {
                         
-                        ListModelStatus status = LIST_UNDEFINE;
+                        HappyViewModelStatus status = VIEW_MODEL_UNDEFINE;
                         if (items.count > 0) {
-                            status = LIST_NORMAL;
+                            status = VIEW_MODEL_NORMAL;
                             SELF.error = nil;
                         } else if (finished) {
                             if (error) {
                                 SELF.error = error;
-                                status = LIST_ERROR;
+                                status = VIEW_MODEL_ERROR;
                             } else {
                                 SELF.error = nil;
-                                status = LIST_EMEPTY;
+                                status = VIEW_MODEL_EMEPTY;
                             }
                         }
                         
                         if (!error) {
                             SELF.extra = extra;
-                            NSMutableArray* cp = [SELF.array mutableCopy];
+                            NSMutableArray* cp = [SELF.model mutableCopy];
                             if (_first) {
                                 _first = NO;
                                 [cp removeAllObjects];
@@ -121,8 +132,8 @@
                                 if ([cp indexOfObjectIdenticalTo:obj] == NSNotFound)
                                     [temp addObject:obj];
                             }
-                            [(NSMutableArray*)SELF.array replaceObjectsInRange:NSMakeRange(0, SELF.array.count) withObjectsFromArray:temp];
-                            SELF.count = SELF.array.count;
+                            [(NSMutableArray*)SELF.model replaceObjectsInRange:NSMakeRange(0, SELF.model.count) withObjectsFromArray:temp];
+                            SELF.count = SELF.model.count;
                             // save to cache
                             [SELF saveToCache];
                             
@@ -150,8 +161,8 @@
 }
 
 -(void)saveToCache {
-    if (_status != LIST_UNDEFINE) {
-        TaskRoute* task = [self saveCacheTask:[self.array copy]];
+    if (self.status != VIEW_MODEL_UNDEFINE) {
+        TaskRoute* task = [self saveCacheTask:[self.model copy]];
         _saveCacheTask = task;
         task.autoRetain = YES;
         if (_saveCacheTask) {
@@ -174,18 +185,18 @@
                     [SELF parseResult:task.result error:nil callback:^(NSArray *items, NSError *error, id lastToken, id extra) {
                         if (items) {
                             int status = SELF.status;
-                            if (status == LIST_UNDEFINE || status == LIST_ERROR) {
+                            if (status == VIEW_MODEL_UNDEFINE || status == VIEW_MODEL_ERROR) {
                                 SELF->_lastToken = lastToken;
                                 SELF.hasMore = lastToken != nil;
                                 
-                                [(NSMutableArray*)SELF.array addObjectsFromArray:items];
-                                SELF.count = SELF.array.count;
+                                [(NSMutableArray*)SELF.model addObjectsFromArray:items];
+                                SELF.count = SELF.model.count;
                             }
                             
-                            if (SELF.array.count > 0) {
-                                status = LIST_NORMAL;
+                            if (SELF.model.count > 0) {
+                                status = VIEW_MODEL_NORMAL;
                             } else {
-                                status = LIST_EMEPTY;
+                                status = VIEW_MODEL_EMEPTY;
                             }
                             
                             if (status != SELF.status) {
@@ -210,7 +221,7 @@
 }
 
 -(void)getMore {
-    if (_getMoreTask == nil && _hasMore && _refreshing == NO && _gettingMore == NO) {
+    if (_getMoreTask == nil && _hasMore && self.refreshing == NO && _gettingMore == NO) {
         _getMoreTask = [self getmoreTask];
         if (_getMoreTask) {
             __weak typeof(self) ws = self;
@@ -225,11 +236,11 @@
                         if (!error) {
                             NSMutableArray* temp = [[NSMutableArray alloc] init];
                             for (NSObject* obj in items) {
-                                if ([SELF.array indexOfObjectIdenticalTo:obj] == NSNotFound)
+                                if ([SELF.model indexOfObjectIdenticalTo:obj] == NSNotFound)
                                     [temp addObject:obj];
                             }
-                            [(NSMutableArray*)SELF.array addObjectsFromArray:temp];
-                            SELF.count = SELF.array.count;
+                            [(NSMutableArray*)SELF.model addObjectsFromArray:temp];
+                            SELF.count = SELF.model.count;
 
                             SELF.extra = extra;
                             
@@ -270,7 +281,7 @@
         [_array removeObjectAtIndex:index];
         self.count--;
         if (_array.count == 0) {
-            self.status = LIST_EMEPTY;
+            self.status = VIEW_MODEL_EMEPTY;
         }
     }
 }
@@ -278,7 +289,7 @@
 -(void)addItem:(id)item index:(int)index {
     if (index >= 0 && index <= _array.count && item) {
         if (_array.count == 0) {
-            self.status = LIST_NORMAL;
+            self.status = VIEW_MODEL_NORMAL;
             [_array addObject:item];
         }else {
             [_array insertObject:item atIndex:index];

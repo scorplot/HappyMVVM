@@ -7,20 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef NS_ENUM(NSUInteger, ListModelStatus) {
-    LIST_UNDEFINE,
-    LIST_EMEPTY,
-    LIST_ERROR,
-    LIST_NORMAL,
-};
+#import "HappyBI.h"
 
 @class TaskRoute;
-@interface HappyListBI : NSObject
+@interface HappyListBI : HappyBI
 @property (nonatomic, readonly) id context; // context
-@property (nonatomic, readonly) NSArray *array;
+@property (nonatomic, readonly) NSArray *model;
 @property (nonatomic, readonly, assign) NSInteger count; // how many items in model, it's equlas array.count
-@property (nonatomic, readonly) ListModelStatus status;
+@property (nonatomic, readonly) HappyViewModelStatus status;
 @property (nonatomic, readonly) NSError *error;
 @property (nonatomic, readonly, getter=isRefreshing) BOOL refreshing;
 @property (nonatomic, readonly, getter=isGettingMore) BOOL gettingMore;

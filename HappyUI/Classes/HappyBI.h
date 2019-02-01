@@ -6,17 +6,18 @@
 //
 
 #import <Foundation/Foundation.h>
-typedef NS_ENUM(NSUInteger, BaseModelStatus) {
-    MODEL_UNDEFINE,
-    MODEL_ERROR,
-    MODEL_NORMAL,
+typedef NS_ENUM(NSUInteger, HappyViewModelStatus) {
+    VIEW_MODEL_UNDEFINE,
+    VIEW_MODEL_EMEPTY,
+    VIEW_MODEL_ERROR,
+    VIEW_MODEL_NORMAL,
 };
 
 @class TaskRoute;
 @interface HappyBI : NSObject
 @property (nonatomic, readonly) id context; // context
 @property (nonatomic, readonly) id model;
-@property (nonatomic, readonly) BaseModelStatus status;
+@property (nonatomic, readonly) HappyViewModelStatus status;
 @property (nonatomic, readonly) NSError *error;
 @property (nonatomic, readonly, getter=isRefreshing) BOOL refreshing;
 

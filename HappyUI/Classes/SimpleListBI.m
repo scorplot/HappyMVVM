@@ -16,7 +16,7 @@
     NSString* cacheFile = [self cacheFilePath];
     if (cacheFile) {
         ListBaseResponse* temp = [[ListBaseResponse alloc] init];
-        temp.list = [self.array copy];
+        temp.list = [self.model copy];
         temp.extra = self.extra;
         temp.lastToken = self.lastToken;
 

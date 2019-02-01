@@ -60,8 +60,8 @@ static const NSInteger preloadIndex  = 5;
         
         [self setUpCollectionView:_collectionViewArray collectionView:_listCollectionView];
         
-        if (collectionView && model.array) {
-            CollectionViewConnectArray(_listCollectionView, _listModel.array, _collectionViewArray);
+        if (collectionView && model.model) {
+            CollectionViewConnectArray(_listCollectionView, _listModel.model, _collectionViewArray);
         }
         __weak typeof(self) ws = self;
         if (self.refreshHeaderView) {
@@ -157,8 +157,8 @@ static const NSInteger preloadIndex  = 5;
     }
 }
 
--(void)updateStatus:(ListModelStatus)status view:(UIScrollView*)contentView {
-    if (status == LIST_NORMAL) {
+-(void)updateStatus:(HappyViewModelStatus)status view:(UIScrollView*)contentView {
+    if (status == VIEW_MODEL_NORMAL) {
         [_emptyView removeFromSuperview];
         [_errorView removeFromSuperview];
         [_loadingView removeFromSuperview];
@@ -174,7 +174,7 @@ static const NSInteger preloadIndex  = 5;
             }
         } else {
             [_loadingView removeFromSuperview];
-            if (status == LIST_EMEPTY) {
+            if (status == VIEW_MODEL_EMEPTY) {
                 // empty data
                 [_errorView removeFromSuperview];
                 if (self.emptyView) {
@@ -188,7 +188,7 @@ static const NSInteger preloadIndex  = 5;
                     _emptyView.frame = rc;
                     [contentView addSubview:_emptyView];
                 }
-            } else if (status == LIST_ERROR) {
+            } else if (status == VIEW_MODEL_ERROR) {
                 // error
                 [_emptyView removeFromSuperview];
                 if (self.errorView) {
@@ -200,7 +200,7 @@ static const NSInteger preloadIndex  = 5;
                         rc.size.height -= headerHeight;
                     }
                     _errorView.frame = rc;
-                    if (self.listModel.array.count==0) {
+                    if (self.listModel.model.count==0) {
                         [contentView addSubview:_errorView];
                     }
                 }
@@ -342,8 +342,8 @@ static const NSInteger preloadIndex  = 5;
         
         [self setUpTableView:_tableViewArray tableView:_listTableView];
         
-        if (tableView && model.array) {
-            TableViewConnectArray(_listTableView, _listModel.array, _tableViewArray);
+        if (tableView && model.model) {
+            TableViewConnectArray(_listTableView, _listModel.model, _tableViewArray);
         }
         __weak typeof(self) ws = self;
         if (self.refreshHeaderView) {
@@ -448,7 +448,7 @@ static const NSInteger preloadIndex  = 5;
         [_getMoreFooterView removeFromSuperview];
         _getMoreFooterView = getMoreFooterView;
         UIScrollView* scrollView = _listTableView?_listTableView:_listCollectionView;
-        CGPoint offset = scrollView.contentOffset;
+        //CGPoint offset = scrollView.contentOffset;
         UIEdgeInsets insert = scrollView.contentInset;
         if (_getMoreFooterView) {
             

@@ -29,6 +29,8 @@
     UIView* _errorView;
     BOOL _firstLoading;
     UIView* _loadingView;
+    BOOL _firstEmpty;
+    UIView* _emptyView;
     
     BOOL _firstRefresh;
     UIView<ScrollRefreshHeaderProtocal>* _refreshHeaderView;
@@ -130,8 +132,8 @@
     }
 }
 
--(void)updateStatus:(BaseModelStatus)status view:(UIView*)contentView {
-    if (status == MODEL_NORMAL) {
+-(void)updateStatus:(HappyViewModelStatus)status view:(UIView*)contentView {
+    if (status == VIEW_MODEL_NORMAL) {
         [self.errorView removeFromSuperview];
         [self.loadingView removeFromSuperview];
     } else {
@@ -145,7 +147,7 @@
             }
         } else {
             [_loadingView removeFromSuperview];
-            if (status == MODEL_ERROR) {
+            if (status == VIEW_MODEL_ERROR) {
                 // error
                 if (self.errorView) {
                     CGRect rc = contentView.bounds;
@@ -207,22 +209,27 @@
     return view;
 }
 
-//-(void)setErrorView:(UIView *)errorView {
-//    _firstError = YES;
-//    _errorView = errorView;
-//}
-//-(UIView * _Nullable)errorView{
-//    if (_firstError == NO) {
-//        _firstError = YES;
-//
-//        UILabel* view = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 200, 200)];
-//        view.text = NSLocalizedString(@"error occurs", nil);
-//        view.backgroundColor = [UIColor purpleColor];
-//
-//        _errorView = view;
-//    }
-//    return _errorView;
-//}
+-(void)setEmptyView:(UIView *)emptyView {
+    _firstEmpty = YES;
+    if (_emptyView != emptyView) {
+        [_emptyView removeFromSuperview];
+        _emptyView = emptyView;
+    }
+}
+-(UIView * _Nullable)emptyView{
+    if (_firstEmpty == NO) {
+        _firstEmpty = YES;
+        
+        _emptyView = [self defaultErrorView];
+    }
+    return _emptyView;
+}
+-(UIView*)defaultEmptyView {
+    UILabel* view = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 200, 200)];
+    view.text = NSLocalizedString(@"empty", nil);
+    view.backgroundColor = [UIColor purpleColor];
+    return view;
+}
 
 -(void)setLoadingView:(UIView *)loadingView {
     _firstLoading = YES;
