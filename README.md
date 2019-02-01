@@ -1,9 +1,9 @@
-# HappyUI
+# HappyMVVM
 
-[![CI Status](http://img.shields.io/travis/scorplot/HappyUI.svg?style=flat)](https://travis-ci.org/scorplot/HappyUI)
-[![Version](https://img.shields.io/cocoapods/v/HappyUI.svg?style=flat)](http://cocoapods.org/pods/HappyUI)
-[![License](https://img.shields.io/cocoapods/l/HappyUI.svg?style=flat)](http://cocoapods.org/pods/HappyUI)
-[![Platform](https://img.shields.io/cocoapods/p/HappyUI.svg?style=flat)](http://cocoapods.org/pods/HappyUI)
+[![CI Status](http://img.shields.io/travis/scorplot/HappyMVVM.svg?style=flat)](https://travis-ci.org/scorplot/HappyMVVM)
+[![Version](https://img.shields.io/cocoapods/v/HappyMVVM.svg?style=flat)](http://cocoapods.org/pods/HappyMVVM)
+[![License](https://img.shields.io/cocoapods/l/HappyMVVM.svg?style=flat)](http://cocoapods.org/pods/HappyMVVM)
+[![Platform](https://img.shields.io/cocoapods/p/HappyMVVM.svg?style=flat)](http://cocoapods.org/pods/HappyMVVM)
 
 ## Example
 
@@ -13,11 +13,11 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-HappyUI is available through [CocoaPods](http://cocoapods.org). To install
+HappyMVVM is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'HappyUI'
+pod 'HappyMVVM'
 ```
 
 ## Author
@@ -26,4 +26,4 @@ Aruisi, scorplot@aliyun.com
 
 ## License
 
-HappyUI is available under the MIT license. See the LICENSE file for more info.
+HappyMVVM is available under the MIT license. See the LICENSE file for more info.

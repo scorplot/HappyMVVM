@@ -1,0 +1,39 @@
+{
+  "name": "HappyMVVM",
+  "version": "0.2.1",
+  "summary": "HappyMVVM is a good library to write ui",
+  "description": "HappyMVVM is a good library to write ui.",
+  "homepage": "https://github.com/scorplot/HappyMVVM",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "scorplot": "1@1.com"
+  },
+  "source": {
+    "git": "https://github.com/scorplot/HappyMVVM.git",
+    "tag": "0.2.1"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "HappyMVVM/Classes/**/*",
+  "dependencies": {
+    "TableViewArray": [
+
+    ],
+    "CollectionViewArray": [
+
+    ],
+    "TaskEnginer": [
+
+    ],
+    "CCUIModel": [
+
+    ],
+    "RealReachability": [
+
+    ]
+  }
+}

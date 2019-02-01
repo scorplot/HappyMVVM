@@ -35,5 +35,5 @@ Carthage/Build
 # `pod install` in .travis.yml
 #
 # Pods/
-Example/HappyUI.xcodeproj/xcshareddata
-Example/HappyUI.xcworkspace/xcshareddata
+Example/HappyMVVM.xcodeproj/xcshareddata
+Example/HappyMVVM.xcworkspace/xcshareddata

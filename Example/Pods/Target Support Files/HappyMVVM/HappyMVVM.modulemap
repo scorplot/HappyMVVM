@@ -1,0 +1,6 @@
+framework module HappyMVVM {
+  umbrella header "HappyMVVM-umbrella.h"
+
+  export *
+  module * { export * }
+}

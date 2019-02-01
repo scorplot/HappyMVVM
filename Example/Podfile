@@ -1,9 +1,9 @@
 use_frameworks!
 
-target 'HappyUI_Example' do
-  pod 'HappyUI', :path => '../'
+target 'HappyMVVM_Example' do
+  pod 'HappyMVVM', :path => '../'
 
-  target 'HappyUI_Tests' do
+  target 'HappyMVVM_Tests' do
     inherit! :search_paths
 
   end
