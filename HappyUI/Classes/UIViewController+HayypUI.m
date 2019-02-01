@@ -1,6 +1,6 @@
 //
 //  UIViewController+HayypUI.m
-//  CCUIModel
+//  HappyMVVM
 //
 //  Created by Aruisi on 4/16/18.
 //

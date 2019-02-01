@@ -1,5 +1,5 @@
 //
-//  HappyBIProtocal.h
+//  HappyMVVMProtocal.h
 //  Pods
 //
 //  Created by Aruisi on 4/23/18.
@@ -7,8 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
-#ifndef HappyBIProtocal_h
-#define HappyBIProtocal_h
+#ifndef HappyMVVMProtocal_h
+#define HappyMVVMProtocal_h
 
 @protocol ScrollRefreshHeaderProtocal <NSObject>
 @required
@@ -26,4 +26,4 @@
 
 @end
 
-#endif /* HappyBIProtocal_h */
+#endif /* HappyMVVMProtocal_h */

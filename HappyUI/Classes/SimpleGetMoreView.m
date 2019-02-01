@@ -1,6 +1,6 @@
 //
 //  SimpleGetMoreView.m
-//  CCUIModel
+//  HappyMVVM
 //
 //  Created by Aruisi on 4/24/18.
 //

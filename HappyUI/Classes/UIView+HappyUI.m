@@ -1,6 +1,6 @@
 //
 //  UIView+HappyUI.m
-//  CCUIModel
+//  HappyMVVM
 //
 //  Created by Aruisi on 4/16/18.
 //

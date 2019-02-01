@@ -1,6 +1,6 @@
 //
 //  SimpleHappyVM.m
-//  CCUIModel
+//  HappyMVVM
 //
 //  Created by Aruisi on 4/20/18.
 //
