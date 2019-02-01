@@ -6,14 +6,14 @@
 //
 
 #import "HappyController.h"
-#import "HappyBI.h"
+#import "HappyVM.h"
 #import <CollectionViewArray/CollectionViewArray.h>
 #import <CCUIModel/CCUIModel.h>
 #import <TableViewArray/TableViewArray.h>
 #import "SimpleRefreshingView.h"
 @interface HappyController ()
 
-@property (nonatomic, strong) HappyBI * model;
+@property (nonatomic, strong) HappyVM * vm;
 
 @end
 
@@ -41,8 +41,8 @@
 
 -(void)setRefreshInset {
     CGFloat top = 0;
-    _refreshHeaderView.refreshing = _model.isRefreshing;
-    top = _refreshHeaderView?(_model.isRefreshing?_refreshHeaderView.frame.size.height:0):0;
+    _refreshHeaderView.refreshing = _vm.isRefreshing;
+    top = _refreshHeaderView?(_vm.isRefreshing?_refreshHeaderView.frame.size.height:0):0;
     if (top != _insert.top) {
         UIScrollView* scrollView = _tableView?_tableView:_collectionView;
         UIEdgeInsets insert = scrollView.contentInset;
@@ -86,9 +86,9 @@
     return _refreshHeaderView;
 }
 
--(instancetype)initWith:(HappyBI *)model collectionView:(UICollectionView *)collectionView{
+-(instancetype)initWith:(HappyVM *)vm collectionView:(UICollectionView *)collectionView{
     if (self =  [super init]) {
-        _model  = model;
+        _vm  = vm;
         _collectionView = collectionView;
         _collectionViewArray = [[CollectionViewArray alloc] init];
         
@@ -101,14 +101,14 @@
         if (self.refreshHeaderView) {
             [_collectionView addSubview:self.refreshHeaderView];
             self.refreshHeaderView.shouldTrigger = ^BOOL{
-                [ws.model refresh];
-                return ws.model.isRefreshing;
+                [ws.vm refresh];
+                return ws.vm.isRefreshing;
             };
         }
 
         // listener model changed
-        [self addObserverForHappyListBIForView:_collectionView];
-        [createNotifer(_model, @"model") makeRelation:self withBlock:^(id value) {
+        [self addObserverForHappyListVMForView:_collectionView];
+        [createNotifer(_vm, @"model") makeRelation:self withBlock:^(id value) {
             typeof(self) SELF = ws;
             if (SELF) {
                 [SELF->_collectionView reloadData];
@@ -123,7 +123,7 @@
 }
 
 -(void)updateRefreshStatus:(BOOL)value view:(UIView*)contentView {
-    _refreshHeaderView.refreshing = _model.isRefreshing;
+    _refreshHeaderView.refreshing = _vm.isRefreshing;
     [self setRefreshInset];
     if (value) {
         if (_startRefresh) _startRefresh();
@@ -137,7 +137,7 @@
         [self.errorView removeFromSuperview];
         [self.loadingView removeFromSuperview];
     } else {
-        if (_model.isRefreshing) {
+        if (_vm.isRefreshing) {
             [self.errorView removeFromSuperview];
             if (self.loadingView) {
                 CGRect rc = contentView.bounds;
@@ -158,7 +158,7 @@
                         rc.size.height -= headerHeight;
                     }
                     _errorView.frame = rc;
-                    if (self.model.model == nil) {
+                    if (self.vm.model == nil) {
                         [contentView addSubview:self.errorView];
                     }
                 }
@@ -168,20 +168,20 @@
         }
     }
 }
--(void)addObserverForHappyListBIForView:(UIView *)contentView {
+-(void)addObserverForHappyListVMForView:(UIView *)contentView {
     typeof(self) __weak SELF = self;
     __weak UIView* __contentView = contentView;
     
-    [createNotifer(SELF.model, @"status") makeRelation:self withBlock:^(id value) {
+    [createNotifer(SELF.vm, @"status") makeRelation:self withBlock:^(id value) {
         if (__contentView) {
-            [SELF updateRefreshStatus:SELF.model.isRefreshing view:__contentView];
+            [SELF updateRefreshStatus:SELF.vm.isRefreshing view:__contentView];
             [SELF updateStatus:[value intValue] view:__contentView];
         }
     }];
-    [createNotifer(SELF.model, @"refreshing") makeRelation:self withBlock:^(id value) {
+    [createNotifer(SELF.vm, @"refreshing") makeRelation:self withBlock:^(id value) {
         if (__contentView) {
             [SELF updateRefreshStatus:[value boolValue] view:__contentView];
-            [SELF updateStatus:SELF.model.status view:__contentView];
+            [SELF updateStatus:SELF.vm.status view:__contentView];
         }
     }];
 }
@@ -260,9 +260,9 @@
     return loadingView;
 }
 #pragma mark - tableView
--(instancetype)initWith:(HappyBI *)model tableView:(UITableView *)tableView{
+-(instancetype)initWith:(HappyVM *)model tableView:(UITableView *)tableView{
     if (self = [super init]) {
-        _model  = model;
+        _vm  = model;
         _tableView = tableView;
         _tableViewArray = [[TableViewArray alloc] init];
         _tableView.tableFooterView = [[UIView alloc] init];
@@ -276,14 +276,14 @@
         if (self.refreshHeaderView) {
             [_tableView addSubview:self.refreshHeaderView];
             self.refreshHeaderView.shouldTrigger = ^BOOL{
-                [ws.model refresh];
-                return ws.model.isRefreshing;
+                [ws.vm refresh];
+                return ws.vm.isRefreshing;
             };
         }
 
         // listener model changed
-        [self addObserverForHappyListBIForView:_tableView];
-        [createNotifer(_model, @"model") makeRelation:self withBlock:^(id value) {
+        [self addObserverForHappyListVMForView:_tableView];
+        [createNotifer(_vm, @"model") makeRelation:self withBlock:^(id value) {
             typeof(self) SELF = ws;
             if (SELF) {
                 [SELF->_tableView reloadData];

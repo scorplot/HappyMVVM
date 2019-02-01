@@ -6,26 +6,26 @@
 //  Copyright © 2017年 Scorplot. All rights reserved.
 //
 
-#import "HappyListBI.h"
+#import "HappyListVM.h"
 #import "ListBaseResponse.h"
 #import <TaskEnginer/TaskRoute.h>
 #import <RealReachability/RealReachability.h>
 
-@interface HappyBI()
+@interface HappyVM()
 @property (nonatomic, readwrite) id model;
 @property (nonatomic, readwrite) HappyViewModelStatus status;
 @property (nonatomic, readwrite) NSError *error;
 @property (nonatomic, readwrite, getter=isRefreshing) BOOL refreshing;
 @end
 
-@interface HappyListBI()
+@interface HappyListVM()
 @property (nonatomic, readwrite, getter=isGettingMore) BOOL gettingMore;
 @property (nonatomic, readwrite) BOOL hasMore;
 @property (nonatomic, assign, readwrite) NSInteger count;
 @property (nonatomic, readwrite) id extra;
 @end
 
-@implementation HappyListBI {
+@implementation HappyListVM {
     NSMutableArray *_array;
     TaskRoute* _refreshTask;
     TaskRoute* _getMoreTask;

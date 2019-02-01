@@ -1,22 +1,22 @@
 //
-//  BaseModel.m
+//  HappyVM.m
 //  CCUIModel
 //
 //  Created by Aruisi on 4/20/18.
 //
 
-#import "HappyBI.h"
+#import "HappyVM.h"
 #import <TaskEnginer/TaskRoute.h>
 #import <RealReachability/RealReachability.h>
 
-@interface HappyBI()
+@interface HappyVM()
 @property (nonatomic, readwrite) id model;
 @property (nonatomic, readwrite) HappyViewModelStatus status;
 @property (nonatomic, readwrite) NSError *error;
 @property (nonatomic, readwrite, getter=isRefreshing) BOOL refreshing;
 @end
 
-@implementation HappyBI {
+@implementation HappyVM {
     TaskRoute* _refreshTask;
     __weak TaskRoute* _saveCacheTask;
     __weak TaskRoute* _loadCacheTask;

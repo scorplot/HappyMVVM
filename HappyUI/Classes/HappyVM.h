@@ -1,5 +1,5 @@
 //
-//  BaseModel.h
+//  HappyVM.h
 //  CCUIModel
 //
 //  Created by Aruisi on 4/20/18.
@@ -14,7 +14,7 @@ typedef NS_ENUM(NSUInteger, HappyViewModelStatus) {
 };
 
 @class TaskRoute;
-@interface HappyBI : NSObject
+@interface HappyVM : NSObject
 @property (nonatomic, readonly) id context; // context
 @property (nonatomic, readonly) id model;
 @property (nonatomic, readonly) HappyViewModelStatus status;

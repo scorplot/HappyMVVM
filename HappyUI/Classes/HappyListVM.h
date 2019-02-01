@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HappyBI.h"
+#import "HappyVM.h"
 
 @class TaskRoute;
-@interface HappyListBI : HappyBI
+@interface HappyListVM : HappyVM
 @property (nonatomic, readonly) id context; // context
 @property (nonatomic, readonly) NSArray *model;
 @property (nonatomic, readonly, assign) NSInteger count; // how many items in model, it's equlas array.count

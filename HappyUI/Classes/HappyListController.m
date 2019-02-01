@@ -7,7 +7,7 @@
 //
 
 #import "HappyListController.h"
-#import "HappyListBI.h"
+#import "HappyListVM.h"
 #import <CollectionViewArray/CollectionViewArray.h>
 #import <CCUIModel/CCUIModel.h>
 #import <TableViewArray/TableViewArray.h>
@@ -17,7 +17,7 @@
 static const NSInteger preloadIndex  = 5;
 @interface HappyListController ()
 
-@property (nonatomic, strong) HappyListBI * listModel;
+@property (nonatomic, strong) HappyListVM * listVM;
 
 @end
 
@@ -46,41 +46,41 @@ static const NSInteger preloadIndex  = 5;
     BOOL _isDraaging;
 }
 
--(instancetype)initWith:(HappyListBI *)model collectionView:(UICollectionView *)collectionView{
+-(instancetype)initWith:(HappyListVM *)vm collectionView:(UICollectionView *)collectionView{
     if (self =  [super init]) {
-        _listModel  = model;
+        _listVM  = vm;
         _listCollectionView = collectionView;
         _collectionViewArray = [[CollectionViewArray alloc] init];
         typeof(self)__weak SELF = self;
         _collectionViewArray.willDisplayCellForItemAtIndexPath = ^(UICollectionView * _Nonnull collectionView, UICollectionViewCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath,id _Nullable object) {
-            if (indexPath.row > [collectionView numberOfItemsInSection:0]-preloadIndex && !SELF.listModel.gettingMore&&!SELF.listModel.refreshing) {
-                [SELF.listModel getMore];
+            if (indexPath.row > [collectionView numberOfItemsInSection:0]-preloadIndex && !SELF.listVM.gettingMore&&!SELF.listVM.refreshing) {
+                [SELF.listVM getMore];
             }
         };
         
         [self setUpCollectionView:_collectionViewArray collectionView:_listCollectionView];
         
-        if (collectionView && model.model) {
-            CollectionViewConnectArray(_listCollectionView, _listModel.model, _collectionViewArray);
+        if (collectionView && vm.model) {
+            CollectionViewConnectArray(_listCollectionView, _listVM.model, _collectionViewArray);
         }
         __weak typeof(self) ws = self;
         if (self.refreshHeaderView) {
             [_listCollectionView insertSubview:self.refreshHeaderView atIndex:0];
             self.refreshHeaderView.shouldTrigger = ^BOOL{
-                [ws.listModel refresh];
-                return ws.listModel.isRefreshing;
+                [ws.listVM refresh];
+                return ws.listVM.isRefreshing;
             };
         }
         if (self.getMoreFooterView) {
-            if (_listModel.hasMore)
+            if (_listVM.hasMore)
                 [_listCollectionView addSubview:_getMoreFooterView];
             self.getMoreFooterView.shouldTrigger = ^BOOL{
-                [ws.listModel getMore];
-                return ws.listModel.isGettingMore;
+                [ws.listVM getMore];
+                return ws.listVM.isGettingMore;
             };
         }
         
-        model.refreshDidSuccess = ^{
+        vm.refreshDidSuccess = ^{
             HappyListController* controller = ws;
             if (controller) {
                 CGPoint offset = ws.listCollectionView.contentOffset;
@@ -95,7 +95,7 @@ static const NSInteger preloadIndex  = 5;
         };
         
         // listener model changed
-        [self addObserverForHappyListBIForView:_listCollectionView];
+        [self addObserverForHappyListVMForView:_listCollectionView];
         
         [collectionView addObserver:self forKeyPath:@"bounds" options:0 context:nil];
         [collectionView addObserver:self forKeyPath:@"contentInset" options:0 context:nil];
@@ -107,8 +107,8 @@ static const NSInteger preloadIndex  = 5;
 
 -(void)setRefreshInset {
     CGFloat top = 0;
-    _refreshHeaderView.refreshing = _listModel.isRefreshing;
-    top = _refreshHeaderView?(_listModel.isRefreshing?_refreshHeaderView.frame.size.height:0):0;
+    _refreshHeaderView.refreshing = _listVM.isRefreshing;
+    top = _refreshHeaderView?(_listVM.isRefreshing?_refreshHeaderView.frame.size.height:0):0;
     if (top != _insert.top) {
         UIScrollView* scrollView = _listTableView?_listTableView:_listCollectionView;
         UIEdgeInsets insert = scrollView.contentInset;
@@ -130,8 +130,8 @@ static const NSInteger preloadIndex  = 5;
 
 -(void)setGetMoreInset{
     CGFloat bottom = 0;
-    _getMoreFooterView.gettingMore = _listModel.isGettingMore;
-    bottom = _getMoreFooterView?(_listModel.isGettingMore?_getMoreFooterView.frame.size.height:0):0;
+    _getMoreFooterView.gettingMore = _listVM.isGettingMore;
+    bottom = _getMoreFooterView?(_listVM.isGettingMore?_getMoreFooterView.frame.size.height:0):0;
     if (bottom != _insert.bottom) {
         UIScrollView* scrollView = _listTableView?_listTableView:_listCollectionView;
         UIEdgeInsets insert = scrollView.contentInset;
@@ -143,7 +143,7 @@ static const NSInteger preloadIndex  = 5;
     }
 }
 -(void)updateGetMoreStatus:(BOOL)value view:(UIView*)contentView {
-    if (_listModel.hasMore) {
+    if (_listVM.hasMore) {
         [_listTableView addSubview:_getMoreFooterView];
         [_listCollectionView addSubview:_getMoreFooterView];
     } else {
@@ -163,7 +163,7 @@ static const NSInteger preloadIndex  = 5;
         [_errorView removeFromSuperview];
         [_loadingView removeFromSuperview];
     } else {
-        if (_listModel.isRefreshing) {
+        if (_listVM.isRefreshing) {
             [_emptyView removeFromSuperview];
             [_errorView removeFromSuperview];
             if (self.loadingView) {
@@ -200,7 +200,7 @@ static const NSInteger preloadIndex  = 5;
                         rc.size.height -= headerHeight;
                     }
                     _errorView.frame = rc;
-                    if (self.listModel.model.count==0) {
+                    if (self.listVM.model.count==0) {
                         [contentView addSubview:_errorView];
                     }
                 }
@@ -208,29 +208,29 @@ static const NSInteger preloadIndex  = 5;
         }
     }
 }
--(void)addObserverForHappyListBIForView:(UIScrollView *)contentView {
+-(void)addObserverForHappyListVMForView:(UIScrollView *)contentView {
     typeof(self) __weak SELF = self;
     __weak UIScrollView* __contentView = contentView;
     
-    [createNotifer(SELF.listModel, @"status") makeRelation:self withBlock:^(id value) {
+    [createNotifer(SELF.listVM, @"status") makeRelation:self withBlock:^(id value) {
         if (__contentView) {
-            [SELF updateRefreshStatus:SELF.listModel.isRefreshing view:__contentView];
+            [SELF updateRefreshStatus:SELF.listVM.isRefreshing view:__contentView];
             [SELF updateStatus:[value intValue] view:__contentView];
         }
     }];
-    [createNotifer(SELF.listModel, @"refreshing") makeRelation:self withBlock:^(id value) {
+    [createNotifer(SELF.listVM, @"refreshing") makeRelation:self withBlock:^(id value) {
         if (__contentView) {
             [SELF updateRefreshStatus:[value boolValue] view:__contentView];
-            [SELF updateStatus:SELF.listModel.status view:__contentView];
+            [SELF updateStatus:SELF.listVM.status view:__contentView];
         }
     }];
     
-    [createNotifer(SELF.listModel, @"gettingMore") makeRelation:self withBlock:^(id value) {
+    [createNotifer(SELF.listVM, @"gettingMore") makeRelation:self withBlock:^(id value) {
         if (__contentView)
             [SELF updateGetMoreStatus:[value boolValue] view:__contentView];
     }];
     
-    [createNotifer(SELF.listModel, @"hasMore") makeRelation:self withBlock:^(id value) {
+    [createNotifer(SELF.listVM, @"hasMore") makeRelation:self withBlock:^(id value) {
         if (__contentView) {
             UIView* footer = SELF.getMoreFooterView;
             if ([value boolValue]) {
@@ -249,7 +249,7 @@ static const NSInteger preloadIndex  = 5;
         [_emptyView removeFromSuperview];
         _emptyView = emptyView;
         if (_emptyView) {
-            [self updateStatus:_listModel.status view:_listTableView?_listTableView:_listCollectionView];
+            [self updateStatus:_listVM.status view:_listTableView?_listTableView:_listCollectionView];
         }
     }
 }
@@ -275,7 +275,7 @@ static const NSInteger preloadIndex  = 5;
         [_errorView removeFromSuperview];
         _errorView = errorView;
         if (_errorView) {
-            [self updateStatus:_listModel.status view:_listTableView?_listTableView:_listCollectionView];
+            [self updateStatus:_listVM.status view:_listTableView?_listTableView:_listCollectionView];
         }
     }
 }
@@ -325,44 +325,44 @@ static const NSInteger preloadIndex  = 5;
 
 #pragma mark - tableView
 
--(instancetype)initWith:(HappyListBI *)model tableView:(UITableView *)tableView{
+-(instancetype)initWith:(HappyListVM *)vm tableView:(UITableView *)tableView{
     if (self = [super init]) {
-        _listModel  = model;
+        _listVM  = vm;
         _listTableView = tableView;
         _tableViewArray = [[TableViewArray alloc] init];
         _tableViewArray.disableAnimation = YES;
         typeof(self)__weak SELF = self;
         _listTableView.tableFooterView = [[UIView alloc] init];
         _tableViewArray.willDisplayCellforRowAtIndexPath = ^(UITableView * _Nullable tableView, UITableViewCell * _Nullable cell, NSIndexPath * _Nullable indexPath,id _Nullable object) {
-            if (tableView.contentOffset.y > tableView.contentSize.height-tableView.frame.size.height*1.3 && !SELF.listModel.gettingMore&&!SELF.listModel.refreshing) {
-                [SELF.listModel getMore];
+            if (tableView.contentOffset.y > tableView.contentSize.height-tableView.frame.size.height*1.3 && !SELF.listVM.gettingMore&&!SELF.listVM.refreshing) {
+                [SELF.listVM getMore];
             }
             [tableView sendSubviewToBack:SELF.refreshHeaderView];
         };
         
         [self setUpTableView:_tableViewArray tableView:_listTableView];
         
-        if (tableView && model.model) {
-            TableViewConnectArray(_listTableView, _listModel.model, _tableViewArray);
+        if (tableView && vm.model) {
+            TableViewConnectArray(_listTableView, _listVM.model, _tableViewArray);
         }
         __weak typeof(self) ws = self;
         if (self.refreshHeaderView) {
             [_listTableView insertSubview:self.refreshHeaderView atIndex:0];
             self.refreshHeaderView.shouldTrigger = ^BOOL{
-                [ws.listModel refresh];
-                return ws.listModel.isRefreshing;
+                [ws.listVM refresh];
+                return ws.listVM.isRefreshing;
             };
         }
         if (self.getMoreFooterView) {
-            if (_listModel.hasMore)
+            if (_listVM.hasMore)
                 [_listTableView addSubview:_getMoreFooterView];
             self.getMoreFooterView.shouldTrigger = ^BOOL{
-                [ws.listModel getMore];
-                return ws.listModel.isGettingMore;
+                [ws.listVM getMore];
+                return ws.listVM.isGettingMore;
             };
         }
         
-        model.refreshDidSuccess = ^{
+        vm.refreshDidSuccess = ^{
             HappyListController* controller = ws;
             if (controller) {
                 CGPoint offset = ws.listTableView.contentOffset;
@@ -376,7 +376,7 @@ static const NSInteger preloadIndex  = 5;
         };
         
         // listener model changed
-        [self addObserverForHappyListBIForView:_listTableView];
+        [self addObserverForHappyListVMForView:_listTableView];
         
         [tableView addObserver:self forKeyPath:@"bounds" options:0 context:nil];
         [tableView addObserver:self forKeyPath:@"contentInset" options:0 context:nil];
@@ -452,14 +452,14 @@ static const NSInteger preloadIndex  = 5;
         UIEdgeInsets insert = scrollView.contentInset;
         if (_getMoreFooterView) {
             
-            if (_listModel.hasMore) {
+            if (_listVM.hasMore) {
                 [_listTableView addSubview:_getMoreFooterView];
                 [_listCollectionView addSubview:_getMoreFooterView];
                 _getMoreFooterView.frame = CGRectMake(0, scrollView.contentSize.height+insert.bottom-_insert.bottom, scrollView.frame.size.width, _getMoreFooterView.frame.size.height);
 
             }
         }
-        if (_listModel.isGettingMore) {
+        if (_listVM.isGettingMore) {
             [self setGetMoreInset];
             [_getMoreFooterView scrollOffset:scrollView.contentSize.height + insert.bottom - _insert.bottom - scrollView.frame.size.height];
         }

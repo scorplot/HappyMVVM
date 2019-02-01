@@ -12,7 +12,7 @@
 
 @class CollectionViewArray;
 @class TableViewArray;
-@class HappyListBI;
+@class HappyListVM;
 
 @interface HappyListController : NSObject
 /**
@@ -47,16 +47,16 @@
 @property (nonatomic, strong) UIView<ScrollGetMoreFooterProtocal>* _Nullable getMoreFooterView;
 
 
-@property (nonatomic, readonly) HappyListBI * _Nullable listModel;
+@property (nonatomic, readonly) HappyListVM * _Nullable listVM;
 
 @property (nonatomic, readonly)  UICollectionView* _Nullable  listCollectionView;
 @property (nonatomic, readonly)  UITableView* _Nullable  listTableView;
 
 //collectioView
--(instancetype _Nonnull )initWith:(HappyListBI*_Nonnull)model collectionView:(UICollectionView*_Nonnull)collectionView;
+-(instancetype _Nonnull )initWith:(HappyListVM*_Nonnull)vm collectionView:(UICollectionView*_Nonnull)collectionView;
 
 //tableView
--(instancetype _Nonnull )initWith:(HappyListBI *_Nonnull)model tableView:(UITableView *_Nonnull)tableView;
+-(instancetype _Nonnull )initWith:(HappyListVM *_Nonnull)vm tableView:(UITableView *_Nonnull)tableView;
 
 -(UIView<ScrollRefreshHeaderProtocal>*)defaultRefreshHeaderView;
 -(UIView<ScrollGetMoreFooterProtocal>*)defaultGetMoreFooterView;

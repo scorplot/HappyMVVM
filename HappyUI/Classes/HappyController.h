@@ -10,7 +10,7 @@
 
 @class CollectionViewArray;
 @class TableViewArray;
-@class HappyBI;
+@class HappyVM;
 
 @interface HappyController : NSObject
 
@@ -38,16 +38,16 @@
 
 @property (nonatomic, strong) UIView<ScrollRefreshHeaderProtocal>* _Nullable refreshHeaderView;
 
-@property (nonatomic, readonly) HappyBI * _Nullable model;
+@property (nonatomic, readonly) HappyVM * _Nullable vm;
 
 @property (nonatomic, readonly)  UICollectionView* _Nullable  collectionView;
 @property (nonatomic, readonly)  UITableView* _Nullable  tableView;
 
 //collectioView
--(instancetype _Nonnull )initWith:(HappyBI*_Nonnull)model collectionView:(UICollectionView*_Nonnull)collectionView;
+-(instancetype _Nonnull )initWith:(HappyVM*_Nonnull)vm collectionView:(UICollectionView*_Nonnull)collectionView;
 
 //tableView
--(instancetype _Nonnull )initWith:(HappyBI *_Nonnull)model tableView:(UITableView *_Nonnull)tableView;
+-(instancetype _Nonnull )initWith:(HappyVM *_Nonnull)vm tableView:(UITableView *_Nonnull)tableView;
 
 -(UIView<ScrollRefreshHeaderProtocal>*)defaultRefreshHeaderView;
 

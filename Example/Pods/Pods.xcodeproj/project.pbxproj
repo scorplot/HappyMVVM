@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		053C885E7FF5076BA85B004038A31A53 /* RealReachability-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAB63BF01394A0A08F4927064115794 /* RealReachability-dummy.m */; };
-		074C39CD8E63B4C42570890A5BD92B16 /* HappyBI.m in Sources */ = {isa = PBXBuildFile; fileRef = D35A8684C06C766A472EE18BB8212FA6 /* HappyBI.m */; };
+		074C39CD8E63B4C42570890A5BD92B16 /* HappyVM.m in Sources */ = {isa = PBXBuildFile; fileRef = D35A8684C06C766A472EE18BB8212FA6 /* HappyVM.m */; };
 		076626797A7A2C0C620DDA84DAD39D2A /* CCUIModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E4699710C53B110814E04A382CF5040 /* CCUIModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0835B019AF64A1D6AE0AD41C0C741E7B /* TaskEnginer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E330A8242D2B86DFF6A6B8ACCD7B80 /* TaskEnginer-dummy.m */; };
 		0B3E8AC2D4D6945C2E980A087595D95E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A99E2C10103EB7BB1A24332652DCC3E /* Foundation.framework */; };
@@ -19,7 +19,7 @@
 		1477D7808AF8565B9F3465C49554B461 /* UIViewController+HayypUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 526CA6F470B3848A115926B0705D387D /* UIViewController+HayypUI.m */; };
 		1504A2BB0BFBB9AB6FA658C03D86FC44 /* ReachStateWWAN.h in Headers */ = {isa = PBXBuildFile; fileRef = 353C4F2C4D1AA46168241C77563D2542 /* ReachStateWWAN.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		15FB2CFDC08670E97941C338A1C5698E /* ListBaseResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA71E6748BBEB51EC3B19D3F3384C16 /* ListBaseResponse.m */; };
-		1603754635C0DE73130D3828C2D9C34D /* HappyListBI.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA2308FBBCA3DCD325A50700E72D2D /* HappyListBI.m */; };
+		1603754635C0DE73130D3828C2D9C34D /* HappyListVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA2308FBBCA3DCD325A50700E72D2D /* HappyListVM.m */; };
 		168F4D464CF22D2075BE6DBD3996C623 /* NSMutableArray+Listener.h in Headers */ = {isa = PBXBuildFile; fileRef = FDCDDE244372E12D9CAB6724EB23CA07 /* NSMutableArray+Listener.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169BDE11CAC79991D0DC8D7B004823AB /* HappyUI-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1314CE5A9A065D2AFC6AC0EEE020FE0A /* HappyUI-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		19576C18B76963C724ADF92000979883 /* TableViewProtocolListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 996AF5E6404800B6AF365A8F42B8E1A7 /* TableViewProtocolListener.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -78,7 +78,7 @@
 		98C7F72FCB5D6B964E7479E4FD40699E /* CircleReferenceCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEB4067054DF659B7B1495D9F2E3868 /* CircleReferenceCheck.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9914E271850BAA45C8E03FB6F0202052 /* SimpleGetMoreView.h in Headers */ = {isa = PBXBuildFile; fileRef = 62448BEF54F5718C1E20EFB3B1B2A3EE /* SimpleGetMoreView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		992817EC1ECA2BED550F6BB1FFEAAA48 /* Pods-HappyUI_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 10E2916681C5227E1CA00DDAC3D94861 /* Pods-HappyUI_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9A1C58D8D35004FD85AABA92158EFF4A /* SimpleHappyBI.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D47948E4EAFD9DFA45C97E78F5F6E8 /* SimpleHappyBI.m */; };
+		9A1C58D8D35004FD85AABA92158EFF4A /* SimpleHappyVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D47948E4EAFD9DFA45C97E78F5F6E8 /* SimpleHappyVM.m */; };
 		9DE701E0391FACDC566CFF008B423BB3 /* CircleReferenceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B69179136DB5FF9E5BC3616AE85F64E /* CircleReferenceCheck.framework */; };
 		AA730797B0F756520BBAAEAEFC61608F /* ReachState.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F64E1E80315400E5FAD4B5CAC490AFD /* ReachState.m */; };
 		B383CAF1B936F2F4B2CC52D0576B0B4B /* JointTaskItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 294A4FCB4276F0E41E194DACB9A3FBFC /* JointTaskItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -89,7 +89,7 @@
 		BAD1C407216938CCAF6378DB6AD721CC /* CircleReferenceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B69179136DB5FF9E5BC3616AE85F64E /* CircleReferenceCheck.framework */; };
 		BB648E67FADCC1A37ABC29DAAB934213 /* CollectionViewArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A220A405A555050AE9C560D6DA9E0CE /* CollectionViewArray.m */; };
 		BEE388C4F7A80A3867EF8F8939597115 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A99E2C10103EB7BB1A24332652DCC3E /* Foundation.framework */; };
-		C1CE7940D20F3DF9605944A5930B550C /* HappyListBI.h in Headers */ = {isa = PBXBuildFile; fileRef = 17C0E69F4703C29DB73A372C3AE4A0B4 /* HappyListBI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1CE7940D20F3DF9605944A5930B550C /* HappyListVM.h in Headers */ = {isa = PBXBuildFile; fileRef = 17C0E69F4703C29DB73A372C3AE4A0B4 /* HappyListVM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C6AC62D309D67C359766A5AF1D35A5EE /* CircleReferenceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B69179136DB5FF9E5BC3616AE85F64E /* CircleReferenceCheck.framework */; };
 		C82E1A4096FB46A4F822EE145D17D4E6 /* PingHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0E09A9FB12859CB2BFF95C5271C44582 /* PingHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9FED92482198A784C6D97DEBE485BF3 /* LoadFileSubTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 406D20672ED71CA697DBAC37BDB9BFD0 /* LoadFileSubTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -102,7 +102,7 @@
 		D252F2819788873F9E934795492B4999 /* HappyContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 755BAE633C52B7A0AEC6A2A5B48BC7CA /* HappyContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D26CC3B7242F587077D2E74C933565D8 /* TableViewArray-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0E89E9B01D908B4A5EAB394BE59DE1AA /* TableViewArray-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D421A5613B330438A2A73571A83F31FE /* RealReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB29E45F10D11573451C77A5C5EED7 /* RealReachability.m */; };
-		D54881377E6D58E9A15CCBDB6D1E05E2 /* SimpleListBI.m in Sources */ = {isa = PBXBuildFile; fileRef = 448E157D3475DA4304F7B60EAEC36B5D /* SimpleListBI.m */; };
+		D54881377E6D58E9A15CCBDB6D1E05E2 /* SimpleHappyListVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 448E157D3475DA4304F7B60EAEC36B5D /* SimpleHappyListVM.m */; };
 		D59BA4346ECCD9092D1F9FA5688B4753 /* MutableArrayListener.h in Headers */ = {isa = PBXBuildFile; fileRef = FCAB01C121CEED442A6EA4A4519C565A /* MutableArrayListener.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D5FA614FB4069AC6AC1BB4BAEBED951A /* TableViewArray.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06308E73281F9EBE473595097E8482EA /* TableViewArray.framework */; };
 		D621502B40F21179B144AA33494A9111 /* ReachStateLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 729453604F6BC654C3EED356F1FF2000 /* ReachStateLoading.m */; };
@@ -111,15 +111,15 @@
 		DA6AA707211A94DC6D07FBBD221F4089 /* TaskEnginer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A8A467684646AB3BDC8AEB9AB9C34649 /* TaskEnginer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAE32E90C82D60895CB02DEF9CA1E2C6 /* SimpleRefreshingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 034B146D7C135FD7881B0FC5F2373660 /* SimpleRefreshingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB990B812547C652120167DB09C27E01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A99E2C10103EB7BB1A24332652DCC3E /* Foundation.framework */; };
-		DC0CF117F44A72B623A6B96E52246727 /* SimpleHappyBI.h in Headers */ = {isa = PBXBuildFile; fileRef = 42D81F45EB5C10D28D024A0F8F76AEA6 /* SimpleHappyBI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC0CF117F44A72B623A6B96E52246727 /* SimpleHappyVM.h in Headers */ = {isa = PBXBuildFile; fileRef = 42D81F45EB5C10D28D024A0F8F76AEA6 /* SimpleHappyVM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DC992110DDA4A3365C8112CB897F3B87 /* MutableArrayListener.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319D85F2F4E10FB0E14590649AE2AF31 /* MutableArrayListener.framework */; };
 		DF181999B94A94E2C45B71EF9AC7BFF6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A99E2C10103EB7BB1A24332652DCC3E /* Foundation.framework */; };
 		DF8988A6E267DE99CC6C4ECB843B055C /* CCUIModel-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E7815CA3B17E6A7662C7D9C204D11100 /* CCUIModel-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DFC8B3E9640B2F475C59BD244CAE748F /* SubTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 30909EE9A8B3DDB010976789DA1B3C1E /* SubTask.m */; };
-		E1D8830F409822499A8E787808AC76DB /* SimpleListBI.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E3A03E453CC1392E1F3AAB3276F502 /* SimpleListBI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E1D8830F409822499A8E787808AC76DB /* SimpleHappyListVM.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E3A03E453CC1392E1F3AAB3276F502 /* SimpleHappyListVM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E232243798D2A5F8B37EAB6332FE60ED /* ReachStateUnloaded.m in Sources */ = {isa = PBXBuildFile; fileRef = 1416229013A79040FE1D5C2D6413DBDD /* ReachStateUnloaded.m */; };
 		E5894652845721D52C1EA6922DC3E11B /* SimpleRefreshingView.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CF1CE33478EB0E27F7A850C9282C2F /* SimpleRefreshingView.m */; };
-		E821E1DBC3C37B88826F4033E8BD4A9B /* HappyBI.h in Headers */ = {isa = PBXBuildFile; fileRef = 53D07811A5605BD24C628EEC81E602EC /* HappyBI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E821E1DBC3C37B88826F4033E8BD4A9B /* HappyVM.h in Headers */ = {isa = PBXBuildFile; fileRef = 53D07811A5605BD24C628EEC81E602EC /* HappyVM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E86553AD5BAD2BA59B8E3E005F7A2C7D /* UINavigationController+HappyUI.m in Sources */ = {isa = PBXBuildFile; fileRef = B5630D10A0C0A1D846A9904BC77DFCCF /* UINavigationController+HappyUI.m */; };
 		E8D538EE45066F8DD62E6E4770F812DD /* HappyController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5072AA07F30DC48F09F3BA0DE07C84E /* HappyController.m */; };
 		E8FE198891FE69B86DE0C7BEB7CA4CAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A99E2C10103EB7BB1A24332652DCC3E /* Foundation.framework */; };
@@ -320,7 +320,7 @@
 		1416229013A79040FE1D5C2D6413DBDD /* ReachStateUnloaded.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReachStateUnloaded.m; path = RealReachability/FSM/ReachStateUnloaded.m; sourceTree = "<group>"; };
 		1449949AEFEDF7A15C75402405F0FC54 /* PingHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PingHelper.m; path = RealReachability/Ping/PingHelper.m; sourceTree = "<group>"; };
 		16A1B5F99C0753F08DFAEFF379A05A89 /* TableViewArray.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TableViewArray.m; path = TableViewArray/Classes/TableViewArray.m; sourceTree = "<group>"; };
-		17C0E69F4703C29DB73A372C3AE4A0B4 /* HappyListBI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyListBI.h; path = HappyUI/Classes/HappyListBI.h; sourceTree = "<group>"; };
+		17C0E69F4703C29DB73A372C3AE4A0B4 /* HappyListVM.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyListVM.h; path = HappyUI/Classes/HappyListVM.h; sourceTree = "<group>"; };
 		1879509BFC5A59AD4DDD113B139E063C /* ReachStateWIFI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReachStateWIFI.h; path = RealReachability/FSM/ReachStateWIFI.h; sourceTree = "<group>"; };
 		18BC316F08DD852341DE078D6C6809E5 /* CircleReferenceCheck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CircleReferenceCheck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		192173693E9FC8432939F0B8BC36FCE3 /* FSMEngine.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FSMEngine.m; path = RealReachability/FSM/FSMEngine.m; sourceTree = "<group>"; };
@@ -351,25 +351,25 @@
 		32572A800CE8D7D48E7276FB4BDD00EA /* NSMutableArrayListenerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NSMutableArrayListenerDelegate.h; path = MutableArrayListener/Classes/NSMutableArrayListenerDelegate.h; sourceTree = "<group>"; };
 		32A2533BDC9AFE564E5FF884EED8EAEB /* HappyAccount.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyAccount.h; path = HappyUI/Classes/HappyAccount.h; sourceTree = "<group>"; };
 		353C4F2C4D1AA46168241C77563D2542 /* ReachStateWWAN.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReachStateWWAN.h; path = RealReachability/FSM/ReachStateWWAN.h; sourceTree = "<group>"; };
-		3BCA2308FBBCA3DCD325A50700E72D2D /* HappyListBI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyListBI.m; path = HappyUI/Classes/HappyListBI.m; sourceTree = "<group>"; };
+		3BCA2308FBBCA3DCD325A50700E72D2D /* HappyListVM.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyListVM.m; path = HappyUI/Classes/HappyListVM.m; sourceTree = "<group>"; };
 		404DCB92A308EA9E299E7F04D4AA74E1 /* TaskEnginer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TaskEnginer.xcconfig; sourceTree = "<group>"; };
 		406D20672ED71CA697DBAC37BDB9BFD0 /* LoadFileSubTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LoadFileSubTask.h; path = TaskEnginer/Classes/LoadFileSubTask.h; sourceTree = "<group>"; };
 		4123599CA34EC4D262CB98F10C42B4D0 /* ReachStateUnReachable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReachStateUnReachable.h; path = RealReachability/FSM/ReachStateUnReachable.h; sourceTree = "<group>"; };
 		4178971D29F6147BA9C27C2FA27D4F4F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		421DD1458AF40B23DE16A68643F6DE12 /* ListBaseResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ListBaseResponse.h; path = HappyUI/Classes/ListBaseResponse.h; sourceTree = "<group>"; };
-		42D81F45EB5C10D28D024A0F8F76AEA6 /* SimpleHappyBI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SimpleHappyBI.h; path = HappyUI/Classes/SimpleHappyBI.h; sourceTree = "<group>"; };
+		42D81F45EB5C10D28D024A0F8F76AEA6 /* SimpleHappyVM.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SimpleHappyVM.h; path = HappyUI/Classes/SimpleHappyVM.h; sourceTree = "<group>"; };
 		447244943D46803F50008E4416E9A581 /* SaveFileSubTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SaveFileSubTask.m; path = TaskEnginer/Classes/SaveFileSubTask.m; sourceTree = "<group>"; };
-		448E157D3475DA4304F7B60EAEC36B5D /* SimpleListBI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleListBI.m; path = HappyUI/Classes/SimpleListBI.m; sourceTree = "<group>"; };
+		448E157D3475DA4304F7B60EAEC36B5D /* SimpleHappyListVM.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleHappyListVM.m; path = HappyUI/Classes/SimpleHappyListVM.m; sourceTree = "<group>"; };
 		44F7D6A82C6773ADB89B18F8C4AA6550 /* MutableArrayListener.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = MutableArrayListener.modulemap; sourceTree = "<group>"; };
 		4617304D58696BC8831C8A969A5709B0 /* CollectionViewArray-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CollectionViewArray-umbrella.h"; sourceTree = "<group>"; };
 		466F211CD110CA0CA2056B69EF100F0B /* ReachStateUnloaded.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReachStateUnloaded.h; path = RealReachability/FSM/ReachStateUnloaded.h; sourceTree = "<group>"; };
 		47529533B6A7B9DED4BB331D192901EA /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		48D47948E4EAFD9DFA45C97E78F5F6E8 /* SimpleHappyBI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleHappyBI.m; path = HappyUI/Classes/SimpleHappyBI.m; sourceTree = "<group>"; };
+		48D47948E4EAFD9DFA45C97E78F5F6E8 /* SimpleHappyVM.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleHappyVM.m; path = HappyUI/Classes/SimpleHappyVM.m; sourceTree = "<group>"; };
 		4A5B1945A6D72B1EF8BAFD6C6C95DD3F /* CCUIModel.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CCUIModel.xcconfig; sourceTree = "<group>"; };
 		4ADBAF7A345D29FFB7CDCFAF374250B5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4DBC31A9B7FF4483608A7F0F0BF32211 /* PingFoundation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PingFoundation.m; path = RealReachability/Ping/PingFoundation.m; sourceTree = "<group>"; };
 		526CA6F470B3848A115926B0705D387D /* UIViewController+HayypUI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+HayypUI.m"; path = "HappyUI/Classes/UIViewController+HayypUI.m"; sourceTree = "<group>"; };
-		53D07811A5605BD24C628EEC81E602EC /* HappyBI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyBI.h; path = HappyUI/Classes/HappyBI.h; sourceTree = "<group>"; };
+		53D07811A5605BD24C628EEC81E602EC /* HappyVM.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyVM.h; path = HappyUI/Classes/HappyVM.h; sourceTree = "<group>"; };
 		542014E153991B3170AB44749AD4A92C /* CollectionViewArray.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CollectionViewArray.xcconfig; sourceTree = "<group>"; };
 		566664EF113D26DE89C178682643361F /* HappyContext.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyContext.m; path = HappyUI/Classes/HappyContext.m; sourceTree = "<group>"; };
 		5784502E84F6E9F4A34AC0FF969A2C0F /* Pods-HappyUI_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HappyUI_Tests-resources.sh"; sourceTree = "<group>"; };
@@ -443,7 +443,7 @@
 		CEA279081541BA0DB7B44B7E40811E58 /* MutableArrayListener-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MutableArrayListener-umbrella.h"; sourceTree = "<group>"; };
 		CF721A269EB77F7BED0C7F9382D9C07B /* RealReachability.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = RealReachability.modulemap; sourceTree = "<group>"; };
 		D13A2D3D5F9B9F3214BF237C5B91E0B9 /* MutableArrayListener-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MutableArrayListener-dummy.m"; sourceTree = "<group>"; };
-		D35A8684C06C766A472EE18BB8212FA6 /* HappyBI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyBI.m; path = HappyUI/Classes/HappyBI.m; sourceTree = "<group>"; };
+		D35A8684C06C766A472EE18BB8212FA6 /* HappyVM.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HappyVM.m; path = HappyUI/Classes/HappyVM.m; sourceTree = "<group>"; };
 		D3CD8CDE95ABBD7AC4FC1B8D83B7C1CB /* CircleReferenceCheck-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CircleReferenceCheck-dummy.m"; sourceTree = "<group>"; };
 		D853D4152276D8477708DFB8D075CE1C /* CircleReferenceCheck.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CircleReferenceCheck.xcconfig; sourceTree = "<group>"; };
 		D893EA98B11725EB6530FE8AC73C9321 /* RealReachability-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RealReachability-umbrella.h"; sourceTree = "<group>"; };
@@ -454,7 +454,7 @@
 		E5C6B42318D0E5CC4A4CD722E1022F01 /* LoadFileSubTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LoadFileSubTask.m; path = TaskEnginer/Classes/LoadFileSubTask.m; sourceTree = "<group>"; };
 		E5CF1CE33478EB0E27F7A850C9282C2F /* SimpleRefreshingView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SimpleRefreshingView.m; path = HappyUI/Classes/SimpleRefreshingView.m; sourceTree = "<group>"; };
 		E64EAE3B15DC3A83506F219B226DB07D /* Pods-HappyUI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HappyUI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		E6E3A03E453CC1392E1F3AAB3276F502 /* SimpleListBI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SimpleListBI.h; path = HappyUI/Classes/SimpleListBI.h; sourceTree = "<group>"; };
+		E6E3A03E453CC1392E1F3AAB3276F502 /* SimpleHappyListVM.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SimpleHappyListVM.h; path = HappyUI/Classes/SimpleHappyListVM.h; sourceTree = "<group>"; };
 		E7815CA3B17E6A7662C7D9C204D11100 /* CCUIModel-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CCUIModel-umbrella.h"; sourceTree = "<group>"; };
 		E7840362BE4AF999A8739104ACD951AA /* Pods-HappyUI_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HappyUI_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		E9635496E3B07B2BEF72A3A45C7B8542 /* RealReachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealReachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -740,13 +740,13 @@
 			children = (
 				32A2533BDC9AFE564E5FF884EED8EAEB /* HappyAccount.h */,
 				B22447B5CB4FFFDFAE32B75375C03067 /* HappyAccount.m */,
-				53D07811A5605BD24C628EEC81E602EC /* HappyBI.h */,
-				D35A8684C06C766A472EE18BB8212FA6 /* HappyBI.m */,
 				CBAAD4CF4B30A84F2D3470C257861350 /* HappyBIProtocal.h */,
 				755BAE633C52B7A0AEC6A2A5B48BC7CA /* HappyContext.h */,
 				566664EF113D26DE89C178682643361F /* HappyContext.m */,
-				17C0E69F4703C29DB73A372C3AE4A0B4 /* HappyListBI.h */,
-				3BCA2308FBBCA3DCD325A50700E72D2D /* HappyListBI.m */,
+				53D07811A5605BD24C628EEC81E602EC /* HappyVM.h */,
+				D35A8684C06C766A472EE18BB8212FA6 /* HappyVM.m */,
+				17C0E69F4703C29DB73A372C3AE4A0B4 /* HappyListVM.h */,
+				3BCA2308FBBCA3DCD325A50700E72D2D /* HappyListVM.m */,
 				28FEF0C64DA564D875ECDD1CD2942A21 /* HappyController.h */,
 				C5072AA07F30DC48F09F3BA0DE07C84E /* HappyController.m */,
 				CD46DAEF2F8A306EBDFE62361DC462BF /* HappyListController.h */,
@@ -755,10 +755,10 @@
 				EEA71E6748BBEB51EC3B19D3F3384C16 /* ListBaseResponse.m */,
 				62448BEF54F5718C1E20EFB3B1B2A3EE /* SimpleGetMoreView.h */,
 				F1D31871F21CE4CECA1DB67273BB59C9 /* SimpleGetMoreView.m */,
-				42D81F45EB5C10D28D024A0F8F76AEA6 /* SimpleHappyBI.h */,
-				48D47948E4EAFD9DFA45C97E78F5F6E8 /* SimpleHappyBI.m */,
-				E6E3A03E453CC1392E1F3AAB3276F502 /* SimpleListBI.h */,
-				448E157D3475DA4304F7B60EAEC36B5D /* SimpleListBI.m */,
+				42D81F45EB5C10D28D024A0F8F76AEA6 /* SimpleHappyVM.h */,
+				48D47948E4EAFD9DFA45C97E78F5F6E8 /* SimpleHappyVM.m */,
+				E6E3A03E453CC1392E1F3AAB3276F502 /* SimpleHappyListVM.h */,
+				448E157D3475DA4304F7B60EAEC36B5D /* SimpleHappyListVM.m */,
 				034B146D7C135FD7881B0FC5F2373660 /* SimpleRefreshingView.h */,
 				E5CF1CE33478EB0E27F7A850C9282C2F /* SimpleRefreshingView.m */,
 				78A37832771A9B952EAE3735A5DFC71C /* UINavigationController+HappyUI.h */,
@@ -1095,17 +1095,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FE22B5106E8CE3B1740BB6B499E9349 /* HappyAccount.h in Headers */,
-				E821E1DBC3C37B88826F4033E8BD4A9B /* HappyBI.h in Headers */,
+				E821E1DBC3C37B88826F4033E8BD4A9B /* HappyVM.h in Headers */,
 				F25110CEEAB7E233307B7378DE761525 /* HappyBIProtocal.h in Headers */,
 				D252F2819788873F9E934795492B4999 /* HappyContext.h in Headers */,
-				C1CE7940D20F3DF9605944A5930B550C /* HappyListBI.h in Headers */,
+				C1CE7940D20F3DF9605944A5930B550C /* HappyListVM.h in Headers */,
 				169BDE11CAC79991D0DC8D7B004823AB /* HappyUI-umbrella.h in Headers */,
 				808432A1A628E12C72313F7F21894AD5 /* HappyController.h in Headers */,
 				8A8DB8471B33E5EC3174BB1F0BD3B72E /* ListBaseResponse.h in Headers */,
 				580DBA379BB01E33FB2B139DA6173D49 /* HappyListController.h in Headers */,
 				9914E271850BAA45C8E03FB6F0202052 /* SimpleGetMoreView.h in Headers */,
-				DC0CF117F44A72B623A6B96E52246727 /* SimpleHappyBI.h in Headers */,
-				E1D8830F409822499A8E787808AC76DB /* SimpleListBI.h in Headers */,
+				DC0CF117F44A72B623A6B96E52246727 /* SimpleHappyVM.h in Headers */,
+				E1D8830F409822499A8E787808AC76DB /* SimpleHappyListVM.h in Headers */,
 				DAE32E90C82D60895CB02DEF9CA1E2C6 /* SimpleRefreshingView.h in Headers */,
 				43E2977E1FFF0DF9BA45BC061AB92BD8 /* UINavigationController+HappyUI.h in Headers */,
 				289F40DA34EDAFE016745C8409862703 /* UIView+HappyUI.h in Headers */,
@@ -1463,16 +1463,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				35FAA3C40EDB5402C4E4F2F0F49133F4 /* HappyAccount.m in Sources */,
-				074C39CD8E63B4C42570890A5BD92B16 /* HappyBI.m in Sources */,
+				074C39CD8E63B4C42570890A5BD92B16 /* HappyVM.m in Sources */,
 				881F3007CBFBBC20E502CB60D4B1294D /* HappyContext.m in Sources */,
-				1603754635C0DE73130D3828C2D9C34D /* HappyListBI.m in Sources */,
+				1603754635C0DE73130D3828C2D9C34D /* HappyListVM.m in Sources */,
 				5DF49A05B151C5FBAC422A1963CF2847 /* HappyUI-dummy.m in Sources */,
 				E8D538EE45066F8DD62E6E4770F812DD /* HappyController.m in Sources */,
 				15FB2CFDC08670E97941C338A1C5698E /* ListBaseResponse.m in Sources */,
 				1C3D3C01EAFAD0539602E8AF340C1456 /* HappyListController.m in Sources */,
 				FDC30EB8A272B46AD5F162E8628A8C57 /* SimpleGetMoreView.m in Sources */,
-				9A1C58D8D35004FD85AABA92158EFF4A /* SimpleHappyBI.m in Sources */,
-				D54881377E6D58E9A15CCBDB6D1E05E2 /* SimpleListBI.m in Sources */,
+				9A1C58D8D35004FD85AABA92158EFF4A /* SimpleHappyVM.m in Sources */,
+				D54881377E6D58E9A15CCBDB6D1E05E2 /* SimpleHappyListVM.m in Sources */,
 				E5894652845721D52C1EA6922DC3E11B /* SimpleRefreshingView.m in Sources */,
 				E86553AD5BAD2BA59B8E3E005F7A2C7D /* UINavigationController+HappyUI.m in Sources */,
 				3E9D2D9E37215B91B4F63B781228C36A /* UIView+HappyUI.m in Sources */,
