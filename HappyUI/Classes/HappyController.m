@@ -1,23 +1,23 @@
 //
-//  BaseVM.m
+//  HappyController.m
 //  CCUIModel
 //
 //  Created by Aruisi on 4/20/18.
 //
 
-#import "HappyVM.h"
+#import "HappyController.h"
 #import "HappyBI.h"
 #import <CollectionViewArray/CollectionViewArray.h>
 #import <CCUIModel/CCUIModel.h>
 #import <TableViewArray/TableViewArray.h>
 #import "SimpleRefreshingView.h"
-@interface HappyVM ()
+@interface HappyController ()
 
 @property (nonatomic, strong) HappyBI * model;
 
 @end
 
-@implementation HappyVM
+@implementation HappyController
 {
     UICollectionView * _collectionView;
     CollectionViewArray * _collectionViewArray;

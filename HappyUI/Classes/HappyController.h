@@ -1,5 +1,5 @@
 //
-//  BaseVM.h
+//  HappyController.h
 //  CCUIModel
 //
 //  Created by Aruisi on 4/20/18.
@@ -12,7 +12,7 @@
 @class TableViewArray;
 @class HappyBI;
 
-@interface HappyVM : NSObject
+@interface HappyController : NSObject
 
 /**
  refresh callback
