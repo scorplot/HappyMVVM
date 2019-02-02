@@ -21,11 +21,14 @@ static const NSInteger preloadIndex  = 5;
     TableViewArray * _tableViewArray;
     
     BOOL _isDraaging;
-    UIEdgeInsets _insert;
+    
+    // pull up or pull down insert
+    UIEdgeInsets _pullUpDownInsert;
 }
 @property (nonatomic, strong) HappyVM * vm;
 
--(void)addObserverForHappyVMForView:(UIView *)contentView;
+-(void)addObserverForHappyVMForView:(UIScrollView *)contentView;
+-(void)updateScrollViewInset;
 
 @end
 
@@ -48,18 +51,62 @@ static const NSInteger preloadIndex  = 5;
 @dynamic collectionView;
 @dynamic tableView;
 
+#pragma util
+-(void)updateGetMoreFrame {
+    UIScrollView* scrollView = self.tableView?self.tableView:self.collectionView;
+    CGRect rc = scrollView.frame;
+    CGRect destRC = CGRectMake(0, scrollView.contentSize.height+self.insert.bottom+self.insert.top, rc.size.width, _getMoreFooterView.frame.size.height);
+    if (!CGRectEqualToRect(_getMoreFooterView.frame, destRC))
+        _getMoreFooterView.frame = destRC;
+}
+
+-(void)updateGetMoreStatus:(BOOL)value view:(UIScrollView*)contentView {
+    // TODO:@chj 不一致的时候才设置
+    _getMoreFooterView.gettingMore = value;
+    _pullUpDownInsert.bottom = _getMoreFooterView?(value?_getMoreFooterView.frame.size.height:0):0;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self updateScrollViewInset];
+    }];
+    if (value) {
+        if (_startGetMore) _startGetMore();
+    } else {
+        if (_didGetMore) _didGetMore();
+    }
+}
+
+-(void)updateHasMoreStatus:(BOOL)value view:(UIScrollView*)contentView {
+    if (value) {
+        [contentView addSubview:_getMoreFooterView];
+    } else {
+        [_getMoreFooterView removeFromSuperview];
+    }
+}
+
+-(void)addObserverForHappyVMForView:(UIScrollView *)contentView {
+    typeof(self) __weak ws = self;
+    __weak UIScrollView* __contentView = contentView;
+    
+    [super addObserverForHappyVMForView:contentView];
+    
+    [CCMNotifier(self.vm, gettingMore) makeRelation:__contentView withBlock:^(id value) {
+        if (__contentView)
+            [ws updateGetMoreStatus:[value boolValue] view:__contentView];
+    }];
+    
+    [CCMNotifier(self.vm, hasMore) makeRelation:__contentView withBlock:^(id value) {
+        [ws updateHasMoreStatus:[value boolValue] view:contentView];
+    }];
+}
+
+
+
+#pragma mark init
 -(instancetype)initWith:(HappyListVM *)vm collectionView:(UICollectionView *)collectionView{
     if (self =  [super initWith:vm collectionView:collectionView]) {
         typeof(self)__weak ws = self;
-        if (self.getMoreFooterView) {
-            if (self.vm.hasMore)
-                [self.collectionView addSubview:_getMoreFooterView];
-            self.getMoreFooterView.shouldTrigger = ^BOOL{
-                [ws.vm getMore];
-                return ws.vm.isGettingMore;
-            };
-        }
+        [self updateHasMoreStatus:self.vm.hasMore view:collectionView];
         
+        // TODO:@chj 用didScroll替代
         _collectionViewArray.willDisplayCellForItemAtIndexPath = ^(UICollectionView * _Nonnull collectionView, UICollectionViewCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath,id _Nullable object) {
             if (indexPath.row > [collectionView numberOfItemsInSection:0]-preloadIndex && !ws.vm.gettingMore&&!ws.vm.refreshing) {
                 [ws.vm getMore];
@@ -69,81 +116,18 @@ static const NSInteger preloadIndex  = 5;
     return self;
 }
 
--(void)setGetMoreInset{
-    CGFloat bottom = 0;
-    _getMoreFooterView.gettingMore = self.vm.isGettingMore;
-    bottom = _getMoreFooterView?(self.vm.isGettingMore?_getMoreFooterView.frame.size.height:0):0;
-    if (bottom != _insert.bottom) {
-        UIScrollView* scrollView = self.tableView?self.tableView:self.collectionView;
-        UIEdgeInsets insert = scrollView.contentInset;
-        insert.bottom = insert.bottom-_insert.bottom+bottom;
-        _insert.bottom = bottom;
-        [UIView animateWithDuration:0.3 animations:^{
-            [scrollView setContentInset:insert];
-        }];
-    }
-}
--(void)updateGetMoreStatus:(BOOL)value view:(UIView*)contentView {
-    // TODO:@chj 不一致的时候才设置
-    if (self.vm.hasMore) {
-        [self.tableView addSubview:_getMoreFooterView];
-        [self.collectionView addSubview:_getMoreFooterView];
-    } else {
-        [_getMoreFooterView removeFromSuperview];
-    }
-    [self setGetMoreInset];
-    if (value) {
-        if (_startGetMore) _startGetMore();
-    } else {
-        if (_didGetMore) _didGetMore();
-    }
-}
-
--(void)addObserverForHappyVMForView:(UIScrollView *)contentView {
-    typeof(self) __weak SELF = self;
-    __weak UIScrollView* __contentView = contentView;
-    
-    [super addObserverForHappyVMForView:contentView];
-    
-    [CCMNotifier(SELF.vm, gettingMore) makeRelation:self withBlock:^(id value) {
-        if (__contentView)
-            [SELF updateGetMoreStatus:[value boolValue] view:__contentView];
-    }];
-    
-    [CCMNotifier(SELF.vm, hasMore) makeRelation:self withBlock:^(id value) {
-        if (__contentView) {
-            UIView* footer = SELF.getMoreFooterView;
-            if ([value boolValue]) {
-                [(UIScrollView*)__contentView addSubview:footer];
-            } else {
-                [footer removeFromSuperview];
-            }
-        }
-    }];
-}
-
-
-
-#pragma mark - tableView
 -(instancetype)initWith:(HappyListVM *)vm tableView:(UITableView *)tableView{
     if (self = [super initWith:vm tableView:tableView]) {
-        
         __weak typeof(self) ws = self;
+        [self updateHasMoreStatus:self.vm.hasMore view:tableView];
+
+        // TODO:@chj 用didScroll替代
         _tableViewArray.willDisplayCellforRowAtIndexPath = ^(UITableView * _Nullable tableView, UITableViewCell * _Nullable cell, NSIndexPath * _Nullable indexPath,id _Nullable object) {
             if (tableView.contentOffset.y > tableView.contentSize.height-tableView.frame.size.height*1.3 && !ws.vm.gettingMore&&!ws.vm.refreshing) {
                 [ws.vm getMore];
             }
             [ws.tableView sendSubviewToBack:ws.refreshHeaderView];
         };
-        
-        if (self.getMoreFooterView) {
-            if (self.vm.hasMore)
-                [self.tableView addSubview:_getMoreFooterView];
-            self.getMoreFooterView.shouldTrigger = ^BOOL{
-                [ws.vm getMore];
-                return ws.vm.isGettingMore;
-            };
-        }
     }
     return self;
 }
@@ -160,22 +144,12 @@ static const NSInteger preloadIndex  = 5;
         [_getMoreFooterView removeFromSuperview];
         _getMoreFooterView = getMoreFooterView;
         UIScrollView* scrollView = self.tableView?self.tableView:self.collectionView;
-        //CGPoint offset = scrollView.contentOffset;
-        UIEdgeInsets insert = scrollView.contentInset;
-        if (_getMoreFooterView) {
-            
-            if (self.vm.hasMore) {
-                [self.tableView addSubview:_getMoreFooterView];
-                [self.collectionView addSubview:_getMoreFooterView];
-                _getMoreFooterView.frame = CGRectMake(0, scrollView.contentSize.height+insert.bottom-_insert.bottom, scrollView.frame.size.width, _getMoreFooterView.frame.size.height);
 
-            }
-        }
-        if (self.vm.isGettingMore) {
-            [self setGetMoreInset];
-            [_getMoreFooterView scrollOffset:scrollView.contentSize.height + insert.bottom - _insert.bottom - scrollView.frame.size.height];
-        }
-        [self setGetMoreInset];
+        [self updateHasMoreStatus:self.vm.hasMore view:scrollView];
+        [self updateGetMoreFrame];
+        [self updateScrollViewInset];
+        // TODO:@chj bug
+        [_getMoreFooterView scrollOffset:scrollView.contentOffset.y + scrollView.contentSize.height + self.insert.bottom - scrollView.frame.size.height];
     }
 }
 -(UIView<ScrollGetMoreFooterProtocal>*)getMoreFooterView {
@@ -187,47 +161,38 @@ static const NSInteger preloadIndex  = 5;
     return _getMoreFooterView;
 }
 
+#pragma mark other
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UIScrollView*)scrollView change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     [super observeValueForKeyPath:keyPath ofObject:scrollView change:change context:context];
     
-    UIEdgeInsets insert = scrollView.contentInset;
     if ([keyPath isEqualToString:@"contentSize"]) {
         [UIView setAnimationsEnabled:NO];
-        CGRect rc = scrollView.frame;
-        CGRect destRC = CGRectMake(0, scrollView.contentSize.height+insert.bottom+insert.top, rc.size.width, _getMoreFooterView.frame.size.height);
-        if (!CGRectEqualToRect(_getMoreFooterView.frame, destRC))
-            _getMoreFooterView.frame = destRC;
-        [UIView setAnimationsEnabled:YES];
-    } else if ([keyPath isEqualToString:@"contentInset"]) {
-        [UIView setAnimationsEnabled:NO];
-        CGRect rc = scrollView.frame;
-        CGRect destRC = CGRectMake(0, scrollView.contentSize.height+insert.bottom+insert.top, rc.size.width, _getMoreFooterView.frame.size.height);
-        if (!CGRectEqualToRect(_getMoreFooterView.frame, destRC))
-            _getMoreFooterView.frame = destRC;
+        [self updateGetMoreFrame];
         [UIView setAnimationsEnabled:YES];
     } else if ([keyPath isEqualToString:@"contentOffset"]) {
         CGPoint offset = scrollView.contentOffset;
         
         // get more
-        [_getMoreFooterView scrollOffset:scrollView.contentSize.height + insert.bottom - _insert.bottom - scrollView.frame.size.height];
-        if (offset.y > scrollView.contentSize.height + insert.bottom - _insert.bottom - scrollView.frame.size.height + _getMoreFooterView.frame.size.height) {
+        // TODO:@chj bug
+        [_getMoreFooterView scrollOffset:offset.y + scrollView.contentSize.height + self.insert.bottom - scrollView.frame.size.height];
+        if (offset.y > scrollView.contentSize.height + self.insert.bottom - scrollView.frame.size.height + _getMoreFooterView.frame.size.height) {
             if (scrollView.isDragging != _isDraaging) {
                 _isDraaging = scrollView.isDragging;
                 if (scrollView.isDragging == NO) {
-                    BOOL trigger = NO;
+                    BOOL shouldTrigger = YES;
                     if (_getMoreFooterView.shouldTrigger) {
-                        trigger = _getMoreFooterView.shouldTrigger();
+                        shouldTrigger = _getMoreFooterView.shouldTrigger();
                     }
-                    _getMoreFooterView.gettingMore = trigger;
+                    if (shouldTrigger) {
+                        [self.vm getMore];
+                        _getMoreFooterView.gettingMore = self.vm.isGettingMore;
+                    }
                 }
             }
         }
     } else if ([keyPath isEqualToString:@"bounds"]) {
         [UIView setAnimationsEnabled:NO];
-        CGRect rc = scrollView.frame;
-        CGRect destRC = CGRectMake(0, scrollView.contentSize.height+insert.top+_insert.bottom, rc.size.width, _getMoreFooterView.frame.size.height);
-        if (!CGRectEqualToRect(_getMoreFooterView.frame, destRC))
-            _getMoreFooterView.frame = destRC;
+        [self updateGetMoreFrame];
         [UIView setAnimationsEnabled:YES];
     }
 }

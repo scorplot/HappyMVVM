@@ -15,6 +15,11 @@
 @interface HappyController : NSObject
 
 /**
+ custom insert for scrollView
+ */
+@property (nonatomic, assign) UIEdgeInsets insert;
+
+/**
  refresh callback
  */
 @property (nonatomic, copy) void(^startRefresh)(void);
