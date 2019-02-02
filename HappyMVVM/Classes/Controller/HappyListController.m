@@ -14,7 +14,9 @@
 #import "SimpleRefreshingView.h"
 #import "SimpleGetMoreView.h"
 
-static const NSInteger preloadIndex  = 5;
+// auto get more where half screen size left to screen
+static const double preloadOffset = 0.5;
+
 @interface HappyController () {
 @protected
     CollectionViewArray * _collectionViewArray;
@@ -40,6 +42,8 @@ static const NSInteger preloadIndex  = 5;
 {
     BOOL _firstGetMore;
     UIView<ScrollGetMoreFooterProtocal>* _getMoreFooterView;
+    
+    CGPoint _lastOffset;
 }
 @dynamic startRefresh;
 @dynamic didRefresh;
@@ -61,17 +65,11 @@ static const NSInteger preloadIndex  = 5;
 }
 
 -(void)updateGetMoreStatus:(BOOL)value view:(UIScrollView*)contentView {
-    // TODO:@chj 不一致的时候才设置
-    _getMoreFooterView.gettingMore = value;
+    if (_getMoreFooterView.gettingMore != value) _getMoreFooterView.gettingMore = value;
     _pullUpDownInsert.bottom = _getMoreFooterView?(value?_getMoreFooterView.frame.size.height:0):0;
     [UIView animateWithDuration:0.3 animations:^{
         [self updateScrollViewInset];
     }];
-    if (value) {
-        if (_startGetMore) _startGetMore();
-    } else {
-        if (_didGetMore) _didGetMore();
-    }
 }
 
 -(void)updateHasMoreStatus:(BOOL)value view:(UIScrollView*)contentView {
@@ -89,8 +87,16 @@ static const NSInteger preloadIndex  = 5;
     [super addObserverForHappyVMForView:contentView];
     
     [CCMNotifier(self.vm, gettingMore) makeRelation:__contentView withBlock:^(id value) {
-        if (__contentView)
-            [ws updateGetMoreStatus:[value boolValue] view:__contentView];
+        typeof(self) SELF = ws;
+        if (__contentView && SELF) {
+            [SELF updateGetMoreStatus:[value boolValue] view:__contentView];
+            
+            if ([value boolValue]) {
+                if (SELF->_startGetMore) SELF->_startGetMore();
+            } else {
+                if (SELF->_didGetMore) SELF->_didGetMore();
+            }
+        }
     }];
     
     [CCMNotifier(self.vm, hasMore) makeRelation:__contentView withBlock:^(id value) {
@@ -103,31 +109,18 @@ static const NSInteger preloadIndex  = 5;
 #pragma mark init
 -(instancetype)initWith:(HappyListVM *)vm collectionView:(UICollectionView *)collectionView{
     if (self =  [super initWith:vm collectionView:collectionView]) {
-        typeof(self)__weak ws = self;
         [self updateHasMoreStatus:self.vm.hasMore view:collectionView];
         
-        // TODO:@chj 用didScroll替代
-        _collectionViewArray.willDisplayCellForItemAtIndexPath = ^(UICollectionView * _Nonnull collectionView, UICollectionViewCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath,id _Nullable object) {
-            if (indexPath.row > [collectionView numberOfItemsInSection:0]-preloadIndex && !ws.vm.gettingMore&&!ws.vm.refreshing) {
-                [ws.vm getMore];
-            }
-        };
+        _lastOffset = collectionView.contentOffset;
     }
     return self;
 }
 
 -(instancetype)initWith:(HappyListVM *)vm tableView:(UITableView *)tableView{
     if (self = [super initWith:vm tableView:tableView]) {
-        __weak typeof(self) ws = self;
         [self updateHasMoreStatus:self.vm.hasMore view:tableView];
-
-        // TODO:@chj 用didScroll替代
-        _tableViewArray.willDisplayCellforRowAtIndexPath = ^(UITableView * _Nullable tableView, UITableViewCell * _Nullable cell, NSIndexPath * _Nullable indexPath,id _Nullable object) {
-            if (tableView.contentOffset.y > tableView.contentSize.height-tableView.frame.size.height*1.3 && !ws.vm.gettingMore&&!ws.vm.refreshing) {
-                [ws.vm getMore];
-            }
-            [ws.tableView sendSubviewToBack:ws.refreshHeaderView];
-        };
+        
+        _lastOffset = tableView.contentOffset;
     }
     return self;
 }
@@ -190,6 +183,13 @@ static const NSInteger preloadIndex  = 5;
                 }
             }
         }
+        
+        // auto get more
+        CGFloat triggerOffset = scrollView.frame.size.height*1.5-scrollView.contentSize.height;
+        if (_lastOffset.y > triggerOffset && scrollView.contentOffset.y < triggerOffset) {
+            [self.vm getMore];
+        }
+        _lastOffset = scrollView.contentOffset;
     } else if ([keyPath isEqualToString:@"bounds"]) {
         [UIView setAnimationsEnabled:NO];
         [self updateGetMoreFrame];

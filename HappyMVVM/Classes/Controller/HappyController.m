@@ -91,18 +91,12 @@
 }
 
 -(void)updateRefreshStatus:(BOOL)value view:(UIScrollView*)contentView {
-    // TODO:@chj 不一致的时候才设置
-    _refreshHeaderView.refreshing = value;
+    if (_refreshHeaderView.refreshing != value) _refreshHeaderView.refreshing = value;
     _pullUpDownInsert.top = _refreshHeaderView?(value?_refreshHeaderView.frame.size.height:0):0;
 
     [UIView animateWithDuration:0.3 animations:^{
         [self updateScrollViewInset];
     }];
-    if (value) {
-        if (_startRefresh) _startRefresh();
-    } else {
-        if (_didRefresh) _didRefresh();
-    }
 }
 
 -(void)updateStatus:(HappyViewModelStatus)status view:(UIScrollView*)contentView {
@@ -162,21 +156,27 @@
 }
 
 -(void)addObserverForHappyVMForView:(UIScrollView *)contentView {
-    typeof(self) __weak SELF = self;
+    typeof(self) __weak ws = self;
     __weak UIScrollView* __contentView = contentView;
     
-    [CCMNotifier(SELF.vm, status) makeRelation:contentView withBlock:^(id value) {
-        if (__contentView) {
+    [CCMNotifier(self.vm, status) makeRelation:contentView withBlock:^(id value) {
+        typeof(self) SELF = ws;
+        if (__contentView && SELF) {
             [SELF updateRefreshStatus:SELF.vm.isRefreshing view:__contentView];
             [SELF updateStatus:[value intValue] view:__contentView];
         }
     }];
-    [CCMNotifier(SELF.vm, refreshing) makeRelation:contentView withBlock:^(id value) {
-        if (__contentView) {
+    [CCMNotifier(self.vm, refreshing) makeRelation:contentView withBlock:^(id value) {
+        typeof(self) SELF = ws;
+        if (__contentView && SELF) {
             [SELF updateRefreshStatus:[value boolValue] view:__contentView];
             [SELF updateStatus:SELF.vm.status view:__contentView];
-            if ([value boolValue])
+            if ([value boolValue]) {
                 [SELF scrollToTop:__contentView];
+                if (SELF->_startRefresh) SELF->_startRefresh();
+            } else {
+                if (SELF->_didRefresh) SELF->_didRefresh();
+            }
         }
     }];
 }
@@ -207,10 +207,7 @@
     if (_errorView != errorView) {
         [_errorView removeFromSuperview];
         _errorView = errorView;
-        //TODO:@chj check
-        if (_errorView) {
-            [self updateStatus:_vm.status view:_tableView?_tableView:_collectionView];
-        }
+        [self updateStatus:_vm.status view:_tableView?_tableView:_collectionView];
     }
 }
 -(UIView * _Nullable)errorView{
@@ -227,10 +224,7 @@
     if (_emptyView != emptyView) {
         [_emptyView removeFromSuperview];
         _emptyView = emptyView;
-        //TODO:@chj check
-        if (_emptyView) {
-            [self updateStatus:_vm.status view:_tableView?_tableView:_collectionView];
-        }
+        [self updateStatus:_vm.status view:_tableView?_tableView:_collectionView];
     }
 }
 -(UIView * _Nullable)emptyView{
@@ -247,7 +241,7 @@
     if (_loadingView != loadingView) {
         [_loadingView removeFromSuperview];
         _loadingView = loadingView;
-        //TODO:@chj check
+        [self updateStatus:_vm.status view:_tableView?_tableView:_collectionView];
     }
 }
 -(UIView* _Nullable)loadingView {
