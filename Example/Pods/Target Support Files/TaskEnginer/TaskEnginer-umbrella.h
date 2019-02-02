@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "JointCacheTaskManager.h"
 #import "JointSubTask.h"
 #import "JointTaskItem.h"
 #import "JointTaskManager.h"

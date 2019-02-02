@@ -221,5 +221,11 @@ typedef void(^cancelPrefetchingForRowsBlock)(UITableView* _Nullable tableView,NS
 
 @end
 
+@interface UITableView (TableViewArray)
 
+@property (nonatomic, strong) TableViewArray *tv_tableViewArray;
+
+@property (nonatomic, strong) NSArray<NSObject*> *tv_dataSource;
+
+@end
 

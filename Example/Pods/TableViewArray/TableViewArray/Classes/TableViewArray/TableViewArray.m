@@ -38,3 +38,44 @@ void TableViewConnectArray(UITableView* tableview ,NSArray<NSObject*>* dataSourc
     [tableview reloadData];
 }
 
+
+@implementation UITableView (TableViewArray)
+
+- (void)setTv_tableViewArray:(TableViewArray *)tv_tableViewArray
+{
+    if (tv_tableViewArray == nil)
+    {
+        TableViewConnectArray(self, nil, nil);
+    }
+    else
+    {
+        TableViewConnectArray(self, self.tv_dataSource, tv_tableViewArray);
+    }
+    objc_setAssociatedObject(self, @"tv_tableViewArray", tv_tableViewArray, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (TableViewArray *)tv_tableViewArray
+{
+    return objc_getAssociatedObject(self, @"tv_tableViewArray");
+}
+
+
+- (void)setTv_dataSource:(NSArray<NSObject *> *)tv_dataSource
+{
+    if (tv_dataSource == nil)
+    {
+        TableViewConnectArray(self, nil, nil);
+    }
+    else
+    {
+        TableViewConnectArray(self, tv_dataSource, self.tv_tableViewArray);
+    }
+    objc_setAssociatedObject(self, @"tv_dataSource", tv_dataSource, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSArray<NSObject *> *)tv_dataSource
+{
+    return objc_getAssociatedObject(self, @"tv_dataSource");
+}
+
+@end

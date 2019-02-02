@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "UICollectionView+CCUIModel.h"
 #import "CollectionViewArray.h"
 #import "CollectionViewProtocolListener.h"
 

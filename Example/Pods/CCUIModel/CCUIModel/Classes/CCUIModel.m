@@ -18,9 +18,11 @@ static NSObject* __nilValue;
 static NSMutableDictionary<NSString*, NSDictionary<NSString*, NSArray*>*>* __listenerSetterMethods;
 static NSMutableDictionary<NSString*, NSDictionary<NSString*, NSArray*>*>* __notifierSetterMethods;
 static NSMutableDictionary<NSNumber*, NSArray*>* __currentInformation;
+static NSMutableDictionary<NSNumber*, NSArray*>* __debugTraceInfomation;
 
 static const void * __notifierDicKey;
 static const void * __listenerObjKey;
+static errorBlock __errorReport;
 
 //block structure
 struct Block_layout {
@@ -53,6 +55,10 @@ struct Block_descriptor {
 @interface ObserverRelation : NSObject
 @property (nonatomic, weak) NSObject* listener;
 @property (nonatomic, copy) NSString* listenerProp;
+@property (nonatomic, weak) Class listenerPropClass;
+
+@property (nonatomic, assign) const char* file;
+@property (nonatomic, assign) int line;
     
 @property (nonatomic, copy) void(^notiferBlock)(id value);
 @property (nonatomic) SEL notiferSelector;
@@ -179,7 +185,7 @@ struct Block_descriptor {
 @property (nonatomic, weak) id listener;
 @end
 
-static void makeRelationWithProp(id listener, NSString * prop, CCUIModel * fromNotifer);
+static void makeRelationWithProp(id listener, NSString * prop, Class propClass, CCUIModel * fromNotifer, const char* file, int line);
 static id  makeRelationWithSel(id listener, SEL sel, CCUIModel * fromNotifer);
 static void removeRelationWithProp(id object, NSString * prop);
 static void removeRelationWithSel(id object, SEL sel);
@@ -203,9 +209,8 @@ static void notiferListener(NSArray* relations, NSObject* notifer, id value, NSS
         }
     }
     
-    
     [relations enumerateObjectsUsingBlock:^(ObserverRelation * _Nonnull relation, NSUInteger idx, BOOL * _Nonnull stop) {
-        
+
         // values the listener need.
         NSMutableArray * values = [NSMutableArray array];
 
@@ -225,6 +230,20 @@ static void notiferListener(NSArray* relations, NSObject* notifer, id value, NSS
         
         // set the obj to listener
         if (relation.listenerProp) {
+
+#if DEBUG
+            NSString *assertStr = [NSString stringWithFormat:@"property %@ %@ type in lisener %@ can not be setted %@ type. You may set an incompatible object to specific property in its binding notifier model.", relation.listenerProp, relation.listenerPropClass, [relation.listener class], [result class]];
+            NSCAssert(result == nil || [result isKindOfClass:relation.listenerPropClass] == YES , assertStr);
+#else
+            if ([result isKindOfClass:relation.listenerPropClass] == NO)
+            {
+                if (__errorReport != nil)
+                {
+                    __errorReport(relation.file, relation.line);
+                }
+                return;
+            }
+#endif
             if ([relation.listener isKindOfClass:[UIView class]] && ![NSThread isMainThread]){
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [relation.listener setValue:result forKey:relation.listenerProp];
@@ -296,10 +315,75 @@ static NSArray * getNotiferSetter(id self, SEL _cmd){
     }
 }
 
+NSString * capitalizedFirstLetterWithString(NSString *str)
+{
+    NSString *retVal = @"";
+    if (str.length < 2)
+    {
+        retVal = str.capitalizedString;
+    }
+    else
+    {
+        retVal = [NSString stringWithFormat:@"%@%@",[[str substringToIndex:1] uppercaseString],[str substringFromIndex:1]];
+    }
+    return retVal;
+}
+
+void checkValidType(id self, SEL _cmd, id value)
+{
+    unsigned int outCount = 0;
+    objc_property_t * properties = class_copyPropertyList([self class], &outCount);
+    for (unsigned int i = 0; i < outCount; i ++) {
+        objc_property_t property = properties[i];
+        //属性名
+        const char * propertyName = property_getName(property);
+        if ([NSStringFromSelector(_cmd) isEqualToString:[NSString stringWithFormat:@"set%@:", capitalizedFirstLetterWithString([NSString stringWithUTF8String:propertyName])]] == NO) continue;
+        //属性描述
+        const char * propertyAttr = property_getAttributes(property);
+        //        NSLog(@"属性描述为 %s 的 %s ", propertyAttr, name);
+        
+        //属性的特性
+        unsigned int attrCount = 0;
+        objc_property_attribute_t * attrs = property_copyAttributeList(property, &attrCount);
+        for (unsigned int j = 0; j < attrCount; j ++) {
+            objc_property_attribute_t attr = attrs[j];
+            const char * attrName = attr.name;
+            const char * attrValue = attr.value;
+            //            NSLog(@"属性的描述：%s 值：%s", name, value);
+            
+            if (strstr(attrName, "T") != NULL)
+            {
+                NSString *typeStr = nil;
+                
+                NSString *ocValue = [[NSString alloc] initWithCString:attrValue encoding:NSUTF8StringEncoding];
+                
+                NSRange range = [ocValue rangeOfString:@"\""];
+                if (range.location != NSNotFound)
+                {
+                    typeStr = [ocValue substringFromIndex:range.location + range.length];
+                    range = [typeStr rangeOfString:@"\""];
+                    if (range.location != NSNotFound)
+                    {
+                        typeStr = [typeStr substringToIndex:range.location];
+                    }
+                }
+                
+                NSString *assertStr = [NSString stringWithFormat:@"property %s %@ type in %@ can not be setted %@ type", propertyName, typeStr, [self class], [value class]];
+                NSCAssert(value == nil || [value isKindOfClass:NSClassFromString(typeStr)] == YES, assertStr);
+                
+                break;
+            }
+        }
+        free(attrs);
+        NSLog(@"\n");
+    }
+    free(properties);
+}
 
 typedef void (*typeof_objc_notifer_setter_id)(id self, SEL _cmd, id value);
 static void replaced_notifer_setter_id_IMP(__unsafe_unretained id self, SEL _cmd, id value) {
     NSArray* temp = getNotiferSetter(self, _cmd);
+    
     if (temp) {
         typeof_objc_notifer_setter_id original = [temp[0] pointerValue];
         original(self, _cmd, value);
@@ -366,8 +450,53 @@ static void replaced_listener_setter_##var##_IMP(__unsafe_unretained id self, SE
     }\
 }\
 
-IMP_LISTENER_SETTER_DEFINE(id, id)
 IMP_LISTENER_SETTER_DEFINE(BOOL, BOOL)
+
+typedef void (*objc_listener_setter_id)(id self, SEL _cmd, id object);\
+static void replaced_listener_setter_id_IMP(__unsafe_unretained id self, SEL _cmd, id object) {
+    NSArray* temp = getListenerSetter(self, _cmd);
+    CCUIModel* uimodel = nil;
+    if (temp) {
+        objc_listener_setter_id original = [temp[0] pointerValue];
+        mach_port_t machTID = pthread_mach_thread_np(pthread_self());
+        @synchronized (__currentInformation) {
+            uimodel = [__currentInformation objectForKey:@(machTID)][0];
+            if(uimodel && uimodel.tickCount == 0) {
+                [__currentInformation setObject:@[uimodel, self, NSStringFromSelector(_cmd)] forKey:@(machTID)];
+                if (uimodel.dummy) {
+                    return;
+                }
+            }
+        }
+
+        @synchronized (__listenerSetterMethods) {
+            NSDictionary<NSString*, NSArray*>* dic = __listenerSetterMethods[NSStringFromClass([self class])];
+            temp = [dic valueForKey:NSStringFromSelector(_cmd)];
+            Class cls = temp[2];
+
+            if (cls)
+            {
+#if DEBUG
+                NSString *assertStr = [NSString stringWithFormat:@"method %@ argument %@ type in lisener %@ can not be setted %@ type. You may set an incompatible object to specific property in its binding notifier model.", NSStringFromSelector(_cmd), cls, [self class], [object class]];
+                NSCAssert(object == nil || [object isKindOfClass:cls] == YES, assertStr);
+#else
+                if ([object isKindOfClass:cls] == NO)
+                {
+                    if (__errorReport != nil)
+                    {
+                        __errorReport("", 0);
+                    }
+                    return;
+                }
+#endif
+            }
+        }
+        
+        uimodel.tickCount++;
+        original(self, _cmd, object);
+        uimodel.tickCount--;
+    }
+}
 
 static void removeRelationWithProp(id object, NSString * prop){
     NSMutableDictionary * listenerDic = objc_getAssociatedObject(object, &__listenerObjKey);
@@ -470,9 +599,14 @@ static void addRelation(CCUIModel* uimodel){
     }
 }
 
-static void makeRelationWithProp(id listener, NSString * prop, CCUIModel * fromNotifer){
+static void makeRelationWithProp(id listener, NSString * prop, Class propClass, CCUIModel * fromNotifer, const char* file, int line) {
     fromNotifer.relation.listener = listener;
     fromNotifer.relation.listenerProp = prop;
+    fromNotifer.relation.listenerPropClass = propClass;
+    
+    fromNotifer.relation.file = file;
+    fromNotifer.relation.line = line;
+    
     
     removeRelationWithProp(fromNotifer.relation.listener, fromNotifer.relation.listenerProp);
     addRelation(fromNotifer);
@@ -514,8 +648,6 @@ static id  makeRelationWithBlock(id listener, id block, CCUIModel * fromNotifer)
     return value;
 }
 
-
-
 @implementation CCUIModel
 
 +(void)load{
@@ -524,37 +656,38 @@ static id  makeRelationWithBlock(id listener, id block, CCUIModel * fromNotifer)
     __listenerSetterMethods = [NSMutableDictionary dictionary];
     __notifierSetterMethods = [NSMutableDictionary dictionary];
     __currentInformation = [NSMutableDictionary dictionary];
+    __debugTraceInfomation = [NSMutableDictionary dictionary];
     
-    initListenerProperty([UIView class], @"hidden");
-    initListenerProperty([UIView class], @"clipsToBounds");
-    initListenerProperty([UIView class], @"backgroundColor");
-    initListenerProperty([UIView class], @"alpha");
-    initListenerProperty([UIView class], @"opaque");
-    initListenerProperty([UIView class], @"tintColor");
+    initListenerProperty([UIView class], @"hidden", [NSNumber class]);
+    initListenerProperty([UIView class], @"clipsToBounds", [NSNumber class]);
+    initListenerProperty([UIView class], @"backgroundColor", [UIColor class]);
+    initListenerProperty([UIView class], @"alpha", [NSNumber class]);
+    initListenerProperty([UIView class], @"opaque", [NSNumber class]);
+    initListenerProperty([UIView class], @"tintColor", [UIColor class]);
     
-    initListenerProperty([UILabel class], @"text");
-    initListenerProperty([UILabel class], @"attributedText");
-    initListenerProperty([UILabel class], @"font");
-    initListenerProperty([UILabel class], @"enabled");
-    initListenerProperty([UILabel class], @"textColor");
-    initListenerProperty([UILabel class], @"shadowColor");
+    initListenerProperty([UILabel class], @"text", [NSString class]);
+    initListenerProperty([UILabel class], @"attributedText", [NSAttributedString class]);
+    initListenerProperty([UILabel class], @"font", [UIFont class]);
+    initListenerProperty([UILabel class], @"enabled", [NSNumber class]);
+    initListenerProperty([UILabel class], @"textColor", [UIColor class]);
+    initListenerProperty([UILabel class], @"shadowColor", [UIColor class]);
 
-    initListenerProperty([UITextField class], @"text");
-    initListenerProperty([UITextField class], @"attributedText");
-    initListenerProperty([UITextField class], @"textColor");
-    initListenerProperty([UITextField class], @"font");
-    initListenerProperty([UITextField class], @"placeholder");
-    initListenerProperty([UITextField class], @"attributedPlaceholder");
-    initListenerProperty([UITextField class], @"background");
-    initListenerProperty([UITextField class], @"disabledBackground");
+    initListenerProperty([UITextField class], @"text", [NSString class]);
+    initListenerProperty([UITextField class], @"attributedText", [NSAttributedString class]);
+    initListenerProperty([UITextField class], @"textColor", [UIColor class]);
+    initListenerProperty([UITextField class], @"font", [UIFont class]);
+    initListenerProperty([UITextField class], @"placeholder", [NSString class]);
+    initListenerProperty([UITextField class], @"attributedPlaceholder", [NSAttributedString class]);
+    initListenerProperty([UITextField class], @"background", [UIImage class]);
+    initListenerProperty([UITextField class], @"disabledBackground", [UIImage class]);
 
-    initListenerProperty([UITextView class], @"text");
-    initListenerProperty([UITextView class], @"font");
-    initListenerProperty([UITextView class], @"textColor");
-    initListenerProperty([UITextView class], @"attributedText");
+    initListenerProperty([UITextView class], @"text", [NSString class]);
+    initListenerProperty([UITextView class], @"font", [UIFont class]);
+    initListenerProperty([UITextView class], @"textColor", [UIColor class]);
+    initListenerProperty([UITextView class], @"attributedText", [NSAttributedString class]);
 
-    initListenerProperty([UIImageView class], @"image");
-    initListenerProperty([UIImageView class], @"highlightedImage");
+    initListenerProperty([UIImageView class], @"image", [UIImage class]);
+    initListenerProperty([UIImageView class], @"highlightedImage", [UIImage class]);
 }
 
 -(instancetype)init{
@@ -704,15 +837,28 @@ static id  makeRelationWithBlock(id listener, id block, CCUIModel * fromNotifer)
             }
             [__currentInformation removeObjectForKey:@(machTID)];
         }
+
         if (uimodel != placeholder) {
             NSArray* temp = getListenerSetter(listener, cmd);
             if (temp) {
                 NSString * prop = temp[1];
+                Class propClass = temp[2];
                 if (uimodel) {
                     if (uimodel.dummy) {
                         removeRelationWithProp(listener, prop);
                     } else {
-                        makeRelationWithProp(listener, prop, uimodel);
+                        
+                        const char*file = NULL;
+                        __block int line = 0;
+                        @synchronized (__debugTraceInfomation) {
+                            NSArray* content = [__debugTraceInfomation objectForKey:@(machTID)];
+                            if (content.count == 2) {
+                                file = [content[0] pointerValue];
+                                line = [content[1] intValue];
+                            }
+                        }
+                        
+                        makeRelationWithProp(listener, prop, propClass, uimodel, file, line);
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-variable"
                         for (id a in uimodel.notifers) {
@@ -724,6 +870,48 @@ static id  makeRelationWithBlock(id listener, id block, CCUIModel * fromNotifer)
             }
         }
     }
+}
+
++ (void)reportError:(errorBlock)error
+{
+    __errorReport = error;
+}
+
+@end
+
+@implementation CCMCombine
+{
+    id _target;
+}
+
++ (id)modelWithTarget:(id)target nilValue:(id)nilValue
+{
+    return [[CCMCombine alloc] initWithTarget:target];
+}
+
++ (void)debugTrace:(const char*)file line:(int)line
+{
+    mach_port_t machTID = pthread_mach_thread_np(pthread_self());
+    @synchronized (__debugTraceInfomation) {
+        [__debugTraceInfomation setObject:@[[NSValue valueWithPointer:file], @(line)] forKey:@(machTID)];
+    }
+}
+
+- (id)initWithTarget:(id)target
+{
+    self = [super init];
+    if (self)
+    {
+        _target = target;
+    }
+    return self;
+}
+
+- (void)setObject:(CCUIModel*)obj forKeyedSubscript:(NSString *)keyPath
+{
+    [CCUIModel makeRelation:^{
+        [self->_target setValue:obj.idValue forKey:keyPath];
+    }];
 }
 
 @end
@@ -757,7 +945,7 @@ id createDummy(){
     return temp;
 }
 
-bool initListenerProperty(Class  cls, NSString* p){
+bool initListenerProperty(Class  cls, NSString* p, Class valueClass){
     @synchronized (__listenerSetterMethods) {
         NSString* methodName = p.length > 0 ? [NSString stringWithFormat:@"set%@%@:",[[p substringToIndex:1] uppercaseString],[p substringFromIndex:1]] : nil;
         objc_property_t prop = class_getProperty(cls, [p UTF8String]);
@@ -812,7 +1000,7 @@ bool initListenerProperty(Class  cls, NSString* p){
             
             if (original && replaced && replaced != original) {
                 method_setImplementation(method, replaced);
-                [dic setValue:@[[NSValue valueWithPointer:original], p] forKey:methodName];
+                [dic setValue:@[[NSValue valueWithPointer:original], p, valueClass] forKey:methodName];
             }
             
             if (replaced)

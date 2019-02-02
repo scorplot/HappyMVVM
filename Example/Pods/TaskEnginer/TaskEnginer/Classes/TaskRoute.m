@@ -89,7 +89,7 @@
     
 }
 
--(void)setautoRetain:(BOOL)autoRetain {
+-(void)setAutoRetain:(BOOL)autoRetain {
     @synchronized(self) {
         _autoRetain = autoRetain;
         if (_executing) {
@@ -200,7 +200,7 @@
         void (^didFinished)(TaskRoute *task, NSError *error, BOOL finished) = self.didFinished;
         if (didFinished)
             didFinished(self, error, finished);
-        self.strongSelf = nil;
+        if (finished) self.strongSelf = nil;
         strongSelf = nil;
     } else {
         dispatch_async(queue, ^{
@@ -209,7 +209,7 @@
             void (^didFinished)(TaskRoute *task, NSError *error, BOOL finished) = self.didFinished;
             if (didFinished)
                 didFinished(self, error, finished);
-            self.strongSelf = nil;
+            if (finished) self.strongSelf = nil;
             strongSelf = nil;
         });
     }
@@ -384,10 +384,10 @@
         }
         if (allFinished)
             [self notifyDidFinish:error finished:YES tickCount:tickCount];
-        else
-            [self notifyDidFinish:error finished:NO tickCount:tickCount];
+        //else
+        //    [self notifyDidFinish:error finished:NO tickCount:tickCount];
     } else {
-        [self notifyDidFinish:error finished:NO tickCount:tickCount];
+        //[self notifyDidFinish:error finished:NO tickCount:tickCount];
     }
     strongSelf = nil;
 }

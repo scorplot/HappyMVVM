@@ -185,3 +185,11 @@ typedef void(^cancelPrefetchingForItemsBlock)(UICollectionView* _Nonnull collect
 @property(nonatomic,copy,nonnull) BOOL (^scrollViewDidChangeAdjustedContentInset)(UIScrollView* scrollView)API_AVAILABLE(ios(11.0), tvos(11.0));
 
 @end
+
+@interface UICollectionView (CollectionViewArray)
+
+@property (nonatomic, strong) CollectionViewArray *cv_collectionViewArray;
+
+@property (nonatomic, strong) NSArray<NSObject*> *cv_dataSource;
+
+@end

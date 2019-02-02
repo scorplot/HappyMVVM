@@ -1,8 +1,13 @@
 PODS:
-  - CCUIModel (0.0.2):
+  - CCUIModel (0.0.5):
     - CircleReferenceCheck
   - CircleReferenceCheck (0.0.1)
-  - CollectionViewArray (0.1.1):
+  - CollectionViewArray (0.1.3):
+    - CollectionViewArray/Category (= 0.1.3)
+    - CollectionViewArray/CollectionViewArray (= 0.1.3)
+  - CollectionViewArray/Category (0.1.3):
+    - CCUIModel
+  - CollectionViewArray/CollectionViewArray (0.1.3):
     - MutableArrayListener
   - HappyMVVM (0.2.1):
     - CCUIModel
@@ -12,14 +17,19 @@ PODS:
     - TaskEnginer
   - MutableArrayListener (0.1.0):
     - CircleReferenceCheck
-  - RealReachability (1.2.2):
-    - RealReachability/Connection (= 1.2.2)
-    - RealReachability/Ping (= 1.2.2)
-  - RealReachability/Connection (1.2.2)
-  - RealReachability/Ping (1.2.2)
-  - TableViewArray (0.1.7):
+  - RealReachability (1.3.0):
+    - RealReachability/Connection (= 1.3.0)
+    - RealReachability/Ping (= 1.3.0)
+  - RealReachability/Connection (1.3.0)
+  - RealReachability/Ping (1.3.0)
+  - TableViewArray (0.1.9):
+    - TableViewArray/Category (= 0.1.9)
+    - TableViewArray/TableViewArray (= 0.1.9)
+  - TableViewArray/Category (0.1.9):
+    - CCUIModel
+  - TableViewArray/TableViewArray (0.1.9):
     - MutableArrayListener
-  - TaskEnginer (0.0.5):
+  - TaskEnginer (0.0.7):
     - CircleReferenceCheck
 
 DEPENDENCIES:
@@ -40,14 +50,14 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CCUIModel: f81a863c45c13d43da803b6eb3a0dcc919abdc13
+  CCUIModel: 5047d65c33920f0b61f6aa80ccca77895b47ed2d
   CircleReferenceCheck: 5ef0dbaff301108a523f845bf81dfa9a12a83024
-  CollectionViewArray: 7d27b09462af7d14b1ff897ae137c2caae06a38c
+  CollectionViewArray: e30caf9ad72a7d487676c697e8e09cc53fac266c
   HappyMVVM: c878c94cb62e5ecbd2c8662ab13430bb45e4f8c2
   MutableArrayListener: 80566460c0f35ffe89d76a90ebb33adf7f413182
-  RealReachability: 7ea2093650004e5e30635edbf9d29ce9b9091001
-  TableViewArray: 602133037689f6d89b426d73e46676ffa407ad8a
-  TaskEnginer: cebf4064d6314dfd03bb9f3a4972cf3a661e27dc
+  RealReachability: eae9c58d2db52fadd8e1cba4b5d4c028454fbc47
+  TableViewArray: ef44fbd5710533909be90015bf43afcbad5a1cc8
+  TaskEnginer: 5a079640fa2bab8522ae2dfbc2dfcda3730d4a50
 
 PODFILE CHECKSUM: 5bee9b079b60e631fe4d262f4b8eca223cdd62ec
 

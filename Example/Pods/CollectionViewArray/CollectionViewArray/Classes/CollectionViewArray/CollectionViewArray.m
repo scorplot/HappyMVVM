@@ -30,3 +30,45 @@ void CollectionViewConnectArray(UICollectionView * _Nonnull collectionView ,NSAr
     static const void* key;
     objc_setAssociatedObject(collectionView, &key, protocalListener, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
+
+@implementation UICollectionView (UICollectionViewArray)
+
+- (void)setCv_collectionViewArray:(CollectionViewArray *)cv_collectionViewArray
+{
+    if (cv_collectionViewArray == nil)
+    {
+        CollectionViewConnectArray(self, nil, nil);
+    }
+    else
+    {
+        CollectionViewConnectArray(self, self.cv_dataSource, cv_collectionViewArray);
+    }
+    objc_setAssociatedObject(self, @"cv_collectionViewArray", cv_collectionViewArray, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CollectionViewArray *)cv_collectionViewArray
+{
+    return objc_getAssociatedObject(self, @"cv_collectionViewArray");
+}
+
+
+- (void)setCv_dataSource:(NSArray<NSObject *> *)cv_dataSource
+{
+    if (cv_dataSource == nil)
+    {
+        CollectionViewConnectArray(self, nil, nil);
+    }
+    else
+    {
+        CollectionViewConnectArray(self, cv_dataSource, self.cv_collectionViewArray);
+    }
+    objc_setAssociatedObject(self, @"cv_dataSource", cv_dataSource, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSArray<NSObject *> *)cv_dataSource
+{
+    return objc_getAssociatedObject(self, @"cv_dataSource");
+}
+
+@end

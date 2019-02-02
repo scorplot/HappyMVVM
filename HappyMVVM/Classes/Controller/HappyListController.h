@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "HappyMVVMProtocal.h"
+#import "HappyController.h"
 
 @class CollectionViewArray;
 @class TableViewArray;
 @class HappyListVM;
 
-@interface HappyListController : NSObject
+@interface HappyListController : HappyController
 /**
  refresh callback
  */
@@ -28,11 +29,6 @@
 @property (nonatomic, copy) void(^didGetMore)(void);
 
 /**
- empty view
- */
-@property (nonatomic, strong) UIView* _Nullable emptyView;
-
-/**
  error view
  */
 @property (nonatomic, strong) UIView* _Nullable errorView;
@@ -42,27 +38,28 @@
  */
 @property (nonatomic, strong) UIView* _Nullable loadingView;
 
+/**
+ empty view
+ */
+@property (nonatomic, strong) UIView* _Nullable emptyView;
+
 
 @property (nonatomic, strong) UIView<ScrollRefreshHeaderProtocal>* _Nullable refreshHeaderView;
 @property (nonatomic, strong) UIView<ScrollGetMoreFooterProtocal>* _Nullable getMoreFooterView;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored  "-Wincompatible-property-type"
+@property (nonatomic, readonly) HappyListVM * _Nullable vm;
+#pragma clang diagnostic pop
 
-@property (nonatomic, readonly) HappyListVM * _Nullable listVM;
-
-@property (nonatomic, readonly)  UICollectionView* _Nullable  listCollectionView;
-@property (nonatomic, readonly)  UITableView* _Nullable  listTableView;
+@property (nonatomic, readonly)  UICollectionView* _Nullable  collectionView;
+@property (nonatomic, readonly)  UITableView* _Nullable  tableView;
 
 //collectioView
 -(instancetype _Nonnull )initWith:(HappyListVM*_Nonnull)vm collectionView:(UICollectionView*_Nonnull)collectionView;
 
 //tableView
 -(instancetype _Nonnull )initWith:(HappyListVM *_Nonnull)vm tableView:(UITableView *_Nonnull)tableView;
-
--(UIView<ScrollRefreshHeaderProtocal>*)defaultRefreshHeaderView;
--(UIView<ScrollGetMoreFooterProtocal>*)defaultGetMoreFooterView;
--(UIView*)defaultEmptyView;
--(UIView*)defaultErrorView;
--(UIView*)defaultLoadingView;
 
 #pragma mark sub class
 /**
@@ -75,7 +72,6 @@
  */
 -(void)setUpCollectionView:(CollectionViewArray*_Nonnull)binder collectionView:(UICollectionView*_Nonnull)collectionView;
 
-
 /**
  The sub class need to do as following
  1. compute cell height
@@ -83,7 +79,12 @@
  3. implement cellForRow block
  4. handel cell click
  */
--(void)setUpTableView:(TableViewArray*_Nonnull)binder tableView:(UITableView*_Nonnull)tableView;
+-(void)setUpTableView:(TableViewArray* _Nonnull)binder tableView:(UITableView* _Nonnull)tableView;
 
+-(UIView<ScrollRefreshHeaderProtocal>* _Nullable)defaultRefreshHeaderView;
+-(UIView<ScrollGetMoreFooterProtocal>* _Nullable)defaultGetMoreFooterView;
+-(UIView* _Nullable)defaultEmptyView;
+-(UIView* _Nullable)defaultErrorView;
+-(UIView* _Nonnull)defaultLoadingView;
 
 @end

@@ -568,11 +568,12 @@ static NSInteger getArrayIndex(NSArray* arr) {
                 [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                     [indexPaths addObject:[NSIndexPath indexPathForItem:idx inSection:0]];
                 }];
-                if (array.count == indexes.count) {
+                if (array.count == indexPaths.count) {
                     [weakself.collectionView reloadData];
                 } else {
                     [weakself.collectionView insertItemsAtIndexPaths:indexPaths];
                 }
+                [weakself.collectionView numberOfItemsInSection:0];
             }
         }else{
             NSInteger section = getArrayIndex(array);
@@ -585,6 +586,7 @@ static NSInteger getArrayIndex(NSArray* arr) {
             } else {
                 [weakself.collectionView insertItemsAtIndexPaths:indexPaths];
             }
+            [weakself.collectionView numberOfItemsInSection:section];
         }
     };
     observer.didDeleteObjects = ^(NSMutableArray *array, NSArray *objects, NSIndexSet *indexes) {
@@ -604,6 +606,7 @@ static NSInteger getArrayIndex(NSArray* arr) {
                     [indexPaths addObject:[NSIndexPath indexPathForItem:idx inSection:0]];
                 }];
                 [weakself.collectionView deleteItemsAtIndexPaths:indexPaths];
+                [weakself.collectionView numberOfItemsInSection:0];
             }
         }else{
             NSInteger section = getArrayIndex(array);
@@ -612,6 +615,7 @@ static NSInteger getArrayIndex(NSArray* arr) {
                 [indexPaths addObject:[NSIndexPath indexPathForItem:idx inSection:section]];
             }];
             [weakself.collectionView deleteItemsAtIndexPaths:indexPaths];
+            [weakself.collectionView numberOfItemsInSection:section];
         }
     };
     observer.didExchangeIndex = ^(NSMutableArray *array, NSUInteger index1, NSUInteger index2) {
@@ -732,7 +736,7 @@ static NSInteger getArrayIndex(NSArray* arr) {
         if (self.listener.subArray) {
             return self.listener.subArray(_dataSource, section).count;
         } else {
-            return _dataSource.count ;
+            return _dataSource.count;
         }
     }
 }

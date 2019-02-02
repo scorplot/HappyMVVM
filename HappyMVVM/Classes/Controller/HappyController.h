@@ -49,8 +49,6 @@
 //tableView
 -(instancetype _Nonnull )initWith:(HappyVM *_Nonnull)vm tableView:(UITableView *_Nonnull)tableView;
 
--(UIView<ScrollRefreshHeaderProtocal>*)defaultRefreshHeaderView;
-
 #pragma mark sub class
 /**
  The sub class need to do as following
@@ -69,9 +67,10 @@
  3. implement cellForRow block
  4. handel cell click
  */
--(void)setUpTableView:(TableViewArray*_Nonnull)binder tableView:(UITableView*_Nonnull)tableView;
+-(void)setUpTableView:(TableViewArray* _Nonnull)binder tableView:(UITableView* _Nonnull)tableView;
 
--(UIView*)defaultEmptyView;
--(UIView*)defaultErrorView;
--(UIView*)defaultLoadingView;
+-(UIView<ScrollRefreshHeaderProtocal>* _Nullable)defaultRefreshHeaderView;
+-(UIView* _Nullable)defaultEmptyView;
+-(UIView* _Nullable)defaultErrorView;
+-(UIView* _Nullable)defaultLoadingView;
 @end
