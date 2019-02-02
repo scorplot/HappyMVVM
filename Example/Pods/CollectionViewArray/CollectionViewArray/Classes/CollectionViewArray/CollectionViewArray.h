@@ -13,7 +13,7 @@
 #pragma mark  - the picker of array
 typedef NSArray* (^subArray)(NSArray* all, NSInteger index);
 
-void CollectionViewConnectArray(UICollectionView * _Nonnull collectionView ,NSArray<NSObject*>* _Nullable dataSource,CollectionViewArray * _Nonnull listener);
+void CollectionViewConnectArray(UICollectionView * _Nullable collectionView ,NSArray<NSObject*>* _Nullable dataSource,CollectionViewArray * _Nullable listener);
 
 #pragma mark  - CollectionView DataSource
 typedef NSInteger (^numberOfGroupsBlock)(UICollectionView *collectionView);

@@ -19,7 +19,7 @@
 @end
 
 
-void TableViewConnectArray(UITableView* tableview ,NSArray<NSObject*>* dataSource,TableViewArray * listener){
+void TableViewConnectArray(UITableView* _Nullable tableview ,NSArray<NSObject*>* _Nullable dataSource,TableViewArray * _Nullable listener){
     TableViewProtocolListener * protocalListener =  [[TableViewProtocolListener alloc]init];
     protocalListener.listener = listener;
     protocalListener.dataSource= dataSource;

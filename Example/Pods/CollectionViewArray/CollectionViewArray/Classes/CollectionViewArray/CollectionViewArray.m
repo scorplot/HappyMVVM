@@ -13,7 +13,7 @@
 @implementation CollectionViewArray
 
 @end
-void CollectionViewConnectArray(UICollectionView * _Nonnull collectionView ,NSArray<NSObject*>* _Nullable dataSource,CollectionViewArray * _Nonnull listener){
+void CollectionViewConnectArray(UICollectionView * _Nullable collectionView ,NSArray<NSObject*>* _Nullable dataSource,CollectionViewArray * _Nullable listener){
     CollectionViewProtocolListener * protocalListener =  [[CollectionViewProtocolListener alloc]init];
     protocalListener.listener = listener;
     protocalListener.dataSource= dataSource;

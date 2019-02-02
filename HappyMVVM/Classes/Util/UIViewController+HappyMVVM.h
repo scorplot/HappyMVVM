@@ -9,7 +9,7 @@
 #import "HappyContext.h"
 
 @interface UIViewController (HappyMVVM)
-@property (nonatomic, readonly, nullable) HappyContext* context;
--(instancetype)initWithContext:(nullable HappyContext*) context;
+@property (nonatomic, readonly) HappyContext* context;
+-(instancetype)initWithContext:(HappyContext*) context;
 
 @end

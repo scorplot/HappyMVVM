@@ -129,25 +129,25 @@
         self.beginTime = [[NSDate date] timeIntervalSince1970];
         dispatch_async(self.executingQueue, ^{
             @autoreleasepool {
-                if (tickCount != _tickCount) return;
+                if (tickCount != self->_tickCount) return;
                 
                 if (self.willStart)
                     self.willStart(self);
                 
-                if (tickCount != _tickCount) return;
+                if (tickCount != self->_tickCount) return;
                 // did start
                 [self notifyDidStart:tickCount];
                 
-                if (tickCount != _tickCount) return;
+                if (tickCount != self->_tickCount) return;
                 // do execute
                 [self doExecute:^(NSError *error) {
                     // task over
                     @synchronized(self) {
-                        if (tickCount != _tickCount) return;
+                        if (tickCount != self->_tickCount) return;
                         self.executing = NO;
                         self.finished = YES;
                         self.endTime = [[NSDate date] timeIntervalSince1970];
-                        _tickCount++;
+                        self->_tickCount++;
                     }
                     [self notifyDidFinish:error finished:YES tickCount:tickCount];
                 }];
@@ -166,7 +166,7 @@
             didStart(self);
     } else {
         dispatch_async(queue, ^{
-            if (tickCount != _tickCount) return;
+            if (tickCount != self->_tickCount) return;
             void (^didStart)(SubTask *item) = self.didStart;
             if (didStart)
                 didStart(self);
@@ -185,11 +185,11 @@
         [_task subTaskDidCancel:self];
     } else {
         dispatch_async(queue, ^{
-            if (tickCount + 1 != _tickCount) return;
+            if (tickCount + 1 != self->_tickCount) return;
             void (^didCancel)(SubTask *item) = self.didCancel;
             if (didCancel)
                 didCancel(self);
-            [_task subTaskDidCancel:self];
+            [self->_task subTaskDidCancel:self];
         });
     }
 }
@@ -207,13 +207,13 @@
         [_task subTaskDidFinish:self error:error finished:finished];
     } else {
         dispatch_async(queue, ^{
-            if (!finished && tickCount != _tickCount) return;
-            if (finished && tickCount + 1 != _tickCount) return;
+            if (!finished && tickCount != self->_tickCount) return;
+            if (finished && tickCount + 1 != self->_tickCount) return;
             self.error = error;
             void (^didFinished)(SubTask *subTask, NSError *error, BOOL finished) = self.didFinished;
             if (didFinished)
                 didFinished(self, error, finished);
-            [_task subTaskDidFinish:self error:error finished:finished];
+            [self->_task subTaskDidFinish:self error:error finished:finished];
         });
     }
 }
@@ -246,7 +246,7 @@
         [_task subTaskProgress:self compeleted:compeleted expected:expected];
     } else {
         dispatch_async(queue, ^{
-            if (tickCount != _tickCount) return;
+            if (tickCount != self->_tickCount) return;
             void (^progressCallback)(SubTask *subTask, NSUInteger compeleted, NSUInteger expected) = self.progressCallback;
             if (progressCallback)
                 progressCallback(self, compeleted, expected);

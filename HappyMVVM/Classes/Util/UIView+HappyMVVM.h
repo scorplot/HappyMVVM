@@ -9,7 +9,7 @@
 #import "HappyContext.h"
 
 @interface UIView (HappyMVVM)
-@property (nonatomic, readonly, nullable) HappyContext* context;
+@property (nonatomic, readonly) HappyContext* context;
 +(id)loadNibWithBundle:(NSBundle*)bundle nibName:(NSString*)nibName owner:(id)owner context:(HappyContext*)context;
 +(id)loadNibWithMainBundle:(NSString*)nibName owner:(id)owner context:(HappyContext*)context;
 

@@ -791,7 +791,7 @@ static NSInteger getArrayIndex(NSArray* arr) {
                 } else {
                     [weakself.tableView insertSections:indexes withRowAnimation:UITableViewRowAnimationNone];
                 }
-                typeof(_listener.subArray) strongSubArray = weakSubArray;
+                typeof(weakself.listener.subArray) strongSubArray = weakSubArray;
                 if (strongSubArray) {
                     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                         NSArray* subArray = strongSubArray(array, idx);
@@ -894,7 +894,7 @@ static NSInteger getArrayIndex(NSArray* arr) {
         if (array==weakself.dataSource) {
             if (isGroup) {
                 [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:UITableViewRowAnimationNone];
-                typeof(_listener.subArray) strongSubArray = weakSubArray;
+                typeof(weakself.listener.subArray) strongSubArray = weakSubArray;
                 if (strongSubArray) {
                     NSArray* subArray = strongSubArray(array, index);
                     if ([subArray isKindOfClass:[NSMutableArray class]]) {
@@ -915,7 +915,7 @@ static NSInteger getArrayIndex(NSArray* arr) {
             [weakself.tableView reloadData];
             [weakself removeObserver];
             [weakself addObserverForDataSource:(NSMutableArray *)weakself.dataSource];
-            typeof(_listener.subArray) strongSubArray = weakSubArray;
+            typeof(weakself.listener.subArray) strongSubArray = weakSubArray;
             if (strongSubArray) {
                 for (NSInteger i = 0; i < weakself.dataSource.count; i++) {
                     NSArray* subArray = strongSubArray(weakself.dataSource, i);

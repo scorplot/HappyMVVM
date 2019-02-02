@@ -155,7 +155,7 @@
             didStart(self);
     } else {
         dispatch_async(queue, ^{
-            if (tickCount != _tickCount) return;
+            if (tickCount != self->_tickCount) return;
             void (^disStart)(TaskRoute *task) = self.didStart;
             if (disStart)
                 disStart(self);
@@ -178,7 +178,7 @@
         strongSelf = nil;
     } else {
         dispatch_async(queue, ^{
-            if (tickCount + 1 != _tickCount) return;
+            if (tickCount + 1 != self->_tickCount) return;
             void (^didCancel)(TaskRoute *task) = self.didCancel;
             if (didCancel)
                 didCancel(self);
@@ -204,8 +204,8 @@
         strongSelf = nil;
     } else {
         dispatch_async(queue, ^{
-            if (!finished && tickCount != _tickCount) return;
-            if (finished && tickCount + 1 != _tickCount) return;
+            if (!finished && tickCount != self->_tickCount) return;
+            if (finished && tickCount + 1 != self->_tickCount) return;
             void (^didFinished)(TaskRoute *task, NSError *error, BOOL finished) = self.didFinished;
             if (didFinished)
                 didFinished(self, error, finished);
@@ -458,7 +458,7 @@
             taskProgress(self, allCompeleted, allExpected);
     } else {
         dispatch_async(queue, ^{
-            if (tickCount != _tickCount) return;
+            if (tickCount != self->_tickCount) return;
             void (^taskProgress)(TaskRoute *task, NSUInteger compeleted, NSUInteger expected) = self.progressCallback;
             if (taskProgress)
                 taskProgress(self, allCompeleted, allExpected);

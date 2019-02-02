@@ -339,7 +339,7 @@ void checkValidType(id self, SEL _cmd, id value)
         const char * propertyName = property_getName(property);
         if ([NSStringFromSelector(_cmd) isEqualToString:[NSString stringWithFormat:@"set%@:", capitalizedFirstLetterWithString([NSString stringWithUTF8String:propertyName])]] == NO) continue;
         //属性描述
-        const char * propertyAttr = property_getAttributes(property);
+        //const char * propertyAttr = property_getAttributes(property);
         //        NSLog(@"属性描述为 %s 的 %s ", propertyAttr, name);
         
         //属性的特性
@@ -368,8 +368,9 @@ void checkValidType(id self, SEL _cmd, id value)
                     }
                 }
                 
-                NSString *assertStr = [NSString stringWithFormat:@"property %s %@ type in %@ can not be setted %@ type", propertyName, typeStr, [self class], [value class]];
+                NSString* assertStr = [NSString stringWithFormat:@"property %s %@ type in %@ can not be setted %@ type", propertyName, typeStr, [self class], [value class]];
                 NSCAssert(value == nil || [value isKindOfClass:NSClassFromString(typeStr)] == YES, assertStr);
+                (void)assertStr;
                 
                 break;
             }
@@ -703,11 +704,15 @@ static id  makeRelationWithBlock(id listener, id block, CCUIModel * fromNotifer)
 }
 
 -(CCUIModel * (^)(CCUIModel *))plus{
+    typeof(self) ws = self;
     CCUIModel* (^blocker)(CCUIModel* notifer) = ^(CCUIModel* uimodel){
-        [_relation.notifierInfos addObjectsFromArray:uimodel.relation.notifierInfos];
-        [_notifers addObjectsFromArray:uimodel.notifers];
-        [_values addObjectsFromArray:uimodel.values];
-        return self;
+        typeof(self) SELF = ws;
+        if (SELF) {
+            [SELF->_relation.notifierInfos addObjectsFromArray:uimodel.relation.notifierInfos];
+            [SELF->_notifers addObjectsFromArray:uimodel.notifers];
+            [SELF->_values addObjectsFromArray:uimodel.values];
+        }
+        return SELF;
     };
     return blocker;
 }
