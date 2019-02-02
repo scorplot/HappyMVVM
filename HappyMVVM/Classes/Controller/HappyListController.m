@@ -185,7 +185,7 @@ static const double preloadOffset = 0.5;
         }
         
         // auto get more
-        CGFloat triggerOffset = scrollView.frame.size.height*1.5-scrollView.contentSize.height;
+        CGFloat triggerOffset = scrollView.frame.size.height*(1+preloadOffset)-scrollView.contentSize.height;
         if (_lastOffset.y > triggerOffset && scrollView.contentOffset.y < triggerOffset) {
             [self.vm getMore];
         }
